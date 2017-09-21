@@ -199,6 +199,20 @@ Existem dezenas de protocolos para snoopy caches, dado que eles foram os primeir
 \subsubsection{Write Once}
 O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido, que usa a política \textit{write-through} para a primeira escrita e a política \textit{write-back} para as escritas subsequentes.
 
+\textsc{Transições de Leitura:}
+\begin{itemize}
+  \item \textbf{Read-Hit:} são feitos sempre na cópia local;
+
+  \item \textbf{Read-Miss:} se não há cópia \textsc{Dirty}, a memória está coerente e provê uma cópia para a cache. Se existir uma cópia \textsc{Dirty}, a cache que possui a cópia \textsc{Dirty} envia uma cópia para a cache solicitante, a memória é atualizada e ambas as cópias mudam seu estado para \textsc{Valid}.
+\end{itemize}
+
+\textsc{Transições de Escrita:}
+\begin{itemize}
+  \item \textbf{Write-hit:} se a cópia estiver \textsc{Dirty} ou \textsc{Reserved}, o write pode ser feito e o estado da cópia muda para dirty. Se o estado for \textsc{Valid}, é gerado um comando de invalidação \texttt{write\_inv} para todas as caches, a memória é atualizada e a cópia é colocada como \textsc{Reserved};
+
+  \item \textbf{Write-miss:} se não há cópia \textsc{Dirty}, é enviado um comando \texttt{read\_inv} para todas as caches, a cópia é atualizada localmente e o seu estado é \textsc{Dirty}. Se há cópia \textsc{Dirty}, a cópia é fornecida pela cache correspondente, que invalida a sua cópia após o fornecimento. A cópia é alterada localmente e seu estado é \textsc{Dirty}.
+\end{itemize}
+
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{write-once}
@@ -206,18 +220,13 @@ O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido,
   \caption{Diagrama de estados do \textit{Write Once}}
 \end{figure}
 
-\textsc{Transições:}
-\begin{itemize}
-  \item \textbf{Write-hit:} se a cópia estiver \textsc{Dirty} ou \textsc{Reserved}, o write pode ser feito e o estado da cópia muda para dirty. Se o estado for \textsc{Valid}, é gerado um comando de invalidação \texttt{write\_inv} para todas as caches, a memória é atualizada e a cópia é colocada como \textsc{Reserved};
 
-  \item \textbf{Write-miss:} se não há cópia \textsc{Dirty}, é enviado um comando \texttt{read\_inv} para todas as caches, a cópia é atualizada localmente e o seu estado é \textsc{Dirty}. Se há cópia \textsc{Dirty}, a cópia é fornecida pela cache correspondente, que invalida a sua cópia após o fornecimento. A cópia é alterada localmente e seu estado é \textsc{Dirty}.
-\end{itemize}
 
 
 
 
 \subsubsection{Firefly}
-É um tipo de protocolo \textit{write-update} que foi implementado em estações de trabalho multiprocessada Firefly. A política utilizada entre as caches e a memória é a de \textit{write-through}. Necessita de uma linha especial de barramento para fazer as atualizações, chamada de \textit{shared line}.
+É um tipo de protocolo \textit{write-update} que foi implementado em estações de trabalho multiprocessada Firefly. A política utilizada entre as caches e a memória é a de \textit{write-through}. Necessita de uma linha especial de barramento para fazer as atualizações, chamado de \textit{shared line}.
 
 \begin{figure}[ht]
   \centering
@@ -226,6 +235,19 @@ O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido,
   \caption{Diagrama de estados do Firefly}
 \end{figure}
 
+\textsc{Transições de Leitura:}
+\begin{itemize}
+  \item \textbf{Read-Hit:} são feitos sempre na cópia local;
+
+  \item \textbf{Read-Miss:} se existem cópias \textsc{Shared}, as caches fornecem o bloco. Se a cópia está \textsc{Dirty}, a cache fornece o bloco e atualiza a memória. O estado de ambas as cópias muda para \textsc{Shared}. Se não há cópias, a memória fornece uma cópia, que é colocada no estado \textsc{Valid-Exclusive}.
+\end{itemize}
+
+\textsc{Transições de Escrita:}
+\begin{itemize}
+  \item \textbf{Write-hit:} se o bloco estiver \textsc{Dirty} ou \textsc{Valid-Exclusive}, a escrita é local e o novo estado é \textsc{Dirty}. Se a cópia estiver em \textsc{Shared}, todas as cópias e a memória são atualizadas. Se não existe mais compartilhamento, o estado muda para \textsc{Valid-Exclusive};
+
+  \item \textbf{Write-miss:} se a cópia for fornecida pela memória, ela é atualizada localmente e o seu estado fica \textsc{Dirty}. Senão, todas as outras cópias são atualizadas e o novo estado é \textsc{Shared}.
+\end{itemize}
 
 
 
