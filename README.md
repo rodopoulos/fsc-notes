@@ -19,22 +19,28 @@ Todo conteúdo está escrito em Latex, dividos em duas partes referentes às dua
 
 Para gerar todos os documentos, basta acessar a pasta do projeto e rodar o comando:
 
-```make```
+```
+make
+```
 
 Para gerar somente a parte de _Organização e Arquitetura de Computadores_, rode:
 
-```make oac```
+```
+make oac
+```
 
 Para gerar somente a parte de _Sistemas Operacionais_, rode:
 
-```make so```
+```
+make so
+```
 
 Para gerar os documentos em Windows, tome vergonha na cara, instale um Linux e rode os comandos acima.
 
 ## Contribuições
 Eu aconselho e incentivo alunos e interessados da matéria a virem contribuir com este repositório. Definitivamente, **não dê um fork no repositório, centralize o conteúdo aqui** para que não haja divergências nos materiais e para que todos possamos compartilhar. Não seja um egoísta.
 
-Para você contribuir, abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo.
+Para você contribuir, abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo. Você pode também pedir melhor explicação de conceitos.
 
 Você pode contribuir de várias maneiras:
 
@@ -50,7 +56,7 @@ De quebra, você ganha seu nome na lista de contribuições aqui do repositório
 ### Exercícios
 É extremamente importante que sejam reunidos todo e qualquer exercício sobre as matérias deste curso aqui. Eles são a base para fazer um bom estudo antes da prova, uma vez que várias questões tem sacadas capiciosas.
 
-**Mandem todo e qualquer exercício para, de preferência resolvido, via pull request.**
+**Mandem todo e qualquer exercício, de preferência resolvido, via pull request.**
 
 ## Considerações
 
