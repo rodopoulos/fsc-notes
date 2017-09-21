@@ -399,6 +399,8 @@ Este esquema tem problemas com loops, onde geralmente ocorrem 2 previsões incor
 
 
 \subsubsection{Previsão Two-bit}
+% TODO: explicar melhor cada autômato
+
 Foi proposto para sanar a deficiênia do esquema de 1 bit, onde agora para haver a alteração de estado, a previsão deve ser incorreta por duas vezes, no mínimo. É possível haver esquemas $n$-bits, onde o de 2-bits faz parte. Um contador é incrementado quando o desvio for tomado e decrementado quando não for. Quando este for maior que $\frac{(2^n - 1)}{2}$, a previsão do desvio é T. Caso contrário, é NT.
 
 A acurária aqui é de de 78-89\% (SPECInt89) e é utilizado no NexGen 586 (2K automata) e no Pentium (256 automata).
@@ -423,6 +425,8 @@ A acurária aqui é de de 78-89\% (SPECInt89) e é utilizado no NexGen 586 (2K a
 
 
 \subsubsection{Previsores Correlatos (ou de dois níveis)}
+% TODO: melhorar a descrição de funcionamento do funcionamento
+
 Muitas vezes, o comportamento de um branch está relacionado com o comportamento de outro branch. Por isso, os previsores correlatos se baseiam nos últimos branches executados, mesmo que estes não sejam o branch que está sendo previsto. A previsão é feita em dois níveis, com duas estruturas correspondentes:
 \begin{itemize}
   \item \textbf{\textit{branch history register} - (BHR):} guarda o história de execução dos desvios. Cada vez que uma instância dinâmica de um branch for resolvida, é feita uma operação de shift a esquerda com seu sinal no BHR. É usado como índice na BPT;
@@ -509,6 +513,8 @@ Todos os branches são preditos e alguns deles também são executados agressiva
 
 
 \subsection{Arquiteturas Superescalares}
+% TODO: indicar se é RISC ou CISC e porque.
+
 \textsc{Definição} Arquiteturas que permitem que diversas instruções sejam iniciadas em um único ciclo de clock e executadas de maneira independente.
 
 Para que isso seja possível, deve-se ser capaz de buscar mais de uma instrução
@@ -547,7 +553,9 @@ O conceito do projeto está muito associado a estruturas RISC, porém pode ser p
 \end{figure}
 
 
-\subsection{Very Large Instruction Word - VLWI}
+\subsection{Very Large Instruction Word - VLIW}
+% TODO: indicar se VLIW pode ser conserado RISC ou CISC e porque.
+
 \textsc{Definição} arquitetura que combina diversas operações em uma única instrução muito longa. A tarefa de se determinar quais instruções que serão emitidas simultaneamente, entretanto, recai sobre o compilador.
 
 Neste caso, também teremos diversas unidades funcionais independentes. Uma instrução VLIW poderia incluir 2 operações inteira, 2 de ponto flutuante, 2 referências à memoria e um branch, por exemplo. Dessa forma, se cada unidade funcional tem 16 bits, teríamos um palavra de 112 bits. Note que \textbf{deve haver paralelismo suficiente na sequencia de código para manter todas as unidades ocupadas}.

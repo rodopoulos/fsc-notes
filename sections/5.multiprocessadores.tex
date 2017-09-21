@@ -215,7 +215,7 @@ O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido,
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{write-once}
+  \includegraphics[width=0.9\textwidth]{write-once}
   \label{fig:writeonce-automata}
   \caption{Diagrama de estados do \textit{Write Once}}
 \end{figure}
@@ -227,13 +227,6 @@ O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido,
 
 \subsubsection{Firefly}
 É um tipo de protocolo \textit{write-update} que foi implementado em estações de trabalho multiprocessada Firefly. A política utilizada entre as caches e a memória é a de \textit{write-through}. Necessita de uma linha especial de barramento para fazer as atualizações, chamado de \textit{shared line}.
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{firefly}
-  \label{fig:firefly-automata}
-  \caption{Diagrama de estados do Firefly}
-\end{figure}
 
 \textsc{Transições de Leitura:}
 \begin{itemize}
@@ -249,6 +242,12 @@ O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido,
   \item \textbf{Write-miss:} se a cópia for fornecida pela memória, ela é atualizada localmente e o seu estado fica \textsc{Dirty}. Senão, todas as outras cópias são atualizadas e o novo estado é \textsc{Shared}.
 \end{itemize}
 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{firefly}
+  \label{fig:firefly-automata}
+  \caption{Diagrama de estados do Firefly}
+\end{figure}
 
 
 \subsubsection{MSI}
@@ -256,7 +255,7 @@ O primeiro protocol \textit{write-invalidate} proposto. É um protocol híbrido,
 \begin{itemize}
   \item \textbf{Modified} ou Dirty: somente um processador possui uma cópia válida do bloco em sua cache. A cópia da memória principal está incoerente.
   \item \textbf{Shared}: o bloco está presente em diversas caches e está coerente com a memória.
-  \item \textbf{Inválida}
+  \item \textbf{Invalid}
 \end{itemize}
 
 Este protocol segue a política de cache \textbf{write-back} e é do tipo \textbf{write-invalidate}. \textbf{Note que:}
@@ -268,7 +267,7 @@ Este protocol segue a política de cache \textbf{write-back} e é do tipo \textb
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=\textwidth]{msi}
+  \includegraphics[width=.9\textwidth]{msi}
   \label{fig:msi-automata}
   \caption{Diagrama de estados do MSI}
 \end{figure}
