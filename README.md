@@ -60,6 +60,7 @@ Se você quer se aprofundar nesta área, use os livros e _papers_ clássicos e d
 
 
 ## Referências Bibliográficas
-*
-*
-*
+* **D. A. Patterson & J. L. Hennessy** _Computer Organization and Design: The Hardware/Software Interface_ (5th Edition)
+* **J. L. Hennessy & D. A. Patterson** _Computer Organization and Design: A Quantitative Approach_ (5th Edition)
+* **W. Stallings** _Computer Organization and Archteture_ (5th Edition)
+* **D. Culler** _Parallel Computer Archteture_
