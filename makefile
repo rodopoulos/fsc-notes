@@ -3,11 +3,13 @@
 all: oac os
 
 os:
-	$(MAKE) -C os
+	@echo "Gerando parte de Sistemas Operacionais"
+	@$(MAKE) -sC os
+	@mv os/main.pdf ./fsc-os.pdf
 
 oac:
-	$(MAKE) -C oac
-	# cd oac && $(MAKE)
-	@mv oac/main.pdf ./oac.pdf
+	@echo "Gerando parte de Organização e Arquitetura de Computadores"
+	@$(MAKE) -sC oac
+	@mv oac/main.pdf ./fsc-oac.pdf
 
 .PHONY: clean os oac

@@ -15,4 +15,4 @@ build:
 	@bibtex $(FILE) > /dev/null
 	@pdflatex $(FILE) > /dev/null
 	@pdflatex $(FILE) > /dev/null
-	@echo "Feito. \n"
+	@echo "Feito."
