@@ -3,7 +3,7 @@
 all: oac os
 
 os:
-	$(MAKE) -c os
+	$(MAKE) -C os
 
 oac:
 	$(MAKE) -C oac
