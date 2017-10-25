@@ -5,6 +5,7 @@
 \usepackage[brazilian]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
+\usepackage{mdframed}
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage{subcaption}
@@ -15,6 +16,8 @@
 
 % Defining figures base folder
 \graphicspath{{figs/}}
+% Resizing captions sizes
+\captionsetup[figure]{font=footnotesize,labelfont=normalsize}
 
 % New command for importing chapters easily
 \newcommand{\chapterfile}[2]{%
@@ -26,6 +29,18 @@
 % Defines a new command for the horizontal lines, change thickness here
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \newcommand{\newminline}{\\[0.2cm]}
+
+
+% Creating Definition environment
+\newenvironment{definicao}[1]
+	{
+		\begin{mdframed}[topline=false,rightline=false,bottomline=false]
+		\large \textsc{Definição} $\cdot$ \normalsize \textbf{#1}
+
+	}
+	{\end{mdframed}}
+
+
 
 % Removing paragraphs
 \setlength\parindent{0pt}
@@ -99,6 +114,8 @@
 
 	% Content
 	\mainmatter
+	\include{sections/1.fundamentos}
+	\include{sections/2.processos}
 	\nocite{*}
 
 	% References
