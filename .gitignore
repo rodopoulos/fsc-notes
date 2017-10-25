@@ -222,3 +222,6 @@ TSWLatexianTemp*
 
 # Atom latex config
 .latexcfg
+
+#No pdfs
+*.pdf
