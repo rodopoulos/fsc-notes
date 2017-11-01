@@ -87,8 +87,7 @@ Este processo \textbf{envolve tanto hardware como o sistema operacional}. Quando
 \begin{enumerate}
   \item O hardware interrompe a execução corrente e salva seu estado na pilha, o que inclui registradores, descritores, etc.;
 
-  % TODO: o PC é apontado para o endereço do Vetor de Int.?
-  \item O hardware acessa um endereço específico de memória física, onde há o \textbf{vetor de interrupções}. Nele, os endereços das rotinas de tratamento de interrupções geradas por cada dispositivo está contido;
+  \item O hardware acessa um endereço específico de memória física, onde há o \textbf{vetor de interrupções}. Nele, os endereços das rotinas de tratamento de interrupções geradas por cada dispositivo está contido. O PC é apontado para endereço da interrupção correspondente;
 
   \item O sistema operacional executa o tratamento de interrupção indicado. Os registradores que foram empilhados pelo hardware são salvos em memória;
 
@@ -193,8 +192,7 @@ A \textbf{tabela de dispositivos} será a estrutura que irá auxiliar no acompan
 \section{Direct Memory Access}
 Quando a controladora lê dados de um dispositivo, estes são armazenados inicialmente em um \textit{buffer} interno. Estando o bloco completo e correto neste buffer, o mesmo deve ser escrito em memória.
 
-% TODO: a escrita então é exclusiva da controladora? Ou isso varia de arquitetura para arquitetura
-Esta escrita em memória não pode ser feita pela CPU, pois iria esta operação consome muito tempo, dadas as operações de cópia. Desta forma, normalmente, a operação acaba ficando a cargo da controladora, através de operações de acesso direto à memória, ou DMA. Este processo ocorre através das seguintes etapas:
+Esta escrita em memória pode ser feita pela CPU, mas esta operação consome muito tempo, dadas as operações de cópia. Desta forma, normalmente, a operação acaba ficando a cargo da controladora, através de operações de acesso direto à memória, ou DMA. Este processo ocorre através das seguintes etapas:
 
 \begin{enumerate}
   \item O SO informa o endereço de memória para o qual o dado deve ser lido e o número de \textit{bytes} a serem transferidos;
@@ -275,8 +273,7 @@ Geralmente, essas arquiteturas possuem três camadas conceituais, dado que é po
 Nesta organização, cada camada só interage com suas camadas adjacentes, sendo esta noção fortemente reforçada pelo hardware.
 \underline{Exemplos:} THE (1968 - Djikstra), MULTICS (BELL, MIT)
 
-% TODO: Isso vale para todos as arquiteturas? Posso generalizar isso?
-As camadas destinadas aos recursos da máquina ficam em modo protegido, enquanto a camada de programas de usuário fica em modo usuário.
+Normalmente, as camadas destinadas aos recursos da máquina ficam em modo protegido, enquanto a camada de programas de usuário fica em modo usuário.
 
 \begin{figure}[ht]
   \centering
@@ -296,8 +293,6 @@ As camadas destinadas aos recursos da máquina ficam em modo protegido, enquanto
 \end{itemize}
 
 
-% TODO: usar imagem do slide SISTEMA EM CAMADAS e falar que ela é do MULTICS, LEGENDA: roxo (modo usuario) e verde (modo protegido). toda entrada e saida é feita em memória virtual; 2. se o programa do usuário quer alocar memória, conceitualmente ele deve passar pela camada de entrada e saída.
-
 
 
 
@@ -310,16 +305,12 @@ Sistemas operacionais estruturados como máquina virtual possuem, no mais baixo 
 
 As máquinas virtuais implementam um cópia fiel do hardware, com modo kernel/usuário, I/O e interrupções. Quando a máquina virtual é selecionada para execução, ela assume o \textit{hardware}. Eventualmente, o monitor assume o \textit{hardware} para continuar a execução do SO e selecionar alguma outra máquina.
 
-% TODO: legenda da imagem: quando o monitor define que uma VM vai executar, ela assume o hardware. Eventualmente, o monitor assume o hardware novamente para continuar a sua execução e de demais máquinas.
-
 \begin{figure}[ht]
   \centering
   \includegraphics[height=7cm]{os-arch-vm}
   \caption{Sistema opercional com arquitetura de máquinas virtuais}
   \label{fig:os-arch-vm}
 \end{figure}
-
-
 
 \textsc{Vantagens}
 \begin{itemize}
@@ -357,9 +348,5 @@ O \textit{kernel} funciona como um servidor para estes processos, realizando a c
 
 \textsc{Desvantagens}
 \begin{itemize}
-  % TODO: ver se isso esta correto e destrinchar. Usar a imagem abaixo.
-  \item As constantes trocas entre modo usuário e modo protegido acabam por gerar um custoso \textit{overhead}, fazendo esta ser a arquitetura com menor desempenho entre as quatro;
+  \item As constantes trocas entre modo usuário e modo protegido acabam por gerar um custoso \textit{overhead}. Por isso, normalmente, essa arquitetura acaba tendo um desempenho menor.
 \end{itemize}
-
-
-% TODO: legenda para a figura.
