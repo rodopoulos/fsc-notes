@@ -169,7 +169,7 @@ Para garantir um bom algoritmo de escalonamento, alguns \textbf{critérios} deve
 
   \item \textbf{Eficiência:} se há demanda, a CPU deve estar ocupada;
 
-  \item \textbf{Minimizar o tempo de resposta:} % TODO: ver o que é isso
+  \item \textbf{Minimizar o tempo de resposta:} o tempo total decorrido até que um processo seja atendido; % TODO: ver se está correto
 
   \item \textbf{Minimizar o \textit{waiting time}:} ou seja, o tempo de resposta entre os estados \textit{Ready} e \textit{Running};
 
@@ -235,7 +235,7 @@ A prioridade pode ser definida de duas formas:
   \item \textbf{Dinâmicamente:} o sistema analisa o comportamento dos processose atribui prioridades favorecendo um certo tipo de comportamento. Por exemplo, processos com I/O podem ter prioridades altas. O cálculo da prioridade pode ser dado por $1/f$, onde $f$ é a fração do \textit{quantum} de tempo utilizado na última rodada do processo.
 \end{itemize}
 
- Note que é possível que um processo pode monopolizar a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. % TODO: isso ocorre tanto estaticamente como dinamicamente?
+ Note que é possível que um processo pode monopolizar a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. A técnica de prioridade dinâmica tenta justamente mitigar este comportamento.
 
 
 
@@ -291,7 +291,7 @@ Podemos ter dois tipos de \textit{threads}:
 
 
 \subsection{Implementação}
-É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois %TODO: ver o porquê.
+É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{thread} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera chamadas de sistema (\textbf{\textit{syscalls}}), o que é um \textit{overhead} custoso.
 
 A segunda forma é a implementação a \textbf{nível de usuário}, simulando as \textit{threads} através de bibliotecas. Dessa forma, o custo da troca de contexto é baixo, porém quando uma \textit{thread} realizar uma operação blocante, o seu processo inteiro será bloqueado e, consequentemente, todas as suas \textit{threads-irmãs}.
 
@@ -314,10 +314,14 @@ A segunda forma é a implementação a \textbf{nível de usuário}, simulando as
 \end{figure}
 
 \begin{definicao}{\textit{Livelock}}
-  Ocorre quando um conjunto de processos tentam acessar um recurso ao mesmo tempo, por meio de \textit{polling}, sempre encontrando este recurso ocupado e, dessa forma, bloqueando-se mutuamente.
+  Ocorre quando um conjunto de processos tentam acessar um recurso por meio de \textit{polling}, sempre encontrando esse recurso ocupado, pois estes estão alocados a processos que fazem parte do mesmo conjunto. Dessa forma, estes processos bloqueiam-se mutuamente. Logo, \textbf{há uma espera circular dentro do conjunto de processos}.
 \end{definicao}
 
-% TODO: Esperar a Alba responder. Ver se a imagem do slide faz sentido e ilustrar aqui com exemplo
+% TODO: Ver se a imagem do slide faz sentido e ilustrar aqui com exemplo
+
+\begin{definicao}{\textit{Polling}}
+  Técnica onde verifica-se periodicamente o estado de um recurso.
+\end{definicao}
 
 \textbf{Nota:} Do ponto de vista teórico, \textit{livelock} e \textit{deadlock} tem significados equivalentes.
 
