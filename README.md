@@ -9,8 +9,8 @@ Este repositório foi iniciado no 2º semestre de 2017.
 ## Objetivos
 
 * Centralizar todo o conteúdo da matéria em um só lugar;
-* Prover desambiguações e extensões acerca de conceitos mal explicados nos slides disponibilizados
-* Prover um definições canônicas para os conceitos da matéria;
+* Prover desambiguações e extensões acerca de conceitos mal explicados nos slides disponibilizados;
+* Prover definições canônicas para os conceitos da matéria;
 * Prover um resumo mais eficaz para as provas com consulta da matéria.
 
 ## Geração dos Documentos
@@ -38,17 +38,18 @@ make so
 Para gerar os documentos em Windows, tome vergonha na cara, instale um Linux e rode os comandos acima.
 
 ## Contribuições
-Eu aconselho e incentivo alunos e interessados da matéria a virem contribuir com este repositório. Definitivamente, **não dê um fork no repositório, centralize o conteúdo aqui** para que não haja divergências nos materiais e para que todos possamos compartilhar. Não seja um egoísta.
+Eu aconselho e incentivo alunos e interessados da matéria a virem contribuir com este repositório. Definitivamente, **não crie conteúdo e disponibilize apenas um repositório diferente ou só na sua máquina**. Centralize tudo aqui, compartilhe o conhecimento e conteúdo com todos. Não seja egoísta.
 
-Para você contribuir, abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo. Você pode também pedir melhor explicação de conceitos.
+Para você contribuir, dê um _fork_ neste repositório, realize alterações na sua máquina, _commite_ para o seu repositório e abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo.
 
 Você pode contribuir de várias maneiras:
 
 * Novos conteúdo introduzidos na disciplina ao longo dos semestres;
-* Exercícios de fixação de conteúdo que não constam nos anexos dos documento;
-* Expansão e melhor detalhamento de conteúdos;
+* Melhor explicação de um dado conteúdo ou definição;
+* Destrinchamento de um dado conceito;
 * Sugestões na formatação dos textos e documento em geral;
 * Imagens mais intuitivas, legíveis e didáticas;
+* Exercícios de fixação de conteúdo que não constam nos anexos dos documento;
 * Qualquer coisa que você achar útil.
 
 De quebra, você ganha seu nome na lista de contribuições aqui do repositório.
