@@ -38,14 +38,14 @@ make so
 Para gerar os documentos em Windows, tome vergonha na cara, instale um Linux e rode os comandos acima.
 
 ## Contribuições
-Eu aconselho e incentivo alunos e interessados da matéria a virem contribuir com este repositório. Definitivamente, **não crie conteúdo e disponibilize apenas um repositório diferente ou só na sua máquina**. Centralize tudo aqui, compartilhe o conhecimento e conteúdo com todos. Não seja egoísta.
+É extramamente desejável que alunos da matéria e outros interessados venham a contribuir com este repositório. Definitivamente, **não oculte conteúdo em um repositório privado ou na sua máquina**. Centralize tudo aqui, compartilhe com todos. Não seja egoísta.
 
-Para você contribuir, dê um _fork_ neste repositório, realize alterações na sua máquina, _commite_ para o seu repositório e abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo.
+Para você contribuir, dê um _fork_ neste repositório, realize as alterações desejadas, _commite_ para o seu repositório e abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo.
 
-Você pode contribuir de várias maneiras:
+Além disso, você pode contribuir fazendo requisições:
 
-* Novos conteúdo introduzidos na disciplina ao longo dos semestres;
-* Melhor explicação de um dado conteúdo ou definição;
+* Inserção de novos conceitos introduzidos na disciplina ao longo dos semestres;
+* Melhorar explicações;
 * Destrinchamento de um dado conceito;
 * Sugestões na formatação dos textos e documento em geral;
 * Imagens mais intuitivas, legíveis e didáticas;
