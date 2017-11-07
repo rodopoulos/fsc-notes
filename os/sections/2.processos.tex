@@ -1,4 +1,4 @@
-\chapter{Fundamentos: Processos}
+\chapter{Processos}
 
 \begin{definicao}{Processo}
   É um programa em execução, composto por:
@@ -23,7 +23,12 @@ Por fim, existem dois escopos que carregam variáveis sobre a execução do proc
   \item \textbf{Execução:} contendo registradores utilizados pelo processo, como o PC e o apontador de pilha, e o estado de execução do processo.
 \end{itemize}
 
-
+\begin{figure}
+  \centering
+  \includegraphics[width=.5\textwidth]{process-model}
+  \caption{Modelo padrão de escopo de um processo}
+  \label{fig:process-model}
+\end{figure}
 
 
 
@@ -50,9 +55,14 @@ Classificamos os processos em relação ao custo de troca de contexto e manuten�
 
 No modelo \textit{heavyweight}, também chamado de modelo tradicional, cada processo tem um único fluxo de controle, ou seja, em um dado momento ele só tem um valor de \texttt{PC}. Este processo roda independente dos demais e pode conter processos \textit{threads} que dependem dele.
 
-Todo sistema operacional deve possuir mecanismos que permitam a criação de processos. Geralmente, um processo somente é criado por outro processo, o que nos leva uma \textbf{hierarquia de árvore de processos}. Entretanto, é necessário frisar que a árvore de processos não é de fato implementada. A partir do campo de ID do processo pai (PPID), podemos virtualmente implementar essa árvore. Implementá-la de fato seria muito custoso.
+Todo sistema operacional deve possuir mecanismos que permitam a criação de processos. Geralmente, um processo somente é criado por outro processo, o que nos leva uma \textbf{hierarquia de árvore de processos} (Figura \ref{fig:process-tree}). Entretanto, é necessário frisar que a árvore de processos não é de fato implementada. A partir do campo de ID do processo pai (PPID), podemos virtualmente implementar essa árvore. Implementá-la de fato seria muito custoso.
 
-
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{process-tree}
+  \caption{Esquema de uma árvore de processos padrão}
+  \label{fig:process-tree}
+\end{figure}
 
 
 
@@ -169,7 +179,7 @@ Para garantir um bom algoritmo de escalonamento, alguns \textbf{critérios} deve
 
   \item \textbf{Eficiência:} se há demanda, a CPU deve estar ocupada;
 
-  \item \textbf{Minimizar o tempo de resposta:} o tempo total decorrido até que um processo seja atendido; % TODO: ver se está correto
+  \item \textbf{Minimizar o tempo de resposta:} o tempo total decorrido até que um processo produza uma resposta ao usuário/sistema;
 
   \item \textbf{Minimizar o \textit{waiting time}:} ou seja, o tempo de resposta entre os estados \textit{Ready} e \textit{Running};
 
@@ -221,7 +231,7 @@ Os processos que solicitam a CPU são colocados em uma fila \textit{ready}, ger�
 \subsection{\textit{Round Robin}}
 Cada processo tem o direito de usar o processador por um intervalo de tempo pré-definido, denominado \textbf{\textit{quantum}}. Quando este intervalo se esgota, o processador é dado a outro processo e o processo retirado vai para o fim da fila de processos. É versão preemptiva da política FSFC, sendo um algoritmo justo.
 
-
+% TODO: colocar figura
 
 
 
@@ -237,7 +247,7 @@ A prioridade pode ser definida de duas formas:
 
  Note que é possível que um processo pode monopolizar a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. A técnica de prioridade dinâmica tenta justamente mitigar este comportamento.
 
-
+% TODO: colocar figura
 
 
 
@@ -247,7 +257,7 @@ Aqui, dado um conjunto de \textit{jobs} prontos, executamos os \textit{jobs} com
 
 Note que este algoritmo pode não ser muito justo, pois, supondo um processo com uma dada prioridade, este pode entrar em \textit{starvation} se todo novo processo que entrar na fila tiver tempo de execução menor que ele.
 
-
+% TODO: colocar figura
 
 
 
@@ -273,6 +283,8 @@ Note que este algoritmo pode não ser muito justo, pois, supondo um processo com
 \textit{Threads}, ou linhas de controle múltiplas, foram criadas visando maior concorrência na execução de processos. Nelas, o processo é dividido em dois: processo em si, correspondendo ao ambiente, e a \textit{thread}, correspondendo a execução.
 
 Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thread} pode se bloquear a espera de um recurso e outra, do mesmo processo ou não, pode se executar, paralelamente. A entidade que realmente executa é a \textit{thread}, sendo o processo apenas o ambiente.
+
+% TODO: colocar figura
 
 Aqui, \textbf{a troca de contexto é mais leve}, dado que esta troca entre \textit{threads} de um mesmo processo só diz respeito a execução e não ao ambiente.
 
@@ -301,7 +313,7 @@ A segunda forma é a implementação a \textbf{nível de usuário}, simulando as
 
 
 
-\subsection{\textit{Deadlock}}
+\section{\textit{Deadlock}}
 \begin{definicao}{\textit{Deadlock}}
   Um conjunto de processos está em \textit{deadlock} se cada processo pertencente ao conjunto estiver esperando por um evento que somente um outro processo pertencente ao mesmo conjunto pode fazer ocorrer. Como todos estão ocupados, nenhum pode provocar a ocorrência de eventos. Logo, \textbf{é uma espera eterna por recursos}.
 \end{definicao}
@@ -317,11 +329,16 @@ A segunda forma é a implementação a \textbf{nível de usuário}, simulando as
   Ocorre quando um conjunto de processos tentam acessar um recurso por meio de \textit{polling}, sempre encontrando esse recurso ocupado, pois estes estão alocados a processos que fazem parte do mesmo conjunto. Dessa forma, estes processos bloqueiam-se mutuamente. Logo, \textbf{há uma espera circular dentro do conjunto de processos}.
 \end{definicao}
 
-% TODO: Ver se a imagem do slide faz sentido e ilustrar aqui com exemplo
-
 \begin{definicao}{\textit{Polling}}
   Técnica onde verifica-se periodicamente o estado de um recurso.
 \end{definicao}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\textwidth]{livelock}
+  \caption{Uma situação clássica de \textit{livelock}. A situação é análoga a da Figura \ref{fig:deadlock}, onde há um \textit{deadlock}. Entretanto, ao invés de se bloquear, os processos fazem \textit{polling} eterno.}
+  \label{fig:livelock}
+\end{figure}
 
 \textbf{Nota:} Do ponto de vista teórico, \textit{livelock} e \textit{deadlock} tem significados equivalentes.
 
@@ -348,8 +365,9 @@ Nesta técnica, um processo escreve um valor em uma posição de memória e outr
 Entretanto, a ordem e o tempo de execução dos processos não é previsível, dada a política de escalonamento do SO. Com isso, algumas incosistências podem ocorrer nestas áreas de memória compartilhadas, resultando em \textbf{condições de corrida}.
 
 \begin{figure}
-  \includegraphics{variable-sharing}
-  \caption{Processos $P1$ e $P2$ compatilhando a mesma posição $a$ de memória}
+  \centering
+  \includegraphics[width=0.5\textwidth]{variable-sharing}
+  \caption{Processos $P1$ e $P2$ compartilhando a mesma posição $a$ de memória}
   \label{fig:variable-sharing}
 \end{figure}
 
@@ -379,26 +397,44 @@ Para garantir uma exclusão mútua eficiente, a solução deve levar em contra o
   \item \textbf{Espera limitada:} deve existir um limite no número de vezes que outros processos acessam a seção crítica quando um processo está esperando por ela. Ou seja, \textbf{nenhum processo deve esperar eternamente para entrar em sua seção crítica}.
 \end{itemize}
 
+\textbf{Nota:} é importante frisar que levamos em conta que o programador seja correto em sua implementação, ou seja, que ele irá utilizar corretamente as ferramentas. Logo, não podemos supor que ele esqueça de indicar no programa que o processo deve sair da seção crítica.
 
 
+
+
+\subsection{Exclusão Mútua com Inibição de Interrupções}
+Quando um processo deseja acessar a seção crítica, o mesmo inibe todas as interrupções do SO, inibindo o escalonador de emitir interrupções para realocar a CPU. Logo, demais processos não serão executados e apenas o processo inibidor executa. Ao fim do seu acesso à seção crítica, o processo executante reabilita as interrupções. A Figura \ref{fig:syscall-inibition} dá um exemplo.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{syscall-inibition}
+  \caption{Exemplo de código fonte para acesso à seção crítica, inibindo interrupções}
+  \label{fig:syscall-inibition}
+\end{figure}
+
+Esta técnica trivialmente \textbf{preserva a exclusão mútua, a espera limitada e o progresso}, dado que apenas um processo apenas executa (e logo acessa a seção crítica) e a tomada da seção crítica é feita de forma direta por cada processo. Porém, por ser uma função crítica, a inibição de interrupções geralmente só pode ser executada pelo SO, sendo \textbf{arriscado disponibilizar este recurso para o usuário}, logo este raramente tem acesso a esta função.
+
+Também é importante notar que esta técnica acaba por ser prejudicada em arquiteturas multiprocessadas: quando um processo inibe as interrupções, ele o faz apenas no seu processador. Logo, processos em outros \textit{cores} que queiram acessar a região crítica poderião fazê-lo sem problema. Logo, esta abordagem é mais interessantes em arquiteturas mono-processadas ou em ambientes protegidos, com pequenas porções de código.
 
 
 
 
 
 \subsection{Exclusão Mútua com Espera Ocupada}
-A primeira técnica de eclusão mútua é a \textbf{espera ocupada}, ou \textit{busy waiting}. Aqui, o processo espera a permissão de entrada na seção crítica em um \textit{loop} de teste de permissão, como na Figura \ref{fig:busy-waiting}.
+Também chamada de \textit{busy waiting}, nesta técnica o processo espera a permissão de entrada na seção crítica em um \textit{loop} de teste de permissão, como na Figura \ref{fig:busy-waiting}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{busy-waiting}
+  \caption{Exemplo clássico de \textit{busy waiting}. O processo fica em um \textit{loop} até que a variável \texttt{vez} assuma o valor de \texttt{minha}}
+  \label{fig:busy-waiting}
+\end{figure}
 
 Esta técnica acaba por disperdiçar muita CPU, uma vez que o processo não é bloqueado e permanece executando, mas de maneira ociosa. Por isso é interessante utilizá-la apenas quando a espera será pequena. Entretanto, em multiprocessadores, isto pode ser interessante, dado que algum outro processo concorrente pode executar na seção crítica durante a espera ociosa.
 
 Dentre as técnicas neste paradigma, a implementação do Algoritmo de Dekker e Peterson não será destrinchada.
 
-\subsubsection{Inibir Interrupções}
-A inibição de interrupções funciona como uma forma do processo que acessa a seção crítica de bloquear o acesso dos demais processos, inibindo o escalonador de emitir interrupções para realocar a CPU. Ao fim da execução na seção crítica, o processo executante reabilita as interrupções.
 
-Este algoritmo preserva a exclusão mútua, pois apenas um processo acessa a região crítica por vez, e o progresso, % TODO: esperar a Alba responder
-
-Importante notar que esta técnica acaba por ser prejudicada em arquiteturas multiprocessadas: quando um processo inibe as interrupções, ele o faz apenas no seu processador. Logo, processos em outros \textit{cores} que queiram acessar a região crítica poderião fazê-lo sem problema. Logo, esta abordagem é mais interessantes em arquiteturas mono-processadas ou em ambientes protegidos, com pequenas porções de código.
 
 
 
@@ -408,8 +444,24 @@ Nesta técnica, cada processo tem a sua vez de entrar na seção crítica, contr
 
 Dessa forma, o processo irá testar a variável, ficando em \textit{busy waiting}, até que ela assuma o valor que sinalize a vez dele executar. Quando o processo terminar a execução, ele dá um outro valor ao \textit{spin lock}.
 
-Este técnica preserva exclusão mútua e a espera limitada. Entretanto, ela \textbf{não preserva o progresso}. Usamos o exemplo da Figura \ref{fig:strict-switch}, dado o caso onde o processo P1 é muito rápido lento que P2. Suponha que P2 está em sua região não-crítica e, nesse meio tempo, P1 executou por inteiro, deixando a variável \texttt{vez} igual a 1. P1 tenta executar o \textit{loop} novamente, mas não irá conseguir até que P2 coloque a variável em 0. Logo, a região crítica está vazia e temos um processo executando fora da região crítica bloqueando um processo que deseja a região.
+\begin{figure*}[ht]
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{strict-switch-p1}
+    \caption{Código no processo \textbf{\textit{P1}}}
+  \end{subfigure}
+  ~
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{strict-switch-p2}
+    \caption{Código no processo \textbf{\textit{P2}}}
+  \end{subfigure}
 
+  \caption{Exemplo clássico de estrita alternância}
+  \label{fig:strict-switch}
+\end{figure*}
+
+Esta técnica preserva exclusão mútua e a espera limitada. Entretanto, ela \textbf{não preserva o progresso}. Usamos o exemplo da Figura \ref{fig:strict-switch}, dado o caso onde o processo P1 é muito rápido lento que P2. Suponha que P2 está em sua região não-crítica e, nesse meio tempo, P1 executou por inteiro, deixando a variável \texttt{vez} igual a 1. P1 tenta executar o \textit{loop} novamente, mas não irá conseguir até que P2 coloque a variável em 0. Logo, a região crítica está vazia e temos um processo executando fora da região crítica bloqueando um processo que deseja a região.
 
 
 
@@ -421,7 +473,22 @@ Este técnica preserva exclusão mútua e a espera limitada. Entretanto, ela \te
 \subsection{Exclusão Mútua com Bloqueio de Processos}
 A outra técnica é o \textbf{bloqueio de processos}, onde o processo que espera a permissão de entrada na seção crítica executa uma primitiva para se bloquear, aguardando até que a seção seja liberada, como na Figura \ref{fig:block-process}.
 
-Existem duas primitivas básicas: uma para bloquear o processo quando a seção estive ocupada e outra para desbloqueá-lo. Esta técnica acaba por gerar mais trocas de contextos entre processos, causando esperas longas.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.35\textwidth]{block-process}
+  \caption{Exemplo clássico de bloqueio de processo. O processo checa se as variáveis são iguais e, caso contrário, bloqueia}
+  \label{fig:block-process}
+\end{figure}
+
+Esta técnica acaba por \textbf{gerar mais trocas de contextos entre processos, causando esperas longas}.
+
+Existem duas primitivas básicas, as quais, normalmente, envolvem a seção crítica:
+
+\begin{itemize}
+  \item Primitiva de \textbf{bloqueio de processo} quando a seção estive ocupada;
+
+  \item Primitiva de \textbf{desbloqueio de processos} à espera da permissão de acesso à seção crítica.
+\end{itemize}
 
 
 
@@ -486,7 +553,8 @@ São estruturas de dados compartilhadas, que garantem a exclusão mútua por \te
 
 Estas primitivas são chamadas de sistema, podendo ser implementadas tanto como uma espera ocupada ou com bloqueio de processo, sendo este último mais comum e chamado de \textit{mutex}.
 
-\begin{figure}
+\begin{figure}[ht]
+  \centering
   \includegraphics[width=0.35\textwidth]{mutex}
   \caption{Código de região crítica apropriadamente envolvido por operações de \textit{lock}}
   \label{fig:mutex}
@@ -494,7 +562,14 @@ Estas primitivas são chamadas de sistema, podendo ser implementadas tanto como 
 
 
 \subsubsection{\textit{Monitores}}
-Monitores são conjuntos de procedimentos e dados agrupados em um módulo, indicando que estas entidades são uma região crítica. Esta regiões só podem ser acessar por um processo apenas, onde este só podem acessar os dados contidos no monitor através dos procedimentos definidos por este. Logo, \textbf{não há acesso direto aos dados por parte do processo}.
+Monitores são conjuntos de procedimentos e dados agrupados em um módulo, indicando que estas entidades são uma região crítica. Estas regiões só podem ser \textbf{acessadas por um processo por vez}, o qual só pode acessar os dados contidos no da seção crítica através de procedimentos definidos pelo monitor. Logo, \textbf{não há acesso direto aos dados por parte do processo requisitante}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\textwidth]{monitor}
+  \caption{Código de região crítica definido dentro de um monitor. Como exemplo, o procedimento \texttt{p0} seria o único com permissão de acessar dados da região crítica}
+  \label{fig:monitor}
+\end{figure}
 
 O programador é quem definirá as seções críticas, ou seja, o que estará contidos nos monitores. Entretanto, \textbf{a garantia de exclusão mútua é feita pelo compilador}, usando estruturas de baixo nível (como semáforos, por exemplo) e garantindo que apenas um processo acesse o monitor. Por isso, a abstração e \textbf{implementação de monitores deve estar contida na linguagem de programação}, o que raramente é feito.
 
@@ -510,8 +585,9 @@ O problema clássico de Produtor-Consumidor é definido com dois processos \text
 
 Como o \textit{buffer} tem tamanho fixo, devemos ter uma variável que controle o número de mensagens no mesmo. Assim, o processo produtor não escreve algo quando o \textit{buffer} estiver lotado e o processo consumidor não retira dados quando o \textit{buffer} estiver vazio. Consequentemente, esta variável é compartilhada entre os dois processos, podendo gerar uma condição de corrida.
 
-\begin{figure}[ht]
-  \includegraphics[width=\textwidth]{prod-cons-sem}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{prod-cons-sem}
   \caption{Solução do problema com semáforos.}
   \label{fig:prod-cons-sem}
 \end{figure}
@@ -523,8 +599,9 @@ Como o \textit{buffer} tem tamanho fixo, devemos ter uma variável que controle 
 %   \label{}
 % \end{figure}
 
-\begin{figure}[!ht]
-  \includegraphics[width=\textwidth]{prod-cons-monitor}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{prod-cons-monitor}
   \caption{Solução do problema com monitores. Definida a variável crítica \texttt{count}, apenas os procedimentos \texttt{insert} e \texttt{remove} podem opera-la. A lógica dos processos são realocadas em procedimentos distintos}
   \label{fig:prod-cons-monitor}
 \end{figure}
@@ -543,6 +620,13 @@ Em \textbf{ambientes distribuídos}, onde não há uma memória física comparti
 A troca de mensagem entre processos é explicita, onde toda comunicação existe no ato de um processo enviar a mensagem e o outro receber. O momento onde a troca ocorre de fato é chamado de \textbf{rendez-vous}. Portanto, há apenas duas primitivas: enviar a mensagem (\textit{send}) e recebê-la (\textit{receive}).
 
 Quando projetamos a comunicação, devemos nos preocupar com alguns aspectos das primitivas. Por exemplo, a cardinalidade: 1 para 1, 1 para $n$ ou $n$ para $n$. Também é importante se preocupar se as primitivas devem ser bloqueadas ou não, ou seja, antes de concluir o \textit{rendez-vouz}, se o processo remetente deve ser bloqueado ou não.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{message-exchange}
+  \caption{Ilustração de um \textit{rendez-vouz}}
+  \label{fig:rendez-vouz}
+\end{figure}
 
 É importante ressaltar que a maioria dos sistemas \textbf{permitem ambas as abordagens de comunicação}, inclusive permitindo o programador misturar primitivas das duas.
 
@@ -637,7 +721,7 @@ Entretanto, como o \textit{receive} não é blocante, na estratégia de \textit{
 \begin{itemize}
   \item \textbf{NOMSG:} ao constatar o não recebimento da mensagem, a primitiva retorna um sinal de \textit{mensagem não recebida} (\texttt{NOMSG}) para o processo;
 
-  \item \textbf{\textit{Probing}:} ao constatar o não recebimento da mensagem, é feita uma primitiva que requisita a mensagem ao remetente, acarretando no bloqueio do destinatário. % TODO: ver se isto está correto
+  \item \textbf{\textit{Probing}:} ao constatar o não recebimento da mensagem, é feita uma primitiva que requisita a mensagem ao remetente. Em certas situações, essa primitiva pode acarretar no bloqueio do destinatário (note que ela não é um \textit{send} ou \textit{receive}).
 \end{itemize}
 
 \begin{figure*}[ht]
