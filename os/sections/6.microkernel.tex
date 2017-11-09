@@ -1,0 +1,14 @@
+\chapter{\textit{Microkernel}}
+
+
+Esta abordagem apresenta a desvantagem inata de possuir \textbf{baixo desempenho}. Tal característica provêm dê:
+\begin{itemize}
+  \item Aumento do número de tarefas que rodam no modo usuário;
+  \item Aumento no número da troca de contextos;
+  \item Mecanismo de IPC utilizado entre processos: \textit{send} e \textit{receive}.
+\end{itemize}
+
+Com o objetivo de mitigar este problema, a flexibilidade da arquitetura foi sacrificada, para que diversos serviços fossem re-integrados ao \textit{kernel}, evitando as trocas de contexto. Dessa forma, os mecanismos que permaneceram no \textit{kernel} foram: gerência de processos e \textit{threads}, comunicação de processos, proteção, gerência de memória dependente do \textit{hardware}, com a exclusão das operações de \textit{page-in} e \textit{page-out}.
+
+\section{Tratamento de Entrada e Saída}
+O espaço de endereçamento é a abstração óbvia para a incorporação de portas de dispositivos.
