@@ -5,3 +5,29 @@
 
 
 \textbf{(\textit{Deadlocks})} Por quê \textit{deadlocks} são ditos \textit{stable properties}?
+
+
+\textbf{Arquivos} Qual a função da operação \texttt{OPEN} e \texttt{CLOSE}?
+
+\texttt{OPEN:} fazer a associação entre o processo e o arquivo, através da tabela de descritores, retornando um descritor que será usado nas próximas operações.
+
+\texttt{CLOSE}: desfazer a associação entre processo e arquivo, tornando o descritor indisponível.
+
+\textbf{} Considere um sistema de memória paginada,
+
+A: \textbf{CPU:} envia o endereço virtual à MMU;
+
+B: \textbf{MMU:} quebra o endereço virtual em duas partes, sendo elas a página e o deslocamento. A MMU usa $p$ como índice na TLB para obter o \textit{frame} $f$. A MMU troca a página $p$ pelo frame $f$, que é jogado no barramento junto com o deslocamento.
+
+C: \textbf{Memória RAM:} entidade que guarda o dado desejado e será acessada;
+
+D: \textbf{Tabela de Páginas:} guarda
+
+
+\textbf{Páginação} Considere um sistema com 4 \textit{frames} e 8 páginas. Admita a seguinte \textit{string} de referência: 0172327103. Quantos \textit{page faults} ocorrerão se o algorítmo de substituição for FIFO? E se for LRU?
+
+Fazer o exercício de forma a mostrar cada iteração e o histórico das tabelas.
+
+FIFO: 6 page faults
+
+LRU: 7 page faults
