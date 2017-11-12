@@ -231,7 +231,22 @@ Os processos que solicitam a CPU são colocados em uma fila \textit{ready}, ger�
 \subsection{\textit{Round Robin}}
 Cada processo tem o direito de usar o processador por um intervalo de tempo pré-definido, denominado \textbf{\textit{quantum}}. Quando este intervalo se esgota, o processador é dado a outro processo e o processo retirado vai para o fim da fila de processos. É versão preemptiva da política FSFC, sendo um algoritmo justo.
 
-% TODO: colocar figura
+\begin{figure*}[h]
+  \begin{subfigure}[t]{0.45\textwidth}
+    \includegraphics[width=0.9\textwidth]{round-robin-1}
+    \caption{Fila de processos em $t_1$}
+    \label{fig:round-robin-1}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[t]{0.45\textwidth}
+    \includegraphics[width=0.9\textwidth]{round-robin-2}
+    \caption{Fila de processos em $t_2$, ao fim do \textit{quantum} do processo $B$}
+    \label{fig:round-robin-2}
+  \end{subfigure}
+
+  \caption{Escalonamento circular usando \textit{round robin}}
+  \label{fig:round-robin}
+\end{figure*}
 
 
 
@@ -247,7 +262,12 @@ A prioridade pode ser definida de duas formas:
 
  Note que é possível que um processo pode monopolizar a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. A técnica de prioridade dinâmica tenta justamente mitigar este comportamento.
 
-% TODO: colocar figura
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{priority-queue}
+  \caption{Escalonamento com quatro categorias de prioridades}
+  \label{fig:priority-queue}
+\end{figure}
 
 
 
@@ -257,7 +277,22 @@ Aqui, dado um conjunto de \textit{jobs} prontos, executamos os \textit{jobs} com
 
 Note que este algoritmo pode não ser muito justo, pois, supondo um processo com uma dada prioridade, este pode entrar em \textit{starvation} se todo novo processo que entrar na fila tiver tempo de execução menor que ele.
 
-% TODO: colocar figura
+\begin{figure*}[h]
+  \begin{subfigure}[t]{0.45\textwidth}
+    \includegraphics[width=0.9\textwidth]{sjf-1}
+    \caption{Fila de processos crua}
+    \label{fig:sjf-1}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[t]{0.45\textwidth}
+    \includegraphics[width=0.9\textwidth]{sjf-2}
+    \caption{Fila de processos organizada em SJF}
+    \label{fig:sjf-2}
+  \end{subfigure}
+
+  \caption{Uso do \textit{shortest job first}}
+  \label{fig:sjf}
+\end{figure*}
 
 
 
@@ -284,9 +319,14 @@ Note que este algoritmo pode não ser muito justo, pois, supondo um processo com
 
 Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thread} pode se bloquear a espera de um recurso e outra, do mesmo processo ou não, pode se executar, paralelamente. A entidade que realmente executa é a \textit{thread}, sendo o processo apenas o ambiente.
 
-% TODO: colocar figura
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{threads}
+  \caption{Um processo com 3 \textit{threads}, cada uma com sua pilha de execução}
+  \label{fig:threads}
+\end{figure}
 
-Aqui, \textbf{a troca de contexto é mais leve}, dado que esta troca entre \textit{threads} de um mesmo processo só diz respeito a execução e não ao ambiente.
+Aqui, \textbf{a troca de contexto é mais leve}, dado que esta troca entre \textit{threads} de um mesmo processo só diz respeito a execução e não ao ambiente. Frisamos que \textbf{\textit{threads} guardam apenas o contexto de execução e não de ambiente}.
 
 Dado isto, estas \textit{threads} compartilham as mesmas variáveis globais, memória, descritores de arquivo e outros recursos. Logo, são necessários mecanismos de \textbf{sincronização} destes recursos: variáveis \textit{mutex} e variáveis de condição.
 
@@ -303,7 +343,7 @@ Podemos ter dois tipos de \textit{threads}:
 
 
 \subsection{Implementação}
-É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{thread} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera chamadas de sistema (\textbf{\textit{syscalls}}), o que é um \textit{overhead} custoso.
+É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{thread} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera trocas de contexto entre modo protegido e usuário, o que é um \textit{overhead} custoso.
 
 A segunda forma é a implementação a \textbf{nível de usuário}, simulando as \textit{threads} através de bibliotecas. Dessa forma, o custo da troca de contexto é baixo, porém quando uma \textit{thread} realizar uma operação blocante, o seu processo inteiro será bloqueado e, consequentemente, todas as suas \textit{threads-irmãs}.
 
@@ -473,13 +513,6 @@ Esta técnica preserva exclusão mútua e a espera limitada. Entretanto, ela \te
 \subsection{Exclusão Mútua com Bloqueio de Processos}
 A outra técnica é o \textbf{bloqueio de processos}, onde o processo que espera a permissão de entrada na seção crítica executa uma primitiva para se bloquear, aguardando até que a seção seja liberada, como na Figura \ref{fig:block-process}.
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.35\textwidth]{block-process}
-  \caption{Exemplo clássico de bloqueio de processo. O processo checa se as variáveis são iguais e, caso contrário, bloqueia}
-  \label{fig:block-process}
-\end{figure}
-
 Esta técnica acaba por \textbf{gerar mais trocas de contextos entre processos, causando esperas longas}.
 
 Existem duas primitivas básicas, as quais, normalmente, envolvem a seção crítica:
@@ -490,6 +523,12 @@ Existem duas primitivas básicas, as quais, normalmente, envolvem a seção crí
   \item Primitiva de \textbf{desbloqueio de processos} à espera da permissão de acesso à seção crítica.
 \end{itemize}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.35\textwidth]{block-process}
+  \caption{Exemplo clássico de bloqueio de processo. O processo checa se as variáveis são iguais e, caso contrário, bloqueia}
+  \label{fig:block-process}
+\end{figure}
 
 
 
@@ -518,7 +557,7 @@ As operações de manipulação dos semáforos são \textbf{indivisíveis}, ou s
     \centering
     \includegraphics[width=0.9\textwidth]{sem-signal}
     \caption{Operação \textit{Signal}}
-    \label{subfig:sem-wait}
+    \label{subfig:sem-signal}
   \end{subfigure}
 
   \caption{Operações de semáforos}
