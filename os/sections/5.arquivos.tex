@@ -80,7 +80,7 @@ Para ler um arquivo, o processo deve especificar um descritor válido, a quantid
 \subsubsection{\textit{Write}}
 Para escrever dados em um arquivos, o processo deve especificar um descritor válido, um \textit{buffer} local que contenha os dados a serem escritos e o tamanho destes dados. Normalmente, os dados são escritos em um arquivo a partir da posição corrente.
 
-\subsection{Manupulação de Arquivos}
+\subsection{Manipulação de Arquivos}
 Podemos citar:
 \begin{itemize}
   \item Criar arquivo;
@@ -152,7 +152,7 @@ Para isso, necessitamos manter uma área de memória armazenará temporariamente
 \begin{figure}[h]
   \centering
   \includegraphics[width=.75\textwidth]{buffer-cache}
-  \caption{Esquema geral de \textit{buffer cache}}
+  \caption{Esquema geral de \textit{cache} de disco}
   \label{fig:buffer-cache}
 \end{figure}
 
@@ -161,3 +161,10 @@ A gerência da \textit{cache} de disco necessita prever o que fazer quando a ár
 Além disso, A introdução da \textit{cache} de disco introduz um complicante na área de confiabilidade do sistema. Geralmente , uma operação de escrita em arquivo que retorna sucesso indica que o dado foi escrito no disco com sucesso. Em um sistema com \textit{cache} de disco, isso não é verdade, dado que este retorno simplesmente indica que o dado foi escrito na \textit{cache} de disco com sucesso. Logo, dados assumidos pelo usuário como escritos em disco podem ser perdidos após uma pane do sistema, por estarem em memória apenas.
 
 Este problema se agrava quando os blocos alterados contém estruturas de controle do sistema de arquivos. Assim geralmente, os blocos são divididos em \textbf{blocos críticos} e \textbf{blocos de dados}. Os blocos críticos são sempre escritos na \textit{cache} de disco e no disco, gerando um \textit{bypass} da cache.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{buffer-cache-critic}
+  \caption{\textit{Bypass} na escrita de blocos críticos}
+  \label{fig:buffer-cache-critic}
+\end{figure}
