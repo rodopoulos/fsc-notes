@@ -158,51 +158,6 @@ A tradução entre páginas e \textit{frames} tem auxílio de um \textit{hardwar
 \end{figure}
 
 
-\subsection{Funcionamento Detalhado}
-Aqui descrevemos o funcionamento geral do pedido de uma página pela CPU. Supondo um processo na CPU que requisite um dado da memória:
-
-\begin{enumerate}
-  \item A CPU envia o endereço virtual $v$ à MMU;
-
-  \item Na MMU, o endereço virtual é divido em uma tupla ($p,d$), onde $p$ é a página desejada e $d$ o deslocamento dentro da página;
-
-  \item Ainda na MMU, a página $p$ é utilizada para acessar a \textbf{tabela de páginas}, que reside na MMU. A partir dessa tabela, a tupla inicial é convertida na tupla $F = (F,d)$ correspondente do endereço físico. Nela, $f$ corresponderá ao \textit{frame} da memória física e o deslocamento permanece o mesmo;
-
-  \item Antes de escrever o endereço no barramento, a MMU checa se a página está mapeada em memória física, através de um \textit{bit} de presença.
-
-  \begin{itemize}
-    \item Caso a página esteja mapeada, o endereço já pode ser escrito no barramento;
-
-    \item Caso contrário, a MMU gerá um \textit{syscall} ao SO, chamado de \textbf{\textit{page fault}}. Dessa forma, seleciona um \textit{frame} da memória pra ser substituído pela página requisitada e a instrução inicial de acesso a memória é reexecutada. Consequentemente, a MMU vai constatar que a página existe;
-  \end{itemize}
-
-  \item O endereço físico $F$ é escrito no barramento de memória
-\end{enumerate}
-
-
-\subsubsection{Cálculos na Paginação}
-Em uma arquitetura com espaço de endereçamento de $b$ \textit{bits}, páginas de tamanho $P$ \textit{bytes} e uma memória RAM com tamanho $M$ \textit{bytes}, temos que:
-
-\begin{itemize}
-  \item O número de endereços virtuais possíveis é de $2^b$;
-
-  \item O número $F$, que é o total de \textit{frames} na RAM é dado por:
-
-  \begin{equation*}
-    F = \frac{M}{P}
-  \end{equation*}
-\end{itemize}
-
-Ao solicitar um endereço virtual à memória, a CPU utiliza a tupla $(p,d)$, onde $p$ é a página virtual e $d$ o deslocamento dentro da página. Este endereço virtual deve ser transformado em um endereço físico \textbf{de mesmo tamanho}, composto pela tupla $(f,d)$, onde $f$ é o número do \textit{frame} a ser utilizado e $d$ é o mesmo deslocamento usado no endereço virtual.
-
-Disso, temos que:
-
-\begin{itemize}
-  \item O tamanho de página $P$ é o valor máximo que $d$ pode assumir;
-
-  \item
-\end{itemize}
-
 
 
 
@@ -398,3 +353,55 @@ Aqui é explicada toda a rotina de tratamento de um \textit{page fault}:
   \item A instrução que causou o \textit{page fault} é carregada no registrador de instruções e o seu endereço é carregado no PC. Daí, o processo desta instrução é colocado para rodar. O SO termina a execução, voltando a ser executada a rotina em código de máquina que o chamou. A rotina restaura os registradores e demais informações para a situação anterior à falta e dá o processador ao processo de usuário;
 
 \end{enumerate}
+
+
+
+
+
+
+
+
+\subsection{Funcionamento Detalhado}
+Aqui descrevemos o funcionamento geral do pedido de uma página pela CPU. Supondo um processo na CPU que requisite um dado da memória:
+
+\begin{enumerate}
+  \item A CPU envia o endereço virtual $v$ à MMU;
+
+  \item Na MMU, o endereço virtual é divido em uma tupla ($p,d$), onde $p$ é a página desejada e $d$ o deslocamento dentro da página;
+
+  \item Ainda na MMU, a página $p$ é utilizada para acessar a \textbf{tabela de páginas}, que reside na MMU. A partir dessa tabela, a tupla inicial é convertida na tupla $F = (F,d)$ correspondente do endereço físico. Nela, $f$ corresponderá ao \textit{frame} da memória física e o deslocamento permanece o mesmo;
+
+  \item Antes de escrever o endereço no barramento, a MMU checa se a página está mapeada em memória física, através de um \textit{bit} de presença.
+
+  \begin{itemize}
+    \item Caso a página esteja mapeada, o endereço já pode ser escrito no barramento;
+
+    \item Caso contrário, a MMU gerá um \textit{syscall} ao SO, chamado de \textbf{\textit{page fault}}. Dessa forma, seleciona um \textit{frame} da memória pra ser substituído pela página requisitada e a instrução inicial de acesso a memória é reexecutada. Consequentemente, a MMU vai constatar que a página existe;
+  \end{itemize}
+
+  \item O endereço físico $F$ é escrito no barramento de memória
+\end{enumerate}
+
+
+\subsubsection{Cálculos na Paginação}
+Em uma arquitetura com espaço de endereçamento de $b$ \textit{bits}, páginas de tamanho $P$ \textit{bytes} e uma memória RAM com tamanho $M$ \textit{bytes}, temos que:
+
+\begin{itemize}
+  \item O número de endereços virtuais possíveis é de $2^b$;
+
+  \item O número $F$, que é o total de \textit{frames} na RAM é dado por:
+
+  \begin{equation*}
+    F = \frac{M}{P}
+  \end{equation*}
+\end{itemize}
+
+Ao solicitar um endereço virtual à memória, a CPU utiliza a tupla $(p,d)$, onde $p$ é a página virtual e $d$ o deslocamento dentro da página. Este endereço virtual deve ser transformado em um endereço físico \textbf{de mesmo tamanho}, composto pela tupla $(f,d)$, onde $f$ é o número do \textit{frame} a ser utilizado e $d$ é o mesmo deslocamento usado no endereço virtual.
+
+Disso, temos que:
+
+\begin{itemize}
+  \item O tamanho de página $P$ é o valor máximo que $d$ pode assumir;
+
+  \item
+\end{itemize}
