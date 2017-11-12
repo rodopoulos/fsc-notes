@@ -33,9 +33,11 @@ A maioria dos sistemas operacionais modernos utiliza o conceito de indepêndenci
 
 
 \subsection{Manipuladores de Interrupção}
-As operações de E/S podem ser tratadas de maneira síncrona ou assíncrona. A maior dos SO tradicionais as trata de maneira síncrona, ou seja, o processo que solicitou uma operação de E/S fica bloqueado até que esta operação se complete.
+As operações de E/S podem ser tratadas de maneira síncrona ou assíncrona. A maioria dos SO tradicionais as trata de maneira síncrona, ou seja, o processo que solicitou uma operação de E/S fica bloqueado até que esta operação se complete.
 
 Dessa forma, o SO tradicional pode tratar várias operações ao mesmo tempo, porém somente uma interrupção por processo pode estar sendo tratada. Quando ocorre um interrupção, isto indica que a operação se completou e o SO coloca o processo, que estava bloqueado, na fila \textit{ready}.
+
+\textbf{Nota:} as manipulações de interrupção devem ser feitas e modo protegido.
 
 
 
@@ -49,7 +51,7 @@ No caso do disco rígido, o \textit{driver} de disco é o responsável por escre
 
 
 \subsection{\textit{Software Independente de Dispositivo}}
-Existem operações de muito baixo nível que só podem ser executadas com comandos dependentes de dispositivo. A maioria das operações, no entanto, pode ser executada de maneira independente.
+Existem operações de muito baixo nível que só podem ser executadas com comandos dependentes de dispositivo. A maioria dessas operações podem ser executada de maneira independente.
 
 Uma operação que pode ser executada de maneira independente de dispositivo pode ser executada com comandos de baixo nível, por questões de performance. Assim, fica a cargo do projetista do SO que comandos serão independentes de dispositivo ou não. Temos os seguintes exemplos:
 \begin{itemize}
@@ -69,3 +71,10 @@ Uma operação que pode ser executada de maneira independente de dispositivo pod
 
   \item Tratamento de erros não transientes.
 \end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.35\textwidth]{es-layers}
+  \caption{Camadas envolvidas em esquemas de entrada e saída. As camadas 2 à 4 são responsáveis pela gerência de E/S}
+  \label{fig:es-layers}
+\end{figure}
