@@ -284,9 +284,13 @@ Note que este algoritmo pode não ser muito justo, pois, supondo um processo com
 
 Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thread} pode se bloquear a espera de um recurso e outra, do mesmo processo ou não, pode se executar, paralelamente. A entidade que realmente executa é a \textit{thread}, sendo o processo apenas o ambiente.
 
-% TODO: colocar figura
+\begin{figure}
+  \includegraphics{threads}
+  \caption{Um processo com 3 \textit{threads}, cada uma com sua pilha de execução}
+  \label{fig:threads}
+\end{figure}
 
-Aqui, \textbf{a troca de contexto é mais leve}, dado que esta troca entre \textit{threads} de um mesmo processo só diz respeito a execução e não ao ambiente.
+Aqui, \textbf{a troca de contexto é mais leve}, dado que esta troca entre \textit{threads} de um mesmo processo só diz respeito a execução e não ao ambiente. Frisamos que \textbf{\textit{threads} guardam apenas o contexto de execução e não de ambiente}.
 
 Dado isto, estas \textit{threads} compartilham as mesmas variáveis globais, memória, descritores de arquivo e outros recursos. Logo, são necessários mecanismos de \textbf{sincronização} destes recursos: variáveis \textit{mutex} e variáveis de condição.
 
@@ -303,7 +307,7 @@ Podemos ter dois tipos de \textit{threads}:
 
 
 \subsection{Implementação}
-É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{thread} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera chamadas de sistema (\textbf{\textit{syscalls}}), o que é um \textit{overhead} custoso.
+É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{thread} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera trocas de contexto entre modo protegido e usuário, o que é um \textit{overhead} custoso.
 
 A segunda forma é a implementação a \textbf{nível de usuário}, simulando as \textit{threads} através de bibliotecas. Dessa forma, o custo da troca de contexto é baixo, porém quando uma \textit{thread} realizar uma operação blocante, o seu processo inteiro será bloqueado e, consequentemente, todas as suas \textit{threads-irmãs}.
 
@@ -518,7 +522,7 @@ As operações de manipulação dos semáforos são \textbf{indivisíveis}, ou s
     \centering
     \includegraphics[width=0.9\textwidth]{sem-signal}
     \caption{Operação \textit{Signal}}
-    \label{subfig:sem-wait}
+    \label{subfig:sem-signal}
   \end{subfigure}
 
   \caption{Operações de semáforos}

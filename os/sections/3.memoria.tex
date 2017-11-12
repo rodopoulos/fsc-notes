@@ -3,6 +3,22 @@ De uma maneira geral, quando um processo é criado, sua imagem (ou parte dela) �
 
 Um programa fonte apresenta instruções contendo endereços simbólicos, definidos pelo programador. Após o processo de compilação e montagem, o programa agora apresenta endereços relocáveis, construído em relação ao início do módulo onde são definidos. Após a \textit{linkagem}, o programa agora possui os endereços absolutos, único para o programa como um todo. Finalmente, com o \textit{loader}, quando o programa é carregado para a memória, os endereços físicos são efetivamente definidos. % TODO: ver se essa última sentença tá certa
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Gerenciamento}
 O gerenciamento de memória é implementado pelo \textbf{gerente de memória}, responsável por definir e implementar a política de gerenciamento de memória do SO. Além disso, independente desta política, o gerente deve controlar a alocação das porções de memória aos processos, liberando-as quando estas não forem mais necessárias. As técnicas de gerênciamento são três: \textit{monitor residente}, \textit{multiprogramação} e \textit{memória virtual}.
 
@@ -92,7 +108,12 @@ Para tal, temos duas maneiras de implementar este controle: \textit{mapa de bits
 \subsubsection{Mapa de \textit{Bits}}
 Aqui a memória é dividida em unidade de alocação (\textit{UAs}) de tamanho fixo, onde cada uma corresponde a um \textit{bit} no mapa. Se a unidade estiver livre, o valor é 0, caso contrário, o valor é 1.
 
-% TODO: por imagem
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{memory-bitmap}
+  \caption{Mapa de \textit{bits} associado à memória, com cadeia 1111100110110000}
+  \label{fig:memory-bitmap}
+\end{figure}
 
 
 \subsubsection{Lista Encadeada}
@@ -100,7 +121,12 @@ Aqui as cadeias de segmentos livres e ocupados são representados através de um
 
 Existem variações que implementam listas duplamente encadeadas, para que seja possível fazer o \textit{merge} de buracos. Tal situação é comum quando ocorre um término de processo.
 
-% TODO: por imagem
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{memory-chained-list}
+  \caption{Representação de lista encadeada para o contexto de memória da Figura \ref{fig:memory-bitmap}}
+  \label{fig:memory-chained-list}
+\end{figure}
 
 
 
@@ -262,7 +288,7 @@ Com processadores em 64 \textit{bits} e páginas com $4KB$, acabamos por ter $2^
 Em tabelas de páginas invertidas, a indexação é feita pelo \textit{frame} e não mais pela página. O problema é que o índice utilizado pela CPU ainda é a página $p$. Por isso, neste método é utilizada uma tabela de \textit{hash}, com o \textit{frame} como índice. Logo, a CPU ainda envia $p$ como entrada, porém antes de ser aplicado na tabela, é feito um \textit{hash} sobre $p$ para obter o índice correspondente.
 
 Entretanto, existem páginas que após o \textit{hash} acabam por cair no mesmo índice. Nelas, são criados \textit{buckets} com o endereço da página virtual $p$ e o \textit{frame} $f$ correspondente a ser escrito no barramento.
-% TODO: rever isso com a Alba. Isso foi uma explicação do Tanenbaum e parece estar em desacordo como slide
+% TODO: rever isso com a Alba. Isso foi uma explicação do Tanenbaum (pg. X) e parece estar em desacordo com o slide
 
 
 
@@ -339,7 +365,7 @@ O problema do NFU é que uma página muito referenciada há muito tempo atrás r
 \subsubsection{NFU com \textit{Aging}}
 Para que as referência antigas do NFU sejam esquecidas, devemos utilizar uma técnica chamada \textit{aging}. O número de \textit{bits} no contado é o número de referências passadas que será considerado.
 
-No \textit{aging}, a cada interrupção de \textit{clock}, é feito um \textit{shift} do contador de cada página para a direita e o \textit{bit} R é inserido à esquerda, ou seja, no \textit{bit} mais significativo. Quando há um \textit{page fault}, o algoritmo escolhe a página com o menor contador. A Figura \ref{fig:nru-aging} mostra o funcionamento.
+No \textit{aging}, a cada interrupção de \textit{clock}, é feito um \textit{shift} do contador de cada página para a direita e o \textit{bit} R é inserido à esquerda, ou seja, no \textit{bit} mais significativo. Quando há um \textit{page fault}, o algoritmo escolhe a página com o menor contador. A Figura \ref{fig:nfu-aging} mostra o funcionamento.
 
 \begin{figure}[h]
   \centering
