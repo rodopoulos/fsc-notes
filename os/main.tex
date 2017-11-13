@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %-------------------------------------------------------------------------------
-\documentclass[a4paper, 12pt, twoside]{book}
+\documentclass[a4paper, 11pt, twoside]{book}
 \usepackage[brazilian]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
@@ -17,7 +17,7 @@
 % Defining figures base folder
 \graphicspath{{figs/}}
 % Resizing captions sizes
-\captionsetup[figure]{font=footnotesize,labelfont=normalsize}
+\captionsetup[figure]{font=footnotesize,labelfont={footnotesize,bf}}
 
 % New command for importing chapters easily
 \newcommand{\chapterfile}[2]{%
@@ -116,6 +116,9 @@
 	\mainmatter
 	\include{sections/1.fundamentos}
 	\include{sections/2.processos}
+	\include{sections/3.memoria}
+	\include{sections/4.entrada-e-saida}
+	\include{sections/5.arquivos}
 	\nocite{*}
 
 	% References
