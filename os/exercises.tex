@@ -31,3 +31,68 @@ Fazer o exercício de forma a mostrar cada iteração e o histórico das tabelas
 FIFO: 6 page faults
 
 LRU: 7 page faults
+
+
+
+\textbf{Processos - Arquiteturas de SO} Cite os passos para a criação de processos nas arquiteturas \textit{monolíticas}, \textit{microkernel} e \textit{exokernel}.
+
+Para as \textsc{arquiteturas monolíticas}:
+\begin{enumerate}
+  \item O processo pai solicita a criação de um processo filho, através de uma \textit{chamada de sistema} \texttt{create process};
+
+  \item O SO aloca uma entrada livre na \textit{tabela de processos} para o processo filho;
+
+  \item O SO atribui um \textit{PID} ao processo filho;
+
+  \item O SO ajusta a \textit{área de memória} para a execução do processo filho;
+  \begin{itemize}
+    \item % TODO: o que faz quando é criação tradicional?
+    \item % TODO: o que faz quando é clonagem?
+  \end{itemize}
+
+  \item O SO preenche os \textit{valores de registradores} para execução do processo filho na tabela de processos;
+
+  \item O SO insere o processo filho na fila \textit{ready} do escalonador;
+
+  \item O SO retorna ao processo pai.
+\end{enumerate}
+
+Para o \textsc{microkernel}:
+\begin{enumerate}
+  \item O processo pai envia uma mensagem para o microkernel, colocando o \texttt{create process} como conteúdo;
+
+  \item O microkernel recebe a mensagem e determina que o processo filho deve ser criado;
+
+  \item O microkernel aloca uma entrada livre na \textit{tabela de processos} para o processo filho;
+
+  \item O microkernel atribui um \textit{PID} ao processo filho;
+
+  \item O microkernel ajusta a \textit{área de memória} para a execução do processo filho;
+
+  \item O microkernel preenche os \textit{valores de registradores} para execução do processo filho na tabela de processos;
+
+  \item O microkernel insere o processo filho na fila \textit{ready} do escalonador;
+
+  \item O microkernel envia uma mensagem para o processo pai contendo o valor de retorno.
+\end{enumerate}
+
+Para o \textsc{exokernel}:
+\begin{enumerate}
+  \item O processo pai solicita a criação de um processo filho para a LibOS, através de uma \textit{chamada de função} \texttt{create process};
+
+  \item A LibOS aloca uma entrada livre na \textit{tabela de processos} para o processo filho;
+
+  \item A LibOS atribui um \textit{PID} ao processo filho;
+
+  \item A LibOS pede uma região de software (área de memória) ao exokernel, via \textit{chamada de sistema}. Esta área é destinada ao processo filho;
+
+  \item A LibOS solicita um \textit{processor environment} (PE), via chamada de sistema, e copiar o valor dos registradores para lá;
+
+  \item A LibOS preenche o de prólogo e epílogo do PE (troca de contexto), descarregando o código;
+
+  \item O exokernel coloca o PE na sua fila \textit{ready};
+
+  \item A LibOS coloca o processo na sua fila \textit{ready};
+
+  \item A LibOS retorna ao processo pai.
+\end{enumerate}
