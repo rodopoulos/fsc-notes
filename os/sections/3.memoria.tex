@@ -1,7 +1,7 @@
 \chapter{Memória}
 De uma maneira geral, quando um processo é criado, sua imagem (ou parte dela) é armazenada em memória, onde a as instruções e os dados que estão sendo manipulados em um determinado instante são carregados na CPU. Os dados alterados são escritos em memória continuamente e os mais permanentes são armazenados em disco.
 
-Um programa fonte apresenta instruções contendo endereços simbólicos, definidos pelo programador. Após o processo de compilação e montagem, o programa agora apresenta endereços relocáveis, construído em relação ao início do módulo onde são definidos. Após a \textit{linkagem}, o programa agora possui os endereços absolutos, único para o programa como um todo. Finalmente, com o \textit{loader}, quando o programa é carregado para a memória, os endereços físicos são efetivamente definidos. % TODO: ver se essa última sentença tá certa
+Um programa fonte apresenta instruções contendo endereços simbólicos, definidos pelo programador. Após o processo de compilação e montagem, o programa agora apresenta endereços relocáveis, construído em relação ao início do módulo objeto. Após a \textit{linkagem}, o programa agora possui os endereços absolutos, únicos para o programa como um todo.
 
 
 
@@ -240,10 +240,9 @@ Como exemplo, existem tabelas de páginas de 1 nível (PDP-11), 2 níveis (VAX),
 \subsubsection{Mapeamento Invertido}
 Com processadores em 64 \textit{bits} e páginas com $4KB$, acabamos por ter $2^52$ entradas na tabela de página, o que torna inviável a utilização de tabelas com mapeamento direto. \textbf{Nota:} mesmo assim. algumas arquiteturas de 64 \textit{bits} utilizam este mapeamento, com 3 níveis.
 
-Em tabelas de páginas invertidas, a indexação é feita pelo \textit{frame} e não mais pela página. O problema é que o índice utilizado pela CPU ainda é a página $p$. Por isso, neste método é utilizada uma tabela de \textit{hash}, com o \textit{frame} como índice. Logo, a CPU ainda envia $p$ como entrada, porém antes de ser aplicado na tabela, é feito um \textit{hash} sobre $p$ para obter o índice correspondente.
+Em tabelas de páginas invertidas, a indexação é feita pelo \textit{frame} e não mais pela página. O problema é que o índice utilizado pela CPU ainda é a página $p$. Por isso, neste método é utilizada uma tabela de \textit{hash}, com o \textit{frame} como índice. Logo, a CPU envia $p$ como entrada, porém antes de ser aplicado na tabela, é feito um \textit{hash} sobre $p$ para obter o índice correspondente. \textbf{Nota:} em particular, esse \textit{hash} é uma função de módulo, dado que o tamanho da tabela é o tamanho de \textit{frames} possíveis na memória.
 
-Entretanto, existem páginas que após o \textit{hash} acabam por cair no mesmo índice. Nelas, são criados \textit{buckets} com o endereço da página virtual $p$ e o \textit{frame} $f$ correspondente a ser escrito no barramento.
-% TODO: rever isso com a Alba. Isso foi uma explicação do Tanenbaum (pg. X) e parece estar em desacordo com o slide
+Entretanto, existem páginas que após o \textit{hash} acabam por cair no mesmo índice. Nelas, são criados \textit{buckets} (lista de conflitos) contendo o endereço da página virtual $p$ e o \textit{frame} $f$ correspondente a ser escrito no barramento.
 
 
 
@@ -401,7 +400,7 @@ Ao solicitar um endereço virtual à memória, a CPU utiliza a tupla $(p,d)$, on
 Disso, temos que:
 
 \begin{itemize}
-  \item O tamanho de página $P$ é o valor máximo que $d$ pode assumir;
+  \item O tamanho de página $P$ é o valor máximo que $2^d$ pode assumir;
 
   \item
 \end{itemize}
