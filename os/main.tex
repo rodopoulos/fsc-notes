@@ -2,29 +2,22 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %-------------------------------------------------------------------------------
 \documentclass[a4paper, 11pt, twoside]{book}
+\usepackage[hmarginratio=3:2]{geometry}
+\usepackage[hidelinks]{hyperref}
 \usepackage[brazilian]{babel}
 \usepackage[utf8x]{inputenc}
-\usepackage{amsmath}
-\usepackage{hyperref}
+\usepackage{subcaption}
 \usepackage{mdframed}
 \usepackage{graphicx}
 \usepackage{parskip}
-\usepackage{subcaption}
+\usepackage{amsmath}
 \usepackage{float}
-\usepackage[colorinlistoftodos]{todonotes}
-\usepackage[hmarginratio=3:2]{geometry}
 
 
 % Defining figures base folder
 \graphicspath{{figs/}}
 % Resizing captions sizes
 \captionsetup[figure]{font=footnotesize,labelfont={footnotesize,bf}}
-
-% Definindo cores dos links
-\hypersetup{
-    colorlinks = false,
-    linkbordercolor = {white},
-}
 
 % New command for importing chapters easily
 \newcommand{\chapterfile}[2]{%
