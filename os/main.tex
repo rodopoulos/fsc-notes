@@ -5,6 +5,7 @@
 \usepackage[brazilian]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
+\usepackage{hyperref}
 \usepackage{mdframed}
 \usepackage{graphicx}
 \usepackage{parskip}
@@ -18,6 +19,12 @@
 \graphicspath{{figs/}}
 % Resizing captions sizes
 \captionsetup[figure]{font=footnotesize,labelfont={footnotesize,bf}}
+
+% Definindo cores dos links
+\hypersetup{
+    colorlinks = false,
+    linkbordercolor = {white},
+}
 
 % New command for importing chapters easily
 \newcommand{\chapterfile}[2]{%
