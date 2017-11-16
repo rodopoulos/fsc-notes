@@ -23,7 +23,12 @@ Levando em conta a gerência de recursos, o SO deve:
   \item \textbf{Possuir um tempo de resposta previsível:} onde, preferivelmente, este tempo deve ser rápido.
 \end{itemize}
 
-% TODO: pegar imagem do Silberchatz da arquitetura do computador
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{operating-system}
+  \caption{Arquitetura de um sistema operacional moderno}
+  \label{fig:operating-system}
+\end{figure}
 
 
 
@@ -161,9 +166,9 @@ Alguns dispositivos não possuem suporte a interrupções e logo necessitam usar
 
 Além disso, podemos ter dois esquemas de entrada e saída:
 \begin{itemize}
-  \item \textbf{Síncrono:}
-% TODO: fazer aqui
-  \item \textbf{Assíncrono:}
+  \item \textbf{Síncrono:} processo solicita a E/S e fica bloqueado até receber o retorno
+
+  \item \textbf{Assíncrono:} o processo solicita a E/S e continua rodando.
 \end{itemize}
 
 A \textbf{tabela de dispositivos} será a estrutura que irá auxiliar no acompanhamento dos estados de cada dispositivo de I/O que está esperando ser atendido.
