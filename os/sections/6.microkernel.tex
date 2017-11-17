@@ -1,6 +1,7 @@
 \chapter{\textit{Microkernel}}
 A palavra \textit{kernel} é tradicionalmente utilizada para denotar a parte do SO que é essencial e comum a todos os outros \textit{softwares}. A idéia principal da abordagem do \textit{microkernel} é reduzir o tamanho \textit{kernel}, implementando o maior número possível de funções e sub-sistemas fora dele. Esta idéia não é nova, advinda desde 1970. A maioria dos \textit{microkernels} comerciais utilizam a abordagem cliente/servidor. \underline{Exemplos:} Mach, Amoeba e Chorus.
 
+\section{Arquitetura}
 A interface oferecida garante uma estrutura de sistema mais modular, de forma que o mal-funcionamento de servidores de funções pode ser isolado, como em qualquer outro programa de usuário, protegendo o \textit{kernel} de ser afetado. Além disso, isso permite que diferentes estratégias implementadas por diferentes servidores podem coexistir, garantindo \textbf{maior flexibilidade}.
 
 Entretanto, esta abordagem apresenta a desvantagem inata de possuir \textbf{baixo desempenho}. Tal característica provêm dê:
@@ -74,24 +75,24 @@ Os objetos de memória podem ser gerenciados tanto por paginadores externos como
 
 Portanto, são definidas primitivas para a memória virtual:
 \begin{itemize}
-  \item \textbf{\textit{vm_allocate}:} torna a região de memória utilizável, alocando espaço em uma áreea de memória já mapeada;
+  \item \textbf{\textit{vm\_allocate}:} torna a região de memória utilizável, alocando espaço em uma áreea de memória já mapeada;
 
-  \item \textbf{\textit{vm_deallocate}:} retira uma região do mapa de memória utilizável;
+  \item \textbf{\textit{vm\_deallocate}:} retira uma região do mapa de memória utilizável;
 
-  \item \textbf{\textit{vm_map}:} mapeia uma região de memória no espaço de endereçamento do processo. Logo, ela:
+  \item \textbf{\textit{vm\_map}:} mapeia uma região de memória no espaço de endereçamento do processo. Logo, ela:
   \begin{itemize}
     \item Retorna um ponteiro para o início da região mapeada;
 
     \item Neste momento, a região é mapeada, porém não é carregada em memória. Assim, o primeiro acesso a esta região ocasionará em um \textit{page fault}.
   \end{itemize}
 
-  \item \textbf{\textit{vm_copy}:} copia um objeto da memória de uma região par a outra. Como otimização, ele implementa o \textit{copy on write}, onde % TODO: ver o que é isso e por figura
+  \item \textbf{\textit{vm\_copy}:} copia um objeto da memória de uma região par a outra. Como otimização, ele implementa o \textit{copy on write}, onde % TODO: ver o que é isso e por figura
 
-  \item \textbf{\textit{vm_inherit}:} determina que regiões serão herdadas na criação de um processo filho;
+  \item \textbf{\textit{vm\_inherit}:} determina que regiões serão herdadas na criação de um processo filho;
 
-  \item \textbf{\textit{vm_read}:} lê de uma região mapeada em outro espaço de endereçamento;
+  \item \textbf{\textit{vm\_read}:} lê de uma região mapeada em outro espaço de endereçamento;
 
-  \item \textbf{\textit{vm_write}:} escreve uma região mapeada em outro espaço de endereçamento;
+  \item \textbf{\textit{vm\_write}:} escreve uma região mapeada em outro espaço de endereçamento;
 
 \end{itemize}
 
@@ -104,15 +105,15 @@ Objetos de memória são necessariamente paginados, podendo ser gerenciados por 
 O gerente de memória interage com o núcleo do \textit{Mach} através de um protocolo assíncrono pré-definido:
 
 \begin{enumerate}
-  \item Uma tarefa faz o mapeamento (\textit{vm_map}) de um objeto de memória sobre o seu espaço de endereçamento. Nesse momento, a tarefa nomeia o gerente de memória como sendo responsável pela gestão do objeto;
+  \item Uma tarefa faz o mapeamento (\textit{vm\_map}) de um objeto de memória sobre o seu espaço de endereçamento. Nesse momento, a tarefa nomeia o gerente de memória como sendo responsável pela gestão do objeto;
 
-  \item O núcleo envia uma mensagem ao gerente de memória (\textit{memory_object_init}), dizendo que o objeto que ele gerencia foi mapeado. O gerente faz algumas inicializações e responde ao núcleo com \textit{memory_object_ready};
+  \item O núcleo envia uma mensagem ao gerente de memória (\textit{memory\_object\_init}), dizendo que o objeto que ele gerencia foi mapeado. O gerente faz algumas inicializações e responde ao núcleo com \textit{memory\_object\_ready};
 
-  \item A tarefa é referencia o objeto de memória. As referências são feitas por operações básicas de acesso à memória (\textit{LOAD} e \textit{STORE}). Um \textit{page fault} é gerado. O núcleo é ativado e contacta o gerente de memória responsável pelo objeto de memória e pede a página por \textit{memory_object_data_request};
+  \item A tarefa é referencia o objeto de memória. As referências são feitas por operações básicas de acesso à memória (\textit{LOAD} e \textit{STORE}). Um \textit{page fault} é gerado. O núcleo é ativado e contacta o gerente de memória responsável pelo objeto de memória e pede a página por \textit{memory\_object\_data\_request};
 
-  \item Quando a página estiver disponível, o gerente de memória responde ao \textit{kernel} com \textit{memory_object_data_supply};
+  \item Quando a página estiver disponível, o gerente de memória responde ao \textit{kernel} com \textit{memory\_object\_data\_supply};
 
-  \item A substituição de páginas é decidida pelo núcleo \textit{Mach}. Nesse caso, a página é enviada ao gerente de memóriam com um \textit{memory_object_data_return}, que é o responsável pelo seu armazenamento;
+  \item A substituição de páginas é decidida pelo núcleo \textit{Mach}. Nesse caso, a página é enviada ao gerente de memóriam com um \textit{memory\_object\_data\_return}, que é o responsável pelo seu armazenamento;
 
   \item Se a aplicação deseja referenciar a página de um modo proibido pelos direitos de acesso atuais, um \textit{page fault} de proteção é gerado. O gerente pode também decidir restringir os direitos de acesso à uma página por conta própria.
 \end{enumerate}
