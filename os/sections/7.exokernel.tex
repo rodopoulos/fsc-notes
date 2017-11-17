@@ -45,9 +45,9 @@ Tal técnica garante muito poder a aplicação que descarrega o código, dado qu
 
 
 \subsection{LibOS}
-A implementação de abstrações de alto nível é feita pelas bibliotecas, \textbf{em modo usuário}. Isso inclui processos, paginação, arquivos, \textit{drivers}, tratamento de interrupções, memória virtual, mecanismos de IPC e outros. A proteção de memória, no entanto é feita pelo \textit{exokernel}
+A implementação de abstrações de alto nível é feita pelas bibliotecas LibOSes, \textbf{em modo usuário}, ou seja, não privilegiadas. Isso inclui processos, paginação, arquivos, \textit{drivers}, tratamento de interrupções, memória virtual, mecanismos de IPC e outros. A proteção de memória, no entanto é feita pelo \textit{exokernel}
 
-As LibOSes não são privilegiadas e podem ser alteradas pelo usuário. Por isso, elas são \textbf{não confiáveis} (\textit{untrusted}). O usuário também pode elaborar sua própria LibOS, bastando que ele compile e ligue se programa com a biblioteca. Geralmente, são usadas \textit{shared libraries} para tal, o que remove a necessidade de refazer módulos de SO já criados por estas bibliotecas.
+As LibOSes podem ser criadas ou alteradas pelo usuário. Por isso, elas são \textbf{não confiáveis} (\textit{untrusted}). O usuário também pode elaborar sua própria LibOS, bastando que ele compile e ligue se programa com a biblioteca. Geralmente, são usadas \textit{shared libraries} para tal, o que remove a necessidade de refazer módulos de SO já criados por estas bibliotecas.
 
 Processos utilizam a LibOS, \textit{linkando}-as previamente. Cada processo em execução utiliza o escopo de uma LibOS apenas e uma LibOS pode ser utilizada por vários processos. Nesse caso, é possível que processos de uma mesma LibOS compartilhem recursos abstraídos por ela. Entretanto, processos de diferentes LibOS não podem compartilhar recursos.
 
