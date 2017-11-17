@@ -45,11 +45,11 @@ Tal técnica garante muito poder a aplicação que descarrega o código, dado qu
 
 
 \subsection{LibOS}
-A implementação de abstrações de alto nível é feita pelas bibliotecas. Isso inclui processos, paginação, arquivos, \textit{drivers}, tratamento de interrupções, memória virtual, mecanismos de IPC e outros. A proteção de memória, no entanto é feita pelo \textit{exokernel}
+A implementação de abstrações de alto nível é feita pelas bibliotecas, \textbf{em modo usuário}. Isso inclui processos, paginação, arquivos, \textit{drivers}, tratamento de interrupções, memória virtual, mecanismos de IPC e outros. A proteção de memória, no entanto é feita pelo \textit{exokernel}
 
-As LibOSes não são privilegiadas e podem ser alteradas pelo usuário. Por isso, elas são \textbf{não confiáveis} (\textit{untrusted}). O usuário também pode elaborar sua própria LibOS, bastando que ele compile e ligue se programa com a biblioteca. Geralmente, são usadas \textit{shared libraries} para tal.
+As LibOSes não são privilegiadas e podem ser alteradas pelo usuário. Por isso, elas são \textbf{não confiáveis} (\textit{untrusted}). O usuário também pode elaborar sua própria LibOS, bastando que ele compile e ligue se programa com a biblioteca. Geralmente, são usadas \textit{shared libraries} para tal, o que remove a necessidade de refazer módulos de SO já criados por estas bibliotecas.
 
-Processos em execução utilizam o escopo de uma LibOS apenas, sendo que uma LibOS pode ser utilizada por vários processos. Nesse caso, é possível que processos de uma mesma LibOS compartilhem recursos abstraídos por ela. Entretanto, processos de diferentes LibOS não podem compartilhar recursos.
+Processos utilizam a LibOS, \textit{linkando}-as previamente. Cada processo em execução utiliza o escopo de uma LibOS apenas e uma LibOS pode ser utilizada por vários processos. Nesse caso, é possível que processos de uma mesma LibOS compartilhem recursos abstraídos por ela. Entretanto, processos de diferentes LibOS não podem compartilhar recursos.
 
 \subsubsection{Tratamento de Abstrações Compartilhadas}
 Para prover abstrações compartilhadas, o sistema dispõe de alguns mecanismos:
@@ -57,7 +57,7 @@ Para prover abstrações compartilhadas, o sistema dispõe de alguns mecanismos:
 \begin{itemize}
   \item \textbf{Regiões de \textit{Software}:} áreas de memória que só podem ser lidas ou escritas através de chamadas de sistema. Com isso, elas provêm proteção à sub-páginas e isolamento de falhas;
 
-  \item \textbf{Predicados \textit{Wake Up}:} pequenas funções descarregadas no \textit{kernel} que acordam processos quando alguma condição se torna verdadeira. Dessa forma, garante-se que processos com \textit{bugs} ou \textit{crash} atrapalhe processos bem comportados. Além disso, eles permitem que processos possam entrar em estado de \textit{sleep} enquanto aguardam algum recurso;
+  \item \textbf{Predicados \textit{Wake Up}:} pequenas funções descarregadas no \textit{kernel} que acordam processos quando alguma condição se torna verdadeira. Este recurso garante as LibOSes acesso à estruturas de dados vinculadas ao \textit{hardware}. Além disso, eles permitem que processos possam entrar em estado de \textit{sleep} enquanto aguardam algum recurso. Dessa forma, garante-se que processos com \textit{bugs} ou \textit{crash} não atrapalhem processos bem comportados.;
 
   \item \textbf{Proteção hierárquica}: cada chamada de sistema deve conter capacidades que devem ser verificadas pelo \textit{exokernel}, ou seja, que devem ser conter as devidas permissões. Isso garante proteção contra acessos indevidos por alguns processos.
 \end{itemize}
