@@ -17,7 +17,7 @@ Este repositório foi iniciado no 2º semestre de 2017.
 
 Todo conteúdo está escrito em Latex, dividos em duas partes referentes às duas frentes da matéria: _Organização e Arquitetura de Computadores_ e _Sistemas Operacionais_.
 
-Você deve ter instalado no seu ambiente as seguinte depedências do Latex:
+Você deve ter instaladas no seu ambiente as seguinte depedências do Latex:  
 
 * `geometry`
 * `hyperref`
