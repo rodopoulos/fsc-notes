@@ -19,7 +19,17 @@ Todo conteúdo está escrito em Latex, dividos em duas partes referentes às dua
 
 Você deve ter instalado no seu ambiente as seguinte depedências do Latex:
 
-* 
+* `geometry`
+* `hyperref`
+* `babel`
+* `inputenc`
+* `subcaption`
+* `mdframed`
+* `enumitem`
+* `graphicx`
+* `parskip`
+* `amsmath`
+* `float`
 
 Para gerar todos os documentos, basta acessar a pasta do projeto e rodar o comando:
 
