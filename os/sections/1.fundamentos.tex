@@ -5,7 +5,7 @@
   \begin{itemize}
     \item \textbf{Criar para o usuário uma abstração do hardware}, simplificando a máquina real, escondendo a complexidade do hardware;
 
-    \item \textbf{Gerênciar os recursos da máquina}, mantendo informações sobreo estado, endereço, controle de acesso dos mesmos, alocando e liberando-os apropriadamente, de forma eficiente e previsível.
+    \item \textbf{Gerênciar os recursos da máquina}, mantendo informações sobre o estado, endereço, controle de acesso dos mesmos, alocando e liberando-os apropriadamente, de forma eficiente e previsível.
   \end{itemize}
 \end{definicao}
 
@@ -49,7 +49,7 @@ Levando em conta a gerência de recursos, o SO deve:
   \begin{itemize}
     \item \textbf{Inicializar o sistema}, o que inclui registradores, memória, controladores de I/O. Por exemplo, temos operações como zerar o \texttt{PC};
     \item \textbf{Verificações de hardware}, principalmente os dispositivos do computador;
-    \item \textbf{Carregar o SO}. Repare que o que existir no setor 0 do disco será o programa a ser iniciado pelo \textit{bootstrap}, devendo este se o SO;
+    \item \textbf{Carregar o SO}. Repare que, o que existir no setor 0 do disco de boot será o programa a ser iniciado pelo \textit{bootstrap}, devendo este se o SO;
     \item \textbf{Terminar a execução}, dado que é necessário que ele mesmo termina sua execução, uma vez que ele é um microcódigo.
   \end{itemize}
 \end{definicao}
@@ -80,7 +80,7 @@ Interrupções podem ser tanto de \textit{hardware} como de \textit{software}.
 
 Interrupções de \textit{harware} são sinais enviados para a CPU através de barramentos.
 
-Interrupções de \textit{software} são geradas por operações especiais conhecidas como \textbf{chamadas de sistema (\textit{system calls})}. Podemos chamá-las de \textit{monitor calls} ou \textit{supervisor calls}, sendo essas nomenclaturas arcaicas.
+Interrupções de \textit{software} (traps) são geradas por operações especiais conhecidas como \textbf{chamadas de sistema (\textit{system calls})}. Podemos chamá-las de \textit{monitor calls} ou \textit{supervisor calls}, sendo essas nomenclaturas arcaicas.
 
 A interação entre o sistema operacional e os programas é através de chamadas de sistema.
 
@@ -106,7 +106,8 @@ Este processo \textbf{envolve tanto hardware como o sistema operacional}. Quando
 \end{definicao}
 
 
-\textbf{Nota:} a rotina de tratamento de interrupção e seus endereços contidos no vetor de interrupções são gerados e escritos pelo sistema operacional.
+\textbf{Nota:} A rotina de tratamento de interrupção e seus endereços contidos no vetor de interrupções são gerados e escritos pelo sistema operacional.
+\textbf{Nota 2:} A interrupção para clock possui prioridade 0, ou seja, a maior possível.
 
 
 
@@ -206,7 +207,7 @@ Esta escrita em memória pode ser feita pela CPU, mas esta operação consome mu
 
   \item A controladora lê o bloco do dispositivo de I/O;
 
-  \item Após ter o bloco completo em seu buffer, a controladora transfere o conteúdo de ser buffer - \textit{byte} a \textit{byte} - para o endereço de memória especificado no registrador DMA;
+  \item Após ter o bloco completo em seu buffer, a controladora transfere o conteúdo, \textit{byte} a \textit{byte}, para o endereço de memória especificado no registrador DMA;
 
   \item Quando o contador chega a zero, a controladora gera uma interrupção;
 

@@ -4,8 +4,8 @@
   É um programa em execução, composto por:
   \begin{itemize}
     \item Código em execução;
-    \item Pilha de execução e seu apontador;
-    \item Contado de programa (\texttt{PC});
+    \item Pilha de execução e seu apontador (Activation Record);
+    \item Contador de programa (\texttt{PC});
     \item Valores de registradores de máquina;
     \item E outras informações.
   \end{itemize}
@@ -84,7 +84,7 @@ Todo sistema operacional deve possuir mecanismos que permitam a criação de pro
 
 
 \section{Estado do Processo}
-Apesar de processos serem relativamente auto-suficientes, muitas vezes eles necessitam de acessar outros recursos (discos, terminais) ou mesmo se comunicar com outros processos. Quando um processo está ocioso, esperando que um evento aconteça, nós dizemos que ele está bloqueado. Em algumas situações, o processo pode ser bloqueado a revelia pelo sistema operacional. Podemos ter os seguintes estados:
+Apesar de processos serem relativamente auto-suficientes, muitas vezes eles necessitam de acessar outros recursos (discos, terminais) ou mesmo se comunicar com outros processos. Quando um processo está ocioso, esperando que um evento aconteça, nós dizemos que ele está bloqueado. Em algumas situações, o processo pode ser bloqueado a revelia, ou seja, a força, pelo sistema operacional. Podemos ter os seguintes estados:
 
 Estados:
 \begin{itemize}
@@ -98,7 +98,7 @@ Usando a Figura \ref{fig:proc-states} como referências, podemos ilustrar as div
 \begin{enumerate}
   \item O processo bloqueia-se à espera de um evento ou recurso;
 
-  \item O evento ou recurso esperado pelo processo está disponível.Ele agora pode se executar, passando para o estado de \textit{Pronto};
+  \item O evento ou recurso, esperado pelo processo, está disponível. Ele agora pode ser executado, passando para o estado de \textit{Pronto};
 
   \item O processo é escolhido pelo escalonador para execução;
 
@@ -203,7 +203,7 @@ Podemos classificar escalonadores segundo sua preempção:
 \end{itemize}
 
 \begin{definicao}{Região Crítica}
-  Área que contém as estrutura de dados importantes de um processo em execução, não podendo ser acessada por concorrentemente, mas sim atômicamente.
+  Área que contém as estrutura de dados importantes de um processo em execução, não podendo ser acessada concorrentemente, mas sim atômicamente.
 \end{definicao}
 
 O tempo de execução do processo é controlado por um \textit{clock} que gera interrupções em uma determinada frequência, chamadas de \textit{clock tick}. Tal ferramenta está presente em qualquer processador moderno.
@@ -272,8 +272,8 @@ A prioridade pode ser definida de duas formas:
 
 
 
-\subsection{\textit{Shortest Job First}}
-Aqui, dado um conjunto de \textit{jobs} prontos, executamos os \textit{jobs} com menor tempo de execução antes.
+\subsection{\textit{Shortest Job First} (SJF)}
+Aqui, dado um conjunto de \textit{jobs} prontos, executamos os \textit{jobs} com menor tempo de execução antes de maneira não-preemptiva.
 
 Note que este algoritmo pode não ser muito justo, pois, supondo um processo com uma dada prioridade, este pode entrar em \textit{starvation} se todo novo processo que entrar na fila tiver tempo de execução menor que ele.
 
