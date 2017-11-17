@@ -8,49 +8,12 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{subcaption}
 \usepackage{mdframed}
+\usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage{amsmath}
 \usepackage{float}
-
-
-% Defining figures base folder
-\graphicspath{{figs/}}
-% Resizing captions sizes
-\captionsetup[figure]{font=footnotesize,labelfont={footnotesize,bf}}
-
-% New command for importing chapters easily
-\newcommand{\chapterfile}[2]{%
-	\chapter{#2}%
-	\label{#1}%
-	\@inputTeXFile{#1}%
-}
-
-% Defines a new command for the horizontal lines, change thickness here
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-\newcommand{\newminline}{\\[0.2cm]}
-
-
-% Creating Definition environment
-\newenvironment{definicao}[1]
-	{
-		\begin{mdframed}[topline=false,rightline=false,bottomline=false]
-		\large \textsc{Definição} $\cdot$ \normalsize \textbf{#1}
-
-	}
-	{\end{mdframed}}
-
-
-
-% Removing paragraphs
-\setlength\parindent{0pt}
-
-
-
-
-
-
-
+\usepackage{fsc}
 
 
 \begin{document}
@@ -121,7 +84,10 @@
 	\include{sections/5.arquivos}
 	\nocite{*}
 
+  \appendix
+  \include{exercises}
+
 	% References
-	\bibliographystyle{plain} % Plain referencing style
-	\bibliography{references} % Use the example bibliography file sample.bib
+	% \bibliographystyle{plain} 
+	% \bibliography{references}
 \end{document}

@@ -1,0 +1,42 @@
+% Defining figures base folder
+\graphicspath{{figs/}}
+
+% Resizing captions sizes
+\captionsetup[figure]{font=footnotesize,labelfont={footnotesize,bf}}
+
+% Defines a new command for the horizontal lines, change thickness here
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\newminline}{\\[0.2cm]}
+
+% Criando o ambiente de Definição
+\newenvironment{definicao}[1]{
+		\begin{mdframed}[topline=false,rightline=false,bottomline=false]
+		\large \textsc{Definição} $\cdot$ \normalsize \textbf{#1}
+	}
+  % Content goes here
+	{\end{mdframed}
+}
+
+% = AMBIENTE DE EXERCÍCIO =
+% Parâmetros:
+% 1 - Período/Semestre
+% 2 - Assunto (processos, paginação, etc.)
+% 3 - Enunciado
+% Corpo - Resposta
+% ----
+\newenvironment{exercicio}[3]{
+		\begin{mdframed}[topline=false,rightline=false,bottomline=false]
+		  {(\bf #1 $\cdot$ #2)} \textit{#3}
+    \end{mdframed}
+	}
+  % Resposta vai aqui
+{
+  ~\newline \centerline{\rule{.4\textwidth}{.4pt} \vspace{.5cm}}
+}
+
+% Removing paragraphs
+\setlength\parindent{0pt}
+
+% Removing Bibliography
+% \renewcommand{\bibliography}[1]{}
+% \renewcommand{\bibliographystyle}[1]{}
