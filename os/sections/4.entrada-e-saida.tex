@@ -9,7 +9,7 @@ Em geral, dividem-se dispositivos de entrada e saída em dois tipos:
   \item \textbf{Dispositivos de Caractere:} a informação é aceita em unidadades de tamanho variável, Geralmente sendo armazenada temporariamente ou não sendo armazenada. \underline{Exemplo:} terminais, impressoras, \textit{mouse}, etc..
 \end{itemize}
 
-\textbf{O SO programa a controladora}. Ambos trocam informações constantemente, por meio de registradores, sendo estes geralmente são mapeados em posições fixas de memória. O SO solicita alguma entrada ou saída escrevendo nestes registradores.
+\textbf{O SO programa a controladora}. Ambos trocam informações constantemente, por meio de registradores, sendo estes, geralmente, mapeados em posições fixas de memória. O SO solicita alguma entrada ou saída escrevendo nestes registradores.
 
 Cada controladora tem um conjunto de comandos específicos de baixo nível, que são descritos em seus manuais. Uma vez aceito o comando, a controladora trabalha simultaneamente com a CPU, somente interrompendo-a no final do serviço.
 
@@ -35,9 +35,9 @@ A maioria dos sistemas operacionais modernos utiliza o conceito de indepêndenci
 \subsection{Manipuladores de Interrupção}
 As operações de E/S podem ser tratadas de maneira síncrona ou assíncrona. A maioria dos SO tradicionais as trata de maneira síncrona, ou seja, o processo que solicitou uma operação de E/S fica bloqueado até que esta operação se complete.
 
-Dessa forma, o SO tradicional pode tratar várias operações ao mesmo tempo, porém somente uma interrupção por processo pode estar sendo tratada. Quando ocorre um interrupção, isto indica que a operação se completou e o SO coloca o processo, que estava bloqueado, na fila \textit{ready}.
+Dessa forma, o SO tradicional pode tratar várias operações ao mesmo tempo, porém somente uma interrupção por processo pode estar sendo tratada. Quando ocorre uma interrupção, isto indica que a operação se completou e o SO coloca o processo, que estava bloqueado, na fila \textit{ready}.
 
-\textbf{Nota:} as manipulações de interrupção devem ser feitas e modo protegido.
+\textbf{Nota:} as manipulações de interrupção devem ser feitas em modo protegido.
 
 
 

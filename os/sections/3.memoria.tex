@@ -68,7 +68,7 @@ A memória virtual surgiu como uma solução para o problema de se alocar espaç
 
 A solução é quebrar o processo em unidades menores, carregando-as a medida que elas são necessárias. O problema é quem vai quebrar o processo: o programador ou o sistema operacional? Caso for o primeiro, temos um \textit{overlay} e do segundo, nasceu a memória virtual.
 
-Proposto em 1961, é o método mais comum hoje em dia ao logo dos SO atuais, sendo um mecanismo genérico sendo suportado tanto por sistemas mono e multiprogramados. Logo, a idéia é referenciar mais endereços virtuais e não endereços físicos. Logo, parte do SO a responsabilidade de definir os módulos de memória e suas alocações.
+Proposto em 1961, é o método mais comum atualmente, considerando os SO atuais, sendo um mecanismo genérico sendo suportado tanto por sistemas mono e multiprogramados. Logo, a idéia é referenciar mais endereços virtuais e não endereços físicos. Logo, parte do SO a responsabilidade de definir os módulos de memória e suas alocações.
 
 \textbf{O número de endereços virtuais depende da capacidade de endereçamento da máquina} e do suporte do SO. Na execução de cada instrução, os endereços virtuais devem ser traduzidos para endereços físicos, o que exige um cálculo. Temos dois modelos para implementação da memória virtual:
 
@@ -169,9 +169,9 @@ A tradução entre páginas e \textit{frames} tem auxílio de um \textit{hardwar
 \subsection{\textit{Page Fault}}
 O espaço de endereçamento virtual é geralmente bem maior que o espaço de memória física. Dessa forma, é comum que uma página solicitada da CPU não esteja mapeada em memória física.
 
-Por isso, a MMU possui em sua estrutura o \textit{bit} de presença, que indica a presença ou não da página na memória. Caso o \textit{bit} indique que não, a MMU irá \textbf{emitir um \textit{trap} para o SO, chamado de \textit{page fault}}.
+Por isso, a MMU possui em sua estrutura o \textit{bit} de presença, que indica a presença ou não da página na memória. Caso o \textit{bit} indique que não, a MMU irá \textbf{emitir uma \textit{trap} para o SO, chamado de \textit{page fault}}.
 
-Dessa forma, o SO irá escolher uma página da memória para ser substituída pela página requisitada. A página requisitada é buscada retirada do disco e inserida na memória, enquanto a página substituída é retirada da memória e inserida em disco. Por fim, a tabela de páginas é devidamente alterada, com a troca do \textit{bit} de presença e a instrução que gerou a requisição da memória é reexecutada. a Figura \ref{fig:page-fault} ilustra o processo.
+Dessa forma, o SO irá escolher uma página da memória para ser substituída pela página requisitada. A página requisitada é buscada em disco e inserida na memória, enquanto a página substituída é retirada da memória e inserida em disco. Por fim, a tabela de páginas é devidamente alterada, com a troca do \textit{bit} de presença e a instrução que gerou a requisição da memória é reexecutada. a Figura \ref{fig:page-fault} ilustra o processo.
 
 \begin{figure}
   \centering
@@ -210,7 +210,7 @@ As tabelas de página podem variar entre máquinas diferentes, porém possuem ca
   \item \textbf{Número do \textit{frame}:} número do \textit{frame} onde a página está mapeada.
 \end{itemize}
 
-Observe que \textbf{o tamanho da tabela de páginas depende do espaço de endereçamento da arquitetura}. Dessa forma, a tabela poderia assumir espaços irreais como $2^64$. Dessa forma, dois problemas são inseridos: não é viável manter a tabela totalmente na MMU e a velocidade de mapeamento dos endereços pode ser comprometida.
+Observe que \textbf{o tamanho da tabela de páginas depende do espaço de endereçamento da arquitetura}. Dessa forma, a tabela poderia assumir espaços irreais como $2^{64}$. Dessa forma, dois problemas são inseridos: não é viável manter a tabela totalmente na MMU e a velocidade de mapeamento dos endereços pode ser comprometida.
 
 Para mitigar o problema do tamanho, a \textbf{tabela de páginas fica armazenada em memória principal}, onde um registrador guarda o endereço de início desta tabela. Logo, a MMU utiliza uma memória associativa chamada de \textbf{\textit{Translation Look-aside Buffer} (TBL)}, onde algumas entradas da tabela de páginas são armazenadas.
 
@@ -238,7 +238,7 @@ Como exemplo, existem tabelas de páginas de 1 nível (PDP-11), 2 níveis (VAX),
 
 
 \subsubsection{Mapeamento Invertido}
-Com processadores em 64 \textit{bits} e páginas com $4KB$, acabamos por ter $2^52$ entradas na tabela de página, o que torna inviável a utilização de tabelas com mapeamento direto. \textbf{Nota:} mesmo assim. algumas arquiteturas de 64 \textit{bits} utilizam este mapeamento, com 3 níveis.
+Com processadores em 64 \textit{bits} e páginas com $4KB$, acabamos por ter $2^{52}$ entradas na tabela de página, o que torna inviável a utilização de tabelas com mapeamento direto. \textbf{Nota:} mesmo assim. algumas arquiteturas de 64 \textit{bits} utilizam este mapeamento, com 3 níveis.
 
 Em tabelas de páginas invertidas, a indexação é feita pelo \textit{frame} e não mais pela página. O problema é que o índice utilizado pela CPU ainda é a página $p$. Por isso, neste método é utilizada uma tabela de \textit{hash}, com o \textit{frame} como índice. Logo, a CPU envia $p$ como entrada, porém antes de ser aplicado na tabela, é feito um \textit{hash} sobre $p$ para obter o índice correspondente. \textbf{Nota:} em particular, esse \textit{hash} é uma função de módulo, dado que o tamanho da tabela é o tamanho de \textit{frames} possíveis na memória.
 
@@ -335,7 +335,7 @@ No \textit{aging}, a cada interrupção de \textit{clock}, é feito um \textit{s
 Aqui é explicada toda a rotina de tratamento de um \textit{page fault}:
 
 \begin{enumerate}
-  \item O \textit{hardware} gera um \textit{trap} para o \textit{kernel} e salva o PC corrent na pilha;
+  \item O \textit{hardware} gera um \textit{trap} para o \textit{kernel} e salva o PC corrente na pilha;
 
   \item O \textit{hardware} executa uma rotina em código de máquina, que salva os demais registradores e outras informações. No final, a rotina chama o SO;
 
@@ -401,6 +401,4 @@ Disso, temos que:
 
 \begin{itemize}
   \item O tamanho de página $P$ é o valor máximo que $2^d$ pode assumir;
-
-  \item
 \end{itemize}
