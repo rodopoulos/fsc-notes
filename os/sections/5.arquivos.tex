@@ -9,14 +9,14 @@ O sistema de arquivo será o módulo do SO responsável pela criação da abstra
   Coleção de dados relacionados entre si
 \end{definicao}
 
-Cada arquivo possui um nome, que o identifica. Além do nome, o arquivo possui outros atributos como tipo, nome do criados, tamanho, etc.. As informações contidas em um arquivo geralmente são \textbf{persistentes} e armazenadas em dispositivos não-voláteis.
+Cada arquivo possui um nome, que o identifica. Além do nome, o arquivo possui outros atributos como tipo, nome do criador, tamanho, etc.. As informações contidas em um arquivo geralmente são \textbf{persistentes} e armazenadas em dispositivos não-voláteis.
 
 \subsection{Estruturação}
-O servidor de arquivos deve implementar a abstração de arquivo arquivo para o restante do sistema. Para tanto, ele deve determinar como o arquivo será estruturado internamente. As estruturas mais comuns são: sequências de \textit{bytes}, sequência de registros e árvore de registros.
+O servidor de arquivos deve implementar a abstração de arquivo para o restante do sistema. Para tal, ele deve determinar como o arquivo será estruturado internamente. As estruturas mais comuns são: sequências de \textit{bytes}, sequência de registros e árvore de registros.
 
 
 \subsection{Tipos}
-Cada sistema de arquivos determina os tipos de arquivos suportados por ele. Sistemsa como o Unix ou o DOS suportam os seguintes tipos:
+Cada sistema de arquivos determina os tipos de arquivos suportados por ele. Sistemas como o Unix ou o DOS suportam os seguintes tipos:
 
 \begin{itemize}
   \item \textbf{Arquivos Regulares:} contém os dados do usuário;
@@ -64,7 +64,7 @@ Operação de criação de um arquivo. Deve-se criar uma entrada para o novo arq
 
 
 \subsubsection{\textit{Delete}}
-libera o espaço ocupao pelo arquivo, deleta a entrada do diretório que aponta para o arquivo e a entrada do arquivo na tabela de arquivos.
+libera o espaço ocupado pelo arquivo, deleta a entrada do diretório que aponta para o arquivo e a entrada do arquivo na tabela de arquivos.
 
 
 \subsubsection{\textit{Open}}
@@ -119,7 +119,7 @@ A primeira decisão na implementação de arquivos é como os mesmos serão arma
 \subsection{Alocação Contígua}
 Na criação do arquivo, é reservado um espaço contíguo em disco. Para se guardar os endereços de disco associados aos arquivos, necessita-se apenas do endereço inicial do arquivo no disco e seu tamanho.
 
-Em consequência, essa técnica provê uma recuperação de dados extremamente rápida, pois como os blocos são contíguos, o movimento do braço do disco é mínimo. Além disso, é tem fácil implementação.
+Em consequência, essa técnica provê uma recuperação de dados extremamente rápida, pois como os blocos são contíguos, o movimento do braço do disco é mínimo. Além disso, tem fácil implementação.
 
 Entretanto, este método apresenta um alto grau de fragmentação ao longo do tempo. Explicando: uma vez que os blocos são contíguos, após sucessivas exclusões de arquivos, o disco acaba ficando com diversas lacunas ao longo de seu espaço. Quando o disco for preenchido até o final, o espaço das lacunas pode não se suficiente para acomodar arquivos grandes, resultando em falta de espaço, mesmo que, no total de espaço em branco, haja espaço suficiente. Para mitigar este problema, é necessário fazer defragmentação, que e o processo de relocar todos os blocos no inicio do disco, eliminando as lacunas. Note que tal processo é custoso.
 
@@ -135,20 +135,12 @@ Esta técnica mitiga o problema da fragmentação, uma vez que arquivos não pre
 \subsection{I-nodos}
 Aqui, cada arquivo possui uma pequena tabela denominada de i-nodos, que contém os atributos e os endereços dos blocos físicos alocados ao arquivo. Os primeiros endereços de disco são armazenados no próprio i-nodo, que é transferido do disco para a memória no momento da abertura do arquivo.
 
-Em arquivos maiores, o i-nodo ceontém o endereço de um bloco de disco denominado \textbf{bloco indireto simples}. Este bloco é uma tabela de endereços de blocos de disco, podendo haver indireção em segundo e terceiro níveis.
-
-
-
-
-
-
-
-
+Em arquivos maiores, o i-nodo contém o endereço de um bloco de disco denominado \textbf{bloco indireto simples}. Este bloco é uma tabela de endereços de blocos de disco, podendo haver indireção em segundo e terceiro níveis.
 
 \section{Desempenho do Sistema de Arquivos}
 Em geral, um acesso a disco é muito mais lento do que um acesso à memória principal. Uma maneira simples de aumentar a performance do sistema de arquivos é escrever e ler os dados da memória principal sempre que possível.
 
-Para isso, necessitamos manter uma área de memória armazenará temporariamente os blocos de disco mais utilizados. Como essa filosofia se assemelha à filosofia das \textit{caches} físicas, essa ára de memória chama-se \textbf{\textit{cache} de disco}, ou \textit{buffer cache}.
+Para isso, necessitamos manter uma área de memória que armazenará temporariamente os blocos de disco mais utilizados. Como essa filosofia se assemelha à filosofia das \textit{caches} físicas, essa ára de memória chama-se \textbf{\textit{cache} de disco}, ou \textit{buffer cache}.
 
 \begin{figure}[h]
   \centering
