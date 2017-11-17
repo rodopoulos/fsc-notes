@@ -4,7 +4,6 @@ Em um computador, os dados podem ser armazenados em vários dispositivos físico
 O sistema de arquivo será o módulo do SO responsável pela criação da abstração de arquivos e por seu gerenciamento.
 
 \section{Arquivos}
-
 \begin{definicao}{Arquivo}
   Coleção de dados relacionados entre si
 \end{definicao}
@@ -12,8 +11,14 @@ O sistema de arquivo será o módulo do SO responsável pela criação da abstra
 Cada arquivo possui um nome, que o identifica. Além do nome, o arquivo possui outros atributos como tipo, nome do criador, tamanho, etc.. As informações contidas em um arquivo geralmente são \textbf{persistentes} e armazenadas em dispositivos não-voláteis.
 
 \subsection{Estruturação}
-O servidor de arquivos deve implementar a abstração de arquivo para o restante do sistema. Para tal, ele deve determinar como o arquivo será estruturado internamente. As estruturas mais comuns são: sequências de \textit{bytes}, sequência de registros e árvore de registros.
+O servidor de arquivos deve implementar a abstração de arquivo para o restante do sistema. Para tal, ele deve determinar como o arquivo será estruturado internamente. As estruturas mais comuns são: sequências de \textit{bytes}, sequência de registros e árvore de registros, ilustradas na Figure \ref{fig:file-structures}.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.8\textwidth]{file-structures}
+  \caption{As diferentes estruturas de arquivo: (a) sequência de \textit{bytes} (b) sequência de registros e (c) árvore de registros}
+  \label{fig:file-structures}
+\end{figure}
 
 \subsection{Tipos}
 Cada sistema de arquivos determina os tipos de arquivos suportados por ele. Sistemas como o Unix ou o DOS suportam os seguintes tipos:
@@ -48,11 +53,13 @@ Além do nome e dos dados, o SO associa a cada arquivo um conjunto de infomaçõ
 As operações sobre arquivos geralmente levam em consideração um conjunto de entidades de um sistema de arquivos, sendo elas:
 
 \begin{itemize}
-  \item \textbf{Tabela de Arquivos:} possui um entrada para cada arquivo, contendo as informações referentes a cada arquivo;
+  \item \textbf{Tabela de Arquivos:} possui uma entrada para cada arquivo, contendo as informações referentes a cada um;
 
   \item \textbf{Diretório:} caminho que leva ao arquivo. Ao ser criado, o arquivo é posicionado em um diretório e a tabela de arquivos deste diretório deve conter uma entrada para o novo arquivo;
 
   \item \textbf{Posição Corrente:} ponteiro que indica qual a posição do arquivo será acessada na próxima vez. As operações de leitura e escrita incrementam o valor da posição corrente do arquivo do número de \textit{bytes} lidos e escritos.
+
+  \item \textbf{Descritor de Arquivo:} % TODO
 \end{itemize}
 
 
@@ -123,14 +130,34 @@ Em consequência, essa técnica provê uma recuperação de dados extremamente r
 
 Entretanto, este método apresenta um alto grau de fragmentação ao longo do tempo. Explicando: uma vez que os blocos são contíguos, após sucessivas exclusões de arquivos, o disco acaba ficando com diversas lacunas ao longo de seu espaço. Quando o disco for preenchido até o final, o espaço das lacunas pode não se suficiente para acomodar arquivos grandes, resultando em falta de espaço, mesmo que, no total de espaço em branco, haja espaço suficiente. Para mitigar este problema, é necessário fazer defragmentação, que e o processo de relocar todos os blocos no inicio do disco, eliminando as lacunas. Note que tal processo é custoso.
 
+\begin{figure*}[h]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=.7\textwidth]{contiguous-alocation1}
+    \caption{Arquivos alocados contiguamente}
+  \end{subfigure}
+  ~
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=.7\textwidth]{contiguous-alocation2}
+    \caption{Disco fragmentado após exclusão dos arquivos $D$ e $F$}
+  \end{subfigure}
 
+  \caption{Esquema de alocação contígua no disco}
+  \label{fig:contiguous-allocation}
+\end{figure*}
 
 \subsection{Lista Encadeada}
 Aqui, os bloco continuam sendo mantidos como uma lista encadeada. Porém, na implementação, o ponteiro é colocado em uma tabela geral de blocos. Assim, cada bloco contém um ponteiro para um próximo bloco e o dado que ele carrega.
 
 Esta técnica mitiga o problema da fragmentação, uma vez que arquivos não precisam ser guardados de forma sequencial. Porém, o acesso aleatório a dados é extremamente lento, uma vez que para ler um bloco qualquer, temos que ler todos os blocos que vem antes dele, dado que eles estão em uma lista encadeada.
 
-
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.6\textwidth]{disk-file-list}
+  \caption{Esquema de lista encadeada no disco}
+  \label{fig:disk-file-list}
+\end{figure}
 
 \subsection{I-nodos}
 Aqui, cada arquivo possui uma pequena tabela denominada de i-nodos, que contém os atributos e os endereços dos blocos físicos alocados ao arquivo. Os primeiros endereços de disco são armazenados no próprio i-nodo, que é transferido do disco para a memória no momento da abertura do arquivo.
