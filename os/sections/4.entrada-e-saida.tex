@@ -1,25 +1,31 @@
 \chapter{Entrada e Saída}
 
-Para prover um abstração simples da máquina física, o sistema operacional deve conhecer bem cada \textit{hardware} sobre o qual ele opera, uma vez que cada um destes dispositivos tem um conjunto de comandos específicos. Unidades de E/S são compostas de uma parte mecânica, que é o dispositivo, e uma parte eletrônica, que é a sua controladora.
+Para prover um abstração simples da máquina física, o sistema operacional deve conhecer bem cada \textit{hardware} sobre o qual ele opera, uma vez que cada um destes dispositivos tem um conjunto de comandos específicos. As unidades de entrada e saída são compostas por duas partes: uma parte mecânica, sendo o dispositivo propriamente dito, e uma parte eletrônica, que é a sua \textbf{controladora}, a qual irá interagir com o SO para realizar as operações de E/S.
 
-\begin{figure}
+\begin{figure}[H]
+  \centering
   \includegraphics[width=.8\textwidth]{io-unity}
   \caption{Diversas unidades de entrada e saída do SO. Os dispositivos mecânicos estão ligados às suas respectivas controladoras.}
   \label{fig:io-unity}
 \end{figure}
 
-Em geral, dividem-se dispositivos de entrada e saída em dois tipos:
+A \textbf{comunicação entre SO e controladora} se dá por registradores acessados pela CPU, onde o SO emite comandos escrevendo nestes e obtém informações sobre os dispositivos por meio da leitura dos registradores. Além disso, parte da comunicação também é feita por \textit{buffers}, onde o SO lê e escreve dados. Cada controladora irá possuir um conjunto de comandos específicos, definidos em seus manuais.
+
+Os registradores de controle podem estar localizados nas controladores, sendo mapeados em portas de E/S. Entretanto, o sistema geralmente empregado é o de \textbf{E/S mapeado em memória}, onde os registradores são mapeados em posições fixas da memória, sendo associado um endereço a eles.
+
+Em um processo genérico de E/S, temos que:
+\begin{enumerate}
+  \item A CPU envia um sinal ao barramento, contendo o endereço desejado, a operação (\textit{read}/\textit{write}) e espaço do registrador (controladora/memória);
+
+  \item O dispositivo referênciado responde a requisição, emitindo uma chamada de sistema ao fim do serviço.
+\end{enumerate}
+
+Por fim, em geral, dividem-se os dispositivos de entrada e saída em dois tipos:
 \begin{itemize}
   \item \textbf{Dispositivos de Bloco:} onde temos informações sendo armazenadas em unidades de tamanho fixo e sua recuperação é feita por acesso direto. \underline{Exemplo:} disco rídigo;
 
   \item \textbf{Dispositivos de Caractere:} a informação é aceita em unidadades de tamanho variável, Geralmente sendo armazenada temporariamente ou não sendo armazenada. \underline{Exemplo:} terminais, impressoras, \textit{mouse}, etc..
 \end{itemize}
-
-\textbf{O SO programa a controladora}. Ambos trocam informações constantemente, por meio de registradores, sendo estes, geralmente, mapeados em posições fixas de memória. O SO solicita alguma entrada ou saída escrevendo nestes registradores.
-
-Cada controladora tem um conjunto de comandos específicos de baixo nível, que são descritos em seus manuais. Uma vez aceito o comando, a controladora trabalha simultaneamente com a CPU, somente interrompendo-a no final do serviço.
-
-
 
 
 
