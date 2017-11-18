@@ -1,5 +1,5 @@
 \chapter{Exercícios}
-
+\section{1º/2012}
 \begin{exercicio}
   {1º/2012}{\textit{Arquiteturas de SO}}
   {Adminita um sistema operacional que é originalmente organizado segundo a estruturação micro-kernel no qual foi imbutido um outro sistema operacional monolítico, por razões de desempenho. Como você classificaria esse sistema operacional? Por quê?}
@@ -42,15 +42,6 @@
 \end{exercicio}
 
 \begin{exercicio}
-  {1º/2012}{\textit{Memória (Paginação)}}
-  {Considere um sistema de memória virtual paginada. Dê os nomes dos elementos marcados com (a), (b), (c), (d) na figura abaixo e explique como cada um é utilizado em uma operação de acesso à memória.
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.4\textwidth]{ex-mem-structure}
-  \end{figure}}
-\end{exercicio}
-
-\begin{exercicio}
   {1º/2012}{Memória (Paginação)}
   {Considere um sistema com espaço de endereçamento de $32$ bits e páginas de $4$KBytes e espaço de endereçamento real de $26$ bits.
   \begin{enumerate}[label=(\alph*)]
@@ -67,11 +58,6 @@
 \begin{exercicio}
   {1º/2012}{Sistemas de Arquivo}
   {Alguns sistemas de arquivo deletam todos os arquivos de usuário quando o usuário se desconecta da máquina (logoff), a não ser que o usuário, explicitamente, diga quais arquivos devem ser permanentes. Comente esta abordagem em relação à abordagem tradicional.}  
-\end{exercicio}
-
-\begin{exercicio}
-  {1º/2012}{Sistemas de Arquivo}
-  {Explique o objetivo das operações OPEN e CLOSE.}
 \end{exercicio}
 
 \begin{exercicio}
@@ -124,12 +110,50 @@
     \end{tabular}
     \end{table}}
 \end{exercicio}
+\section{1º/2013}
 
+\begin{exercicio}
+  {1º/2013}{Sistemas de Arquivo}
+  {Considere um arquivo de alocação contígua composto por 100 blocos, cujo tamanho máximo é 200 blocos. Quantas operações devem ser feitas caso:
+  \begin{enumerate}
+    \item Um bloco seja adicionado no início do arquivo.
+    \item Um bloco seja adicionado no final do arquivo.
+    \item Um bloco seja removido no início do arquivo.
+  \end{enumerate}
+  Responda o mesmo para um arquivo de mesmo tamanho que utilize lista encadeada.}
+\end{exercicio}
+
+\begin{exercicio}
+  {1º/2013}{\textit{Esclonamento de processos}}
+  {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum=$8$ms).
+  A ordem de chegada dos processos foi A -> B -> C -> D -> E (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
+  \begin{table}[!h]
+    \centering
+    \caption{Tabela de Processos}
+    \label{tab:ex3}
+    \begin{tabular}{cc}
+    \hline \hline
+    \textbf{Processo} & \textbf{Tempo de execução (ms)} \\ \hline
+    A                 & 9                               \\
+    B                 & 2                              \\
+    C                 & 7                               \\
+    D                 & 1                               \\
+    E                 & 18                              \\ \hline \hline
+    \end{tabular}
+    \end{table}}
+\end{exercicio}
+
+\begin{exercicio}
+  {1º/2013}{Processos (Threads)}
+  {Explique os $2$ níveis de implementação de threads. Cite vantagens e desvantagens.}
+  
+\end{exercicio}
+\section{1º/2017}
 \begin{exercicio}
   {2º/2017}{\textit{Threads}}
   {Por quê a implementação de \textit{threads} em nível de usuário possui um custo extremamente baixo de troca de contexto?}
 
-  Resposta aqui
+  Pois não possui o custo da troca de modo usuário para modo protegido.
 \end{exercicio}
 
 \begin{exercicio}
@@ -143,7 +167,7 @@
   {2º/2017}{\textit{Deadlocks}}
   {Por quê \textit{deadlocks} são ditos \textit{stable properties}?}
 
-
+  Pois consistem em estados que não podem ser mudados sem utilização de força externa.
 \end{exercicio}
 
 \begin{exercicio}
@@ -186,6 +210,12 @@
   FIFO: 6 page faults
 
   LRU: 7 page faults
+\end{exercicio}
+
+\begin{exercicio}
+  {2º/2017}{Estruturação de Sistemas Operacionais}
+  {Explique a estruturação em camadas de sistema operacional. Comente vantagens e desvantagens.}
+  
 \end{exercicio}
 
 \begin{exercicio}
