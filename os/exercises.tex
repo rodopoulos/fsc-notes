@@ -6,7 +6,7 @@
   {2º/2017}{\textit{Threads}}
   {Por quê a implementação de \textit{threads} em nível de usuário possui um custo extremamente baixo de troca de contexto?}
 
-  Pois não possui o custo da troca de modo usuário para modo protegido.
+  Pois as trocas de contexto entre \textit{threads} não possuem o custo da troca de modo usuário para protegido, uma vez que esta troca é feita em nível de aplicação, existindo apenas no nível de usuário.
 \end{exercicio}
 
 \begin{exercicio}
@@ -43,11 +43,11 @@
   \begin{enumerate}[label=(\alph*)]
     \item \textbf{CPU:} envia o endereço virtual à MMU;
 
-    \item \textbf{MMU:} quebra o endereço virtual em duas partes, sendo elas a página e o deslocamento. A MMU usa $p$ como índice na TLB para obter o \textit{frame} $f$. A MMU troca a página $p$ pelo frame $f$, que é jogado no barramento junto com o deslocamento.
+    \item \textbf{MMU:} quebra o endereço virtual em duas partes, sendo elas a página e o deslocamento. A MMU usa $p$ como índice na TLB para obter o \textit{frame} $f$. A MMU troca a página $p$ pelo frame $f$, que é inserido no barramento junto com o deslocamento.
 
     \item \textbf{Memória RAM:} entidade que guarda o dado desejado e será acessada;
 
-    \item \textbf{Tabela de Páginas:} guarda % TODO: completar
+    \item \textbf{TLB:} é obtido o \textit{frame}, a partir do endereço virtual recebido.
   \end{enumerate}
 \end{exercicio}
 
@@ -149,6 +149,24 @@
     \item Um bloco seja removido no início do arquivo.
   \end{enumerate}
   Responda o mesmo para um arquivo de mesmo tamanho que utilize lista encadeada.}
+
+  \textbf{Para alocação contígua:}
+  \begin{enumerate}
+    \item 100 realocações de bloco e uma escrita, no começo;
+
+    \item Operação de busca da posição e uma operação de escrita do bloco;
+
+    \item Uma única operação de remoção do bloco.
+  \end{enumerate}
+
+  \textbf{Para lista encadeada:}
+  \begin{enumerate}
+    \item Obtenção de um bloco livre, escrita do bloco em disco e apontamento do bloco como o primeiro do arquivo, colocando o antigo primeiro bloco como o próximo;
+
+    \item Obtenção de um bloco livre, escrita do bloco e inserção do endereço deste bloco no apontamento do antigo último bloco
+
+    \item Remoção do bloco e apontamento do antigo segundo bloco como o novo primeiro.
+  \end{enumerate}
 \end{exercicio}
 
 \begin{exercicio}
@@ -174,6 +192,43 @@
 \begin{exercicio}
   {1º/2013}{Processos (Threads)}
   {Explique os $2$ níveis de implementação de threads. Cite vantagens e desvantagens.}
+
+  \textbf{\textit{Threads} a nível de usuário:} a implementação da \textit{thread} é no espaço de endereçamento do usuário, através de chamadas de funções definidas em uma biblioteca a nível de aplicação.
+
+  \textit{Vantagens}:
+  \begin{itemize}
+    \item A troca de contexto entre \textit{threads} tem custo baixo, dado não é preciso de privilégio de \textit{kernel} e as estruturas compartilhadas estão a nível de usuário apenas;
+
+    \item O escalonamento pode ser especificado dentro do processo do usuário, podendo definir-se uma política mais adequada;
+
+    \item Caso seja implementadas por bibliotecas portáveis, podem ser executadas em qualquer SO.
+  \end{itemize}
+
+  \textit{Desvantagens:}
+  \begin{itemize}
+    \item Se a \textit{thread} realizar uma operação blocante, todo o processo será bloqueado até que a operação tenha resultado, bloqueando as \textit{threads-irmãs};
+
+    \item Uma aplicação \textit{multithread} não pode tirar vantagem do multiprocessamento, já que o processo que detém as \textit{threads} apenas em um processador.
+  \end{itemize}
+
+  \textbf{\textit{Threads} a nível de \textit{kernel}:} o gerenciamento de \textit{threads} é feito pelo \textit{kernel}, manipuladas por chamadas de sistema. Cada processo contém sua tabela de \textit{threads} e o bloqueio de uma \textit{thread} não resulta no bloqueio de outras, sendo este chaveamento feito pelo \textit{kernel}.
+
+  \textit{Vantagens:}
+  \begin{itemize}
+    \item Melhor aproveitamento da capacidade de multiprocessamento da máquina, escalonando várias \textit{threads} do processo em diferentes processadores;
+
+    \item O bloqueio de uma \textit{thread} não resulta no bloqueio de outras, inclusive suas irmãs.
+  \end{itemize}
+
+  \textit{Desvantagens:}
+  \begin{itemize}
+    \item A troca de contexto entre \textit{threads} é custosa, uma vez que existe a passagem do modo usuário para o modo protegido.
+  \end{itemize}
+
+
+
+
+
 \end{exercicio}
 
 
