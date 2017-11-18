@@ -2,6 +2,12 @@
 
 Para prover um abstração simples da máquina física, o sistema operacional deve conhecer bem cada \textit{hardware} sobre o qual ele opera, uma vez que cada um destes dispositivos tem um conjunto de comandos específicos. Unidades de E/S são compostas de uma parte mecânica, que é o dispositivo, e uma parte eletrônica, que é a sua controladora.
 
+\begin{figure}
+  \includegraphics[width=.8\textwidth]{io-unity}
+  \caption{Diversas unidades de entrada e saída do SO. Os dispositivos mecânicos estão ligados às suas respectivas controladoras.}
+  \label{fig:io-unity}
+\end{figure}
+
 Em geral, dividem-se dispositivos de entrada e saída em dois tipos:
 \begin{itemize}
   \item \textbf{Dispositivos de Bloco:} onde temos informações sendo armazenadas em unidades de tamanho fixo e sua recuperação é feita por acesso direto. \underline{Exemplo:} disco rídigo;
