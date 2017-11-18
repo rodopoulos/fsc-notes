@@ -18,17 +18,18 @@
   {1º/2012}{\textit{Esclonamento de processos}}
   {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum=$8$ms).
   A ordem de chegada dos processos foi A -> B -> C -> D -> E (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[]
+  \begin{table}[!h]
     \centering
-    \caption{Tabela dos processos}
+    \caption{Tabela de Processos}
     \label{tab:ex3}
     \begin{tabular}{cc}
-    \textbf{Processo} & \textbf{Tempo de execução (ms)} \\
+    \hline \hline
+    \textbf{Processo} & \textbf{Tempo de execução (ms)} \\ \hline
     A                 & 9                               \\
     B                 & 20                              \\
     C                 & 2                               \\
     D                 & 6                               \\
-    E                 & 18                             
+    E                 & 18                              \\ \hline \hline
     \end{tabular}
     \end{table}}
   
@@ -115,14 +116,11 @@
     \centering
     \caption{Tabela de comparação entre organizações}
     \label{tab:ex15}
-    \begin{tabular}{cc}
-    \hline \hline
-    \textbf{Processo} & \textbf{Tempo de execução (ms)} \\ \hline
-    A                 & 9                               \\
-    B                 & 20                              \\
-    C                 & 2                               \\
-    D                 & 6                               \\
-    E                 & 18                              \\ \hline \hline
+    \begin{tabular}{clll}
+      \hline \hline
+    \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{MicroKernel}} & \multicolumn{1}{c}{\textbf{ExoKernel}} \\ \hline
+    \textbf{Flexibilidade}           &                                         &                                          &                                        \\
+    \textbf{Visão Global do Sistema} &                                         &                                          &                                        \\ \hline \hline
     \end{tabular}
     \end{table}}
 \end{exercicio}
