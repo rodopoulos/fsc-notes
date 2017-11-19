@@ -13,12 +13,7 @@ A \textbf{comunicação entre SO e controladora} se dá por registradores acessa
 
 Os registradores de controle podem estar localizados nas controladores, sendo mapeados em portas de E/S. Entretanto, o sistema geralmente empregado é o de \textbf{E/S mapeado em memória}, onde os registradores são mapeados em posições fixas da memória, sendo associado um endereço a eles.
 
-Em um processo genérico de E/S, temos que:
-\begin{enumerate}
-  \item A CPU envia um sinal ao barramento, contendo o endereço desejado, a operação (\textit{read}/\textit{write}) e espaço do registrador (controladora/memória);
-
-  \item O dispositivo referênciado responde a requisição, emitindo uma chamada de sistema ao fim do serviço.
-\end{enumerate}
+A entidade do SO que interage com as controladoras são do \textbf{drivers de dispositivo}, entidades que recebem instruções abstratas dos processos e as traduzem em comandos específicos a serem enviados às controladoras. % TODO: explicar melhor
 
 Por fim, em geral, dividem-se os dispositivos de entrada e saída em dois tipos:
 \begin{itemize}

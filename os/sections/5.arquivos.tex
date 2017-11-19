@@ -53,29 +53,30 @@ Além do nome e dos dados, o SO associa a cada arquivo um conjunto de infomaçõ
 As operações sobre arquivos geralmente levam em consideração um conjunto de entidades de um sistema de arquivos, sendo elas:
 
 \begin{itemize}
-  \item \textbf{Tabela de Arquivos:} possui uma entrada para cada arquivo, contendo as informações referentes a cada um;
+  \item \textbf{Tabela de Arquivos:} uma tabela global do sistema, onde existe uma entrada para cada arquivo, contendo as informações referentes a cada um;
 
   \item \textbf{Diretório:} caminho que leva ao arquivo. Ao ser criado, o arquivo é posicionado em um diretório e a tabela de arquivos deste diretório deve conter uma entrada para o novo arquivo;
 
-  \item \textbf{Posição Corrente:} ponteiro que indica qual a posição do arquivo será acessada na próxima vez. As operações de leitura e escrita incrementam o valor da posição corrente do arquivo do número de \textit{bytes} lidos e escritos;tá
+  \item \textbf{Tabela de Arquivos Abertos por Processo}: tabela criada para cada processo, sendo indexada pelo descritor de arquivos. Cada entrada referencia um arquivo aberto pelo processo, indicando a sua posição corrente no arquivo, permissões de acesso, etc.. Quando o processo morre, essa tabela deixa de existir;
 
-  \item \textbf{Descritor de Arquivo:} índice que referencia uma entrada na tabela de arquivos. Operações a serem realizadas no arquivo devem ser feitas através de um descritor deste, requisitado ao SO pelo processo.
+  \item \textbf{Descritor de Arquivo:} índice que referencia uma entrada na tabela de arquivos abertos do processo. Operações a serem realizadas no arquivo devem ser feitas utilizando este descritor, requisitado ao SO pelo processo;
+
+  \item \textbf{Posição Corrente:} ponteiro que indica qual a posição do arquivo será acessada na próxima vez. As operações de leitura e escrita incrementam o valor da posição corrente do arquivo do número de \textit{bytes} lidos e escritos.
 \end{itemize}
-
 
 % TODO: ILUSTRAR COM IMAGENS DO TANENBAUM
 Agora definimos as operações sobre os arquivos:
 
 \subsubsection{\textit{Create}}
-Operação de criação de um arquivo. Deve-se criar uma entrada para o novo arquivo no diretório especificado. Além disso, deve-se criar uma entrada na tabela de arquivos com o nome do criador, data de criação e permissões de acesso. O arquivo recém-criado não possui dado nenhum.
+Operação de criação de um arquivo. Deve-se criar uma entrada para o novo arquivo no diretório especificado. Além disso, cria-se uma entrada na tabela de arquivos com o nome do criador, data de criação e permissões de acesso. O arquivo recém-criado não possui dado algum.
 
 
 \subsubsection{\textit{Delete}}
-libera o espaço ocupado pelo arquivo, deleta a entrada do diretório que aponta para o arquivo e a entrada do arquivo na tabela de arquivos.
+Libera o espaço ocupado pelo arquivo e deleta a entrada do diretório que aponta para o arquivo e a entrada do arquivo na tabela de arquivos.
 
 
 \subsubsection{\textit{Open}}
-Antes de ser utilizado, o arquivo precisa ser aberto. Essa chamada traz a entrada da tabela de arquivos referente ao arquivo a ser aberto para a tabela de processos do processo que executou o \textit{open}. Este comando retorna um \textbf{descritor de arquivo}, que será utilizado em todas as operações subsequentes sobre o arquivo.
+Antes de ser utilizado, o arquivo precisa ser aberto. Esta chamada cria o \textit{link} entre a entrada do processo solicitante na \textit{tabela de processos} e a entrada do arquivo solicita na \textit{tabela de arquivos}. Dessa forma, ele retorna um \textit{descritor de arquivos}, que será utilizado em toda as operações subsequentes sobre o arquivo, servindo de índice na entrada da \textit{tabela de arquivos abertos do processo} requisitante.
 
 
 \subsubsection{\textit{Close}}
