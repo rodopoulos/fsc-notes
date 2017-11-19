@@ -11,7 +11,26 @@
 
 \begin{exercicio}
   {2º/2017}{Condições de Corrida}
-  {Considere o código multi-processo abaixo. Existe condição de corrida nesse código? Se sim, corrija o código de maneira a eliminá-la.}
+  {Defina condição de corrida. Considere o código multi-processo abaixo. Existe condição de corrida nesse código? Se sim, corrija o código de maneira a eliminá-la.
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ex-race-cond}
+  \end{figure}}
+
+  \textbf{Condição de Corrida:} quando dois ou mais processos acessam concorrentemente um recurso e o resultado final sobre este recurso depende da ordem na qual os processos foram executados.
+
+  Sim, existe condição de corrida na variável $b$. Utilizamos \textit{locks} para a nossa solução:
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{l|l}
+      \textbf{P1:}            & \textbf{P2:} \\
+      \texttt{print(a)}       & \texttt{print(a)} \\
+      \texttt{acquire(lock)}  & \texttt{acquire(lock)} \\
+      \texttt{b = a + 1}      & \texttt{b = a + 2} \\
+      \texttt{release(lock)}  & \texttt{release(lock)}\\
+    \end{tabular}
+  \end{table}
 \end{exercicio}
 
 \begin{exercicio}
@@ -34,7 +53,7 @@
   {2º/2017}{Memória Virtual}
   {
     Considere um sistema de memória virtual paginada. Dê os nomes dos elementos marcados com (a), (b), (c) e (d) na figura abaixo e explique como cada um é utilizado em uma operação de acesso à memória.
-    \begin{figure}
+    \begin{figure}[H]
       \centering
       \includegraphics[width=0.4\textwidth]{ex-mem-structure}
     \end{figure}
@@ -58,9 +77,32 @@
 
   Fazer o exercício de forma a mostrar cada iteração e o histórico das tabelas.
 
-  FIFO: 6 page faults
+  \textbf{FIFO:} 6 \textit{page faults} \\
+  \[
+  \begin{array}{rcccccccccc}
+    \text{Página Referênciada} & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
+    \text{Resultado} & P & P & P & P & P & - & - & - & P & - \\
+    \\
+    \text{Estado da Memória} & 0 & 1 & 7 & 2 & 3 & 3 & 3 & 3 & 0 & 0 \\
+    & - & 0 & 1 & 7 & 2 & 2 & 2 & 2 & 3 & 3 \\
+    & - & - & 0 & 1 & 7 & 7 & 7 & 7 & 2 & 2 \\
+    & - & - & - & 0 & 1 & 1 & 1 & 1 & 7 & 7 \\
+  \end{array}
+  \]
 
-  LRU: 7 page faults
+  \textbf{LRU:} 7 \textit{page faults} \\
+  \[
+  \begin{array}{cccccccccc}
+    0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
+    P & P & P & P & P & - & - & - & P & P \\
+    \\
+    0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\
+    - & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 \\
+    - & - & 0 & 1 & 7 & 7 & 3 & 2 & 7 & 1 \\
+    - & - & - & 0 & 1 & 1 & 1 & 3 & 2 & 7 \\
+  \end{array}
+  \]
+
 \end{exercicio}
 
 \begin{exercicio}
@@ -280,7 +322,7 @@
 
 \begin{exercicio}
   {1º/2012}{Memória/Paginação}
-  {Considere um sistema com espaço de endereçamento de $32$ bits e páginas de $4$KBytes e espaço de endereçamento real de $26$ bits.
+  {Considere um sistema com espaço de endereçamento de $32$ bits, páginas de $4$ KBytes e espaço de endereçamento real de $26$ bits.
   \begin{enumerate}[label=(\alph*)]
     \item Quantas entradas são necessárias em uma tabela de páginas forward-mapped?
     \item E na tabela de páginas invertida?
@@ -292,6 +334,7 @@
   {O que é uma controladora? Qual entidade do SO interage com ela?}
 
   A controladora é a parte eletrônica das unidades de entrada e saída. Ela interage constantemente com a CPU, através de registradores mapeados em memória.
+
   \textbf{Nota:} existem duas abordagens para os registradores. Na primeira, eles estão contidos na controladora, mapeados como portas de E/S. Na segunda, eles estão mapeados em memória. A Alba geralmente se refere a segunda.
 \end{exercicio}
 
