@@ -11,7 +11,7 @@
   \end{itemize}
 \end{definicao}
 
-Cada processo possui um identificador único, conhecido como \textit{pid}. As informações do processo ficam armazenadas na \textbf{tabela de processos}, sendo o \textit{pid} seu indexador na tabela.
+Cada processo possui um identificador único, conhecido como \textit{pid}. As informações do processo ficam armazenadas na \textbf{tabela de processos}, sendo o \textit{pid} seu índice na tabela.
 
 Durante a execução, o processo compartilha o processador com outros processos, sendo eles escalonados ao longo do tempo. A interação entre processos ocorre por mecanismos de comunicação próprios.
 
@@ -326,15 +326,34 @@ Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thr
   \label{fig:threads}
 \end{figure}
 
-Aqui, \textbf{a troca de contexto é mais leve}, dado que esta troca entre \textit{threads} de um mesmo processo só diz respeito a execução e não ao ambiente. Frisamos que \textbf{\textit{threads} guardam apenas o contexto de execução e não de ambiente}.
+As \textit{threads} de um mesmo processo compartilham as variáveis de ambiente do processo e cada uma contém suas próprias variáveis de execução. Dessa forma, a troca de contexto entre \textit{threads} envolve apenas as variáveis de execução. Consequentemente, \textbf{a troca de contexto é mais leve}. A Tabela \ref{tab:process-thread-data}
 
-Dado isto, estas \textit{threads} compartilham as mesmas variáveis globais, memória, descritores de arquivo e outros recursos. Logo, são necessários mecanismos de \textbf{sincronização} destes recursos: variáveis \textit{mutex} e variáveis de condição.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l}
+    \textbf{Itens por Processo} & \textbf{Itens por \textit{thread}} \\
+    \hline
+    Espaço de endereçamento & Contador de programa \\
+    Variáveis globais & Registradores \\
+    Arquivos abertos & Pilha \\
+    Processos filhos & Estado \\
+    Alarmes pendentes & \\
+    Sinais e manipuladores de sinais & \\
+    Informação de contabilidade & \\
+    \hline
+  \end{tabular}
+
+  \caption{A primeira coluna lista itens compartilhados por todas as \textit{threads} do processo e a segunda lista itens específicos de cada \textit{thread}}
+  \label{tab:process-thread-data}
+\end{table}
+
+Dado isto, estas \textit{threads} compartilham as mesmas variáveis globais, memória, descritores de arquivo e outros recursos. Logo, são necessários mecanismos de \textbf{sincronização} destes recursos: variáveis \textit{mutex}, variáveis de condição, etc..
 
 Podemos ter dois tipos de \textit{threads}:
 \begin{itemize}
   \item \textbf{Estáticas:} o número de linhas de controle que irão compor o processo é definido em tempo de compilação, fazendo com que a execução comece com o número determinado;
 
-  \item \textbf{Dinâmicas:} as \textit{threads} são criadas e destruidas dinâmicamente, ao longo da execução do processo, criadas com primitivas específicas. A execução começa com uma \textit{thread} apontando para o início da rotina \textit{main}. Esta técnica é a mais comum.
+  \item \textbf{Dinâmicas:} as \textit{threads} são criadas e destruídas dinâmicamente, ao longo da execução do processo, criadas com primitivas específicas. A execução começa com uma \textit{thread} apontando para o início da rotina \textit{main}. Esta técnica é a mais comum.
 \end{itemize}
 
 
@@ -343,9 +362,11 @@ Podemos ter dois tipos de \textit{threads}:
 
 
 \subsection{Implementação}
-É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{thread} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera trocas de contexto entre modo protegido e usuário, o que é um \textit{overhead} custoso.
+É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{threads} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera trocas de contexto entre modo protegido e usuário, o que é um \textit{overhead} custoso.
 
 A segunda forma é a implementação a \textbf{nível de usuário}, simulando as \textit{threads} através de bibliotecas. Dessa forma, o custo da troca de contexto é baixo, porém quando uma \textit{thread} realizar uma operação blocante, o seu processo inteiro será bloqueado e, consequentemente, todas as suas \textit{threads-irmãs}.
+
+\textbf{Nota:} maiores informações e comparações entre esses modelos são explorados em exercício na página \pageref{ex:threads-implementation-comparison}.
 
 
 
