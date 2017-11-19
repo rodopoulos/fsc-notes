@@ -49,10 +49,10 @@ Os paginadores utilizam as primitivas \textit{grant}, \textit{map} e \textit{flu
 \section{Exemplo: Mach}
 
 \subsection{Modelo de Memória}
-No Mach o \textbf{modelo de memória} é flexível e independente do \textit{hardware}. Ele divide a gerência de memória em três partes: \textit{pmap}, modo \textit{kernel} independente de arquitetura e paginador externo.
+No Mach o \textbf{modelo de memória é flexível e independente do \textit{hardware}}. Ele divide a gerência de memória em três partes: \textit{pmap}, modo \textit{kernel} independente de arquitetura e paginador externo.
 
 \subsubsection{\textit{Pmap}}
-Este modelo é o modo \textit{kernel} dependente da arquitetura, onde o sistema Mach admite que o processador possui uma unidade de gerência de memória (MMU), onde o \textit{pmap} é o módulo do que controla e acessa a MMU. Desta forma, o \textit{pmap} é dependente do \textit{hardware}.
+O Mach admite que cada processador possui sua MMU. Desta forma, o \textit{pmap} é o módulo que irá controlar e acessar a MMU, através de operações em modo protegido. Dessa forma, o \textit{pmap} é dependente da arquitetura de \textit{hardware}.
 
 \subsubsection{\textit{Kernel} Independente de Máquina}
 Este módulo trata da parte do processamento do \textit{page fault}, que é independente de máquina. Ele realiza o mapeamento de endereços nas tabelas do sistema e a substituição de páginas.
