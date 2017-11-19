@@ -17,7 +17,7 @@ Este repositório foi iniciado no 2º semestre de 2017.
 
 Todo conteúdo está escrito em Latex, dividos em duas partes referentes às duas frentes da matéria: _Organização e Arquitetura de Computadores_ e _Sistemas Operacionais_.
 
-Você deve ter instaladas no seu ambiente as seguinte depedências do Latex:  
+Você deve ter instaladas no seu ambiente as seguinte depedências do Latex:
 
 * `geometry`
 * `hyperref`
@@ -85,3 +85,5 @@ Se você quer se aprofundar nesta área, use os livros e _papers_ clássicos e d
 * **J. L. Hennessy & D. A. Patterson** _Computer Organization and Design: A Quantitative Approach_ (5th Edition)
 * **W. Stallings** _Computer Organization and Archteture_ (5th Edition)
 * **D. Culler** _Parallel Computer Archteture_
+* **A. S. Tanenbaum** _Modern Operating Systems_ (3rd Edition)
+* **A. Silberchatz, P. B. Galvin & G. Gagne** _Operating System Concepts_ (9th Edition)
