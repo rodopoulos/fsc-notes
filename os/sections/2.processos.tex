@@ -229,7 +229,7 @@ Os processos que solicitam a CPU são colocados em uma fila \textit{ready}, ger�
 
 
 \subsection{\textit{Round Robin}}
-Cada processo tem o direito de usar o processador por um intervalo de tempo pré-definido, denominado \textbf{\textit{quantum}}. Quando este intervalo se esgota, o processador é dado a outro processo e o processo retirado vai para o fim da fila de processos. É versão preemptiva da política FSFC, sendo um algoritmo justo.
+Cada processo tem o direito de usar o processador por um intervalo de tempo pré-definido, denominado \textbf{\textit{quantum}}. Quando este intervalo se esgota, o processador é dado a outro processo e o processo retirado vai para o fim da fila de processos. É versão \textbf{preemptiva} da política FSFC, sendo um algoritmo justo.
 
 \begin{figure*}[h]
   \begin{subfigure}[t]{0.45\textwidth}
@@ -257,7 +257,7 @@ A prioridade pode ser definida de duas formas:
 \begin{itemize}
   \item \textbf{Estaticamente:} os processos são divididos em classes e a cada classe é atribuída uma prioridade. A cada prioridade, existe uma fila de prontos associada. A política nas filas pode ser arbitrária;
 
-  \item \textbf{Dinâmicamente:} o sistema analisa o comportamento dos processose atribui prioridades favorecendo um certo tipo de comportamento. Por exemplo, processos com I/O podem ter prioridades altas. O cálculo da prioridade pode ser dado por $1/f$, onde $f$ é a fração do \textit{quantum} de tempo utilizado na última rodada do processo.
+  \item \textbf{Dinâmicamente:} o sistema analisa o comportamento dos processos e atribui prioridades favorecendo um certo tipo de comportamento. Por exemplo, processos com I/O podem ter prioridades altas. O cálculo da prioridade pode ser dado por $1/f$, onde $f$ é a fração do \textit{quantum} de tempo utilizado na última rodada do processo.
 \end{itemize}
 
  Note que é possível que um processo pode monopolizar a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. A técnica de prioridade dinâmica tenta justamente mitigar este comportamento.
@@ -273,7 +273,7 @@ A prioridade pode ser definida de duas formas:
 
 
 \subsection{\textit{Shortest Job First} (SJF)}
-Aqui, dado um conjunto de \textit{jobs} prontos, executamos os \textit{jobs} com menor tempo de execução antes de maneira não-preemptiva.
+Aqui, dado um conjunto de \textit{jobs} prontos, executamos os \textit{jobs} com menor tempo de execução antes de \textbf{maneira não-preemptiva}.
 
 Note que este algoritmo pode não ser muito justo, pois, supondo um processo com uma dada prioridade, este pode entrar em \textit{starvation} se todo novo processo que entrar na fila tiver tempo de execução menor que ele.
 

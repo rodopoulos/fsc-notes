@@ -74,16 +74,26 @@
 \begin{exercicio}
   {2º/2017}{Paginação}
   {Considere um sistema com 4 \textit{frames} e 8 páginas. Admita a seguinte \textit{string} de referência: 0172327103. Quantos \textit{page faults} ocorrerão se o algorítmo de substituição for FIFO? E se for LRU?}
+  \label{ex:pagination-1}
 
   Fazer o exercício de forma a mostrar cada iteração e o histórico das tabelas.
 
   \textbf{FIFO:} 6 \textit{page faults} \\
   \[
   \begin{array}{rcccccccccc}
-    \text{Página Referênciada} & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
-    \text{Resultado} & P & P & P & P & P & - & - & - & P & - \\
+    \text{Página Referênciada}
+    & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
+    \text{Resultado}
+    & P & P & P & P & P & - & - & - & P & - \\
     \\
-    \text{Estado da Memória} & 0 & 1 & 7 & 2 & 3 & 3 & 3 & 3 & 0 & 0 \\
+    \text{Estado da Memória}
+    & 0 & 0 & 0 & 0 & 3 & 3 & 3 & 3 & 3 & 3 \\
+    & - & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+    & - & - & 7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
+    & - & - & - & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\
+    \\
+    \text{Ordem de saída}
+    & 0 & 1 & 7 & 2 & 3 & 3 & 3 & 3 & 0 & 0 \\
     & - & 0 & 1 & 7 & 2 & 2 & 2 & 2 & 3 & 3 \\
     & - & - & 0 & 1 & 7 & 7 & 7 & 7 & 2 & 2 \\
     & - & - & - & 0 & 1 & 1 & 1 & 1 & 7 & 7 \\
@@ -92,14 +102,23 @@
 
   \textbf{LRU:} 7 \textit{page faults} \\
   \[
-  \begin{array}{cccccccccc}
-    0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
-    P & P & P & P & P & - & - & - & P & P \\
+  \begin{array}{rcccccccccc}
+    \text{Página Referênciada}
+    & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
+    \text{Resultado}
+    & P & P & P & P & P & - & - & - & P & P \\
     \\
-    0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\
-    - & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 \\
-    - & - & 0 & 1 & 7 & 7 & 3 & 2 & 7 & 1 \\
-    - & - & - & 0 & 1 & 1 & 1 & 3 & 2 & 7 \\
+    \text{Estado da Memória}
+    & 0 & 0 & 0 & 0 & 3 & 3 & 3 & 3 & 0 & 0 \\
+    & - & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    & - & - & 7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
+    & - & - & - & 2 & 2 & 2 & 2 & 2 & 2 & 3 \\
+    \\
+    \text{Ordem de saída}
+    & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\
+    & - & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 \\
+    & - & - & 0 & 1 & 7 & 7 & 3 & 2 & 7 & 1 \\
+    & - & - & - & 0 & 1 & 1 & 1 & 3 & 2 & 7 \\
   \end{array}
   \]
 
@@ -213,7 +232,7 @@
 
 \begin{exercicio}
   {1º/2013}{\textit{Escalonamento de processos}}
-  {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8$ms). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
+  {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
   \begin{table}[H]
     \centering
     \begin{tabular}{cc}
@@ -227,6 +246,14 @@
     \end{tabular}
   \end{table}
   } % Fim do enunciado
+
+  Estendemos a questão, inserindo também o resultado para política FCFS. Escrevemos em ordem, do primeiro para o último:
+
+  \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow E$
+
+  \textbf{SJF:} $D \rightarrow B \rightarrow C \rightarrow A \rightarrow E$
+
+  \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$
 \end{exercicio}
 
 \begin{exercicio}
@@ -265,11 +292,6 @@
   \begin{itemize}
     \item A troca de contexto entre \textit{threads} é custosa, uma vez que existe a passagem do modo usuário para o modo protegido.
   \end{itemize}
-
-
-
-
-
 \end{exercicio}
 
 
@@ -292,9 +314,8 @@
 
 \begin{exercicio}
   {1º/2012}{Escalonamento de Processos}
-  {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8$ms). \\
-  A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[!h]
+  {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
+  \begin{table}[h]
       \centering
       \begin{tabular}{cc}
         \hline \hline
@@ -306,12 +327,17 @@
         E                 & 18                              \\
         \hline \hline
       \end{tabular}
-      \caption{Tabela de Processos}
-      \label{tab:ex3}
     \end{table}
   }
 
-  Resposta aqui
+
+    Estendemos a questão, inserindo também o resultado para política FCFS (note que nela o \textit{quantum} é inútil). Escrevemos em ordem, do primeiro para o último:
+
+    \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow B \rightarrow E \rightarrow A \rightarrow E$
+
+    \textbf{SJF:} $C \rightarrow D \rightarrow A \rightarrow E \rightarrow B$
+
+    \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$
 \end{exercicio}
 
 \begin{exercicio}
@@ -357,14 +383,45 @@
 \begin{exercicio}
   {1º/2012}{Processos/Escalonamento}
   {O algoritmo de escalonamento de processos FCFS pode ser considerado um caso particular do algortimo Round-Robin. Qual é esse caso?}
-  Quando o quantum é infinito (teoricamente), na prática utiliza-se como FFFF ($32$ bits) FFFF FFFF( $64$ bits).
+
+  Quando o quantum é infinito (teoricamente). Na prática, utiliza-se o \textit{quantum} como FFFF em arquiteturas de $32$ bits e FFFF FFFF em arquiteturas de $64$ bits.
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Memória/Paginação}
   {Considere a seguinte sequência de referências à páginas:
-  1,2,3,4,2,1,5,6,2,1,2,3,7,6,3,2,1,2,3,6 \\
+  1,2,3,4,2,1,5,6,2,1,2,3,7,6,3,2,1,2,3,6. \newline
   Quantos page faults ocorrerão para os algoritmos FCFS, ótimo e LRU, supondo que a memória real possui $4$ frames? Considere que inicialmente a memória está vazia.}
+
+  \textbf{Nota:} use de referência a estruturação do exercício da página \pageref{ex:pagination-1}
+
+  \textbf{FCFS:} 14 \textit{page faults} \\
+  \[
+  \begin{array}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 2 & 1 & 5 & 6 & 2 & 1 & 2 & 3 & 7 & 6 & 3 & 2 & 1 & 2 & 3 & 6 \\ \hline
+P & P & P & P & - & - & P & P & P & P & - & P & P & P & - & P & P & - & P & - \\
+\\
+1 & 2 & 3 & 4 & 4 & 4 & 5 & 6 & 2 & 1 & 1 & 3 & 7 & 6 & 6 & 2 & 1 & 1 & 3 & 3 \\
+- & 1 & 2 & 3 & 3 & 3 & 4 & 5 & 6 & 2 & 2 & 1 & 3 & 7 & 7 & 6 & 2 & 2 & 1 & 1 \\
+- & - & 1 & 2 & 2 & 2 & 3 & 4 & 5 & 6 & 6 & 2 & 1 & 3 & 3 & 7 & 6 & 6 & 2 & 2 \\
+- & - & - & 1 & 1 & 1 & 2 & 3 & 4 & 5 & 5 & 6 & 2 & 1 & 1 & 3 & 7 & 7 & 6 & 6 \\
+  \end{array}
+  \]
+
+  \textbf{Ótimo:} 8 \textit{page faults}. A idéia é sempre retirar a página a ser referenciada no futuro mais distante. \\
+  \[
+  \begin{array}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 2 & 1 & 5 & 6 & 2 & 1 & 2 & 3 & 7 & 6 & 3 & 2 & 1 & 2 & 3 & 6 \\ \hline
+P & P & P & P & - & - & P & P & - & - & - & - & P & - & - & - & P & - & - & - \\
+\\
+1 & 2 & 2 & 2 & 1 & 2 & 2 & 2 & 1 & 2 & 3 & 6 & 6 & 3 & 2 & 2 & 2 & 3 & 6 & 1 \\
+- & 1 & 1 & 1 & 2 & 1 & 1 & 1 & 2 & 3 & 6 & 3 & 3 & 2 & 3 & 3 & 3 & 6 & 1 & 2 \\
+- & - & 3 & 3 & 3 & 3 & 3 & 3 & 3 & 6 & 2 & 2 & 2 & 6 & 6 & 6 & 6 & 1 & 2 & 3 \\
+- & - & - & 4 & 4 & 4 & 5 & 6 & 6 & 1 & 1 & 1 & 7 & 7 & 7 & 7 & 1 & 2 & 3 & 6 \\
+  \end{array}
+  \]
+
+  \textbf{LRU:} 10 \textit{page faults} \\
 
 \end{exercicio}
 
