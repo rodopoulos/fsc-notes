@@ -78,6 +78,12 @@ Libera o espaço ocupado pelo arquivo e deleta a entrada do diretório que apont
 \subsubsection{\textit{Open}}
 Antes de ser utilizado, o arquivo precisa ser aberto. Esta chamada cria o \textit{link} entre a entrada do processo solicitante na \textit{tabela de processos} e a entrada do arquivo solicitado na \textit{tabela de arquivos}. Dessa forma, ele retorna um \textit{descritor de arquivos}, que será utilizado em todas as operações subsequentes sobre o arquivo. Ele também serve de índice na entrada da \textit{tabela de arquivos abertos do processo} requisitante, contendo informações sobre o descritor.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.85\textwidth]{file-open-read}
+  \caption{Figura que mostra como a operação \textit{read} utiliza as estruturas criadas na operação \textit{open} no contexto de arquivos}
+  \label{fig:file-open-read}
+\end{figure}
 
 \subsubsection{\textit{Close}}
 Esta operação desfaz o \textit{link} explicado anteriormente, removendo a entrada do descritor do arquivo solicitado da \textit{tabela de arquivos abertos do processo}. Todos os acessos subsequentes ao descritor e arquivo serão invalidados.
