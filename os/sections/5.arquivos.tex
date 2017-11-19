@@ -57,9 +57,9 @@ As operações sobre arquivos geralmente levam em consideração um conjunto de 
 
   \item \textbf{Diretório:} caminho que leva ao arquivo. Ao ser criado, o arquivo é posicionado em um diretório e a tabela de arquivos deste diretório deve conter uma entrada para o novo arquivo;
 
-  \item \textbf{Posição Corrente:} ponteiro que indica qual a posição do arquivo será acessada na próxima vez. As operações de leitura e escrita incrementam o valor da posição corrente do arquivo do número de \textit{bytes} lidos e escritos.
+  \item \textbf{Posição Corrente:} ponteiro que indica qual a posição do arquivo será acessada na próxima vez. As operações de leitura e escrita incrementam o valor da posição corrente do arquivo do número de \textit{bytes} lidos e escritos;tá
 
-  \item \textbf{Descritor de Arquivo:} % TODO
+  \item \textbf{Descritor de Arquivo:} índice que referencia uma entrada na tabela de arquivos. Operações a serem realizadas no arquivo devem ser feitas através de um descritor deste, requisitado ao SO pelo processo.
 \end{itemize}
 
 
