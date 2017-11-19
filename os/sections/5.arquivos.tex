@@ -76,7 +76,7 @@ Libera o espaço ocupado pelo arquivo e deleta a entrada do diretório que apont
 
 
 \subsubsection{\textit{Open}}
-Antes de ser utilizado, o arquivo precisa ser aberto. Esta chamada cria o \textit{link} entre a entrada do processo solicitante na \textit{tabela de processos} e a entrada do arquivo solicita na \textit{tabela de arquivos}. Dessa forma, ele retorna um \textit{descritor de arquivos}, que será utilizado em toda as operações subsequentes sobre o arquivo, servindo de índice na entrada da \textit{tabela de arquivos abertos do processo} requisitante.
+Antes de ser utilizado, o arquivo precisa ser aberto. Esta chamada cria o \textit{link} entre a entrada do processo solicitante na \textit{tabela de processos} e a entrada do arquivo solicitado na \textit{tabela de arquivos}. Dessa forma, ele retorna um \textit{descritor de arquivos}, que será utilizado em todas as operações subsequentes sobre o arquivo. Ele também serve de índice na entrada da \textit{tabela de arquivos abertos do processo} requisitante, contendo informações sobre o descritor.
 
 
 \subsubsection{\textit{Close}}
