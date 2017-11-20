@@ -4,3 +4,4 @@ Contribuidores
   * Felipe Rodopoulos
   * Guilherme Branco
   * Lucas Amaral
+  * Nayra Moreira
