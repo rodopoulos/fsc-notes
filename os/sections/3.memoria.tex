@@ -212,9 +212,9 @@ As tabelas de página podem variar entre máquinas diferentes, porém possuem ca
 
 Observe que \textbf{o tamanho da tabela de páginas depende do espaço de endereçamento da arquitetura}. Dessa forma, a tabela poderia assumir espaços irreais como $2^{64}$. Dessa forma, dois problemas são inseridos: não é viável manter a tabela totalmente na MMU e a velocidade de mapeamento dos endereços pode ser comprometida.
 
-Para mitigar o problema do tamanho, a \textbf{tabela de páginas fica armazenada em memória principal}, onde um registrador guarda o endereço de início desta tabela. Logo, a MMU utiliza uma memória associativa chamada de \textbf{\textit{Translation Look-aside Buffer} (TBL)}, onde algumas entradas da tabela de páginas são armazenadas.
+Para mitigar o problema do tamanho, a \textbf{tabela de páginas fica armazenada em memória principal}, onde um registrador guarda o endereço de início desta tabela. Logo, a MMU utiliza uma memória associativa chamada de \textbf{\textit{Translation Look-aside Buffer} (TLB)}, onde algumas entradas da tabela de páginas são armazenadas.
 
-Assim, quando um endereço virtual é apresentado a MMU, ela procura este na TBL. Se estiver presente, o mapeamento é direto, caso contrário, um acesso à memória é feito para recuperar a entrada da tabela de páginas. A entrada requisitada é inserida na TBL, de forma que futuras requisiçõe serão imediatas.
+Assim, quando um endereço virtual é apresentado a MMU, ela procura este na TLB. Se estiver presente, o mapeamento é direto, caso contrário, um acesso à memória é feito para recuperar a entrada da tabela de páginas. A entrada requisitada é inserida na TBL, de forma que futuras requisiçõe serão imediatas.
 
 Temos duas organizações possíveis para a tabela de páginas: mapeamento direto ou invertida.
 

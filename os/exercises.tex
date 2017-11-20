@@ -12,7 +12,7 @@
 \begin{exercicio}
   {2º/2017}{Condições de Corrida}
   {Defina condição de corrida. Considere o código multi-processo abaixo. Existe condição de corrida nesse código? Se sim, corrija o código de maneira a eliminá-la.
-  \begin{figure}[H]
+  \begin{figure}[!H]
     \centering
     \includegraphics[width=0.5\textwidth]{ex-race-cond}
   \end{figure}}
@@ -21,7 +21,7 @@
 
   Sim, existe condição de corrida na variável $b$. Utilizamos \textit{locks} para a nossa solução:
 
-  \begin{table}[H]
+  \begin{table}[!H]
     \centering
     \begin{tabular}{l|l}
       \textbf{P1:}            & \textbf{P2:} \\
@@ -53,7 +53,7 @@
   {2º/2017}{Memória Virtual}
   {
     Considere um sistema de memória virtual paginada. Dê os nomes dos elementos marcados com (a), (b), (c) e (d) na figura abaixo e explique como cada um é utilizado em uma operação de acesso à memória.
-    \begin{figure}[H]
+    \begin{figure}[!H]
       \centering
       \includegraphics[width=0.4\textwidth]{ex-mem-structure}
     \end{figure}
@@ -111,7 +111,7 @@
     & P & P & P & P & P & - & - & - & P & - \\
 \end{array}
  \]
-\begin{table}[H]
+\begin{table}[!H]
   \centering
   \begin{tabular}{lll}
     Frame & Página & Tempo de carga \\
@@ -157,7 +157,7 @@
     & P & P & P & P & P & - & - & - & P & P \\
 \end{array}
  \]
-\begin{table}[H]
+\begin{table}[!H]
   \centering
   \begin{tabular}{lll}
     Frame & Página                  & Tempo de referência \\
@@ -193,7 +193,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {2º/2017}{Escalonamento de Processos}
   {Considere o conjunto de $6$ processos e respectivos tempos de execução (quantum = $4 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin}, \textit{First Come First Served} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[H]
+  \begin{table}[!H]
     \centering
     \begin{tabular}{cc}
       \hline \hline
@@ -217,8 +217,9 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \begin{exercicio}
   {2º/2017}{Organização de Sistemas Operacionais}
-  {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta.
-  \begin{table}[!h]
+  {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta. 
+  \begin{table}[!H]
+
     \centering
     \begin{tabular}{clll}
       \hline \hline
@@ -299,8 +300,30 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \end{exercicio}
 
+\begin{exercicio}
+  {2º/2017}{Memória (Paginação)}
+  {Tendo a tabela de páginas abaixo e recebendo o endereço $12$, que endereço a MMU vai colocar no barramento? (Considere páginas de 1KBytes)
+  Faça o mesmo exercício para o endereço $3150$.
+  \begin{table}[!H]
+    \centering
+    \caption{Look-Aside Buffer Table}
+    \label{tab:pag_to_frame}
+    \begin{tabular}{cc}
+      \hline \hline
+    Página & Frame \\ \hline
+    0      & 2     \\
+    1      & 1     \\
+    2      & 0     \\
+    3      & 5     \\ \hline \hline
+    \end{tabular}
+    \end{table}}
+    
+    1. Para endereço $X$ divide-se o endereço pelo tamanho da página, e encontra-se a página requerida.
+    2. Após isto pega-se o número do frame e multiplica-se pelo tamanho para encontrar o endereço da página, soma-se o deslocamento (resto da divisão do primeiro passo).
 
-
+    Para $12$, 12/1024 = 0, resto 12. Página 0 é o frame 2, 2 * 1024 = 2048, 2048 + 12 = 2060.
+    Para $3150$, 3150/1024 = 3, resto 78. Página 3 é o frame 5, 5 * 1024 = 5120, 5120 + 78 = 5198.
+\end{exercicio}
 
 \section{1º/2013}
 \begin{exercicio}
@@ -319,7 +342,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
     \item Operação de busca da posição e uma operação de escrita do bloco;
 
-    \item Uma única operação de remoção do bloco.
+    \item Uma única operação de remoção do bloco. (Podem ser também $99$ operações de shift para a esquerda)
   \end{enumerate}
 
   \textbf{Para lista encadeada:}
@@ -335,7 +358,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2013}{\textit{Escalonamento de processos}}
   {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[H]
+  \begin{table}[!H]
     \centering
     \begin{tabular}{cc}
       \hline \hline
@@ -396,20 +419,16 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   \end{itemize}
 \end{exercicio}
 
-
-
-
-
 \section{1º/2012}
 \begin{exercicio}
   {1º/2012}{Arquiteturas de SO}
   {Admita um sistema operacional que é originalmente organizado segundo a estruturação microkernel no qual foi embutido um outro sistema operacional monolítico, por razões de desempenho. Como você classificaria esse sistema operacional? Por quê?}
+  
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Escalonamento de Processos}
-  {Os escalonadores round-robin mantém, normalmente, uma fila de processos prontos, onde cada processo aparece uma só vez. Considere uma fila de prontos que mantém ponteiros para a tabela de processos. Qual seria o efeito de colocar dois ponteiros para o mesmo processo na fila de prontos $(A \rightarrow B \rightarrow C \rightarrow B)$?
-  }
+  {Os escalonadores round-robin mantém, normalmente, uma fila de processos prontos, onde cada processo aparece uma só vez. Considere uma fila de prontos que mantém ponteiros para a tabela de processos. Qual seria o efeito de colocar dois ponteiros para o mesmo processo na fila de prontos $(A \rightarrow B \rightarrow C \rightarrow B)$?}
 
   O processo rodaria duas vezes por rodada, como se tivesse o dobro do quantum ou uma prioridade maior que os outros.
 \end{exercicio}
@@ -417,7 +436,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2012}{Escalonamento de Processos}
   {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[h]
+  \begin{table}[!H]
       \centering
       \begin{tabular}{cc}
         \hline \hline
@@ -444,11 +463,13 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \begin{exercicio}
   {1º/2012}{Memória/Paginação}
-  {Explique como funcionam as organizações \textit{forward-mapped} (mapeamento direto) e tabela invertida de páginas.}
 
-  \textbf{Forward-mapped:} a tabela é indexada pelo endereço de página virtual, podendo existir uma entrada para cada endeço de página possível. A página indexa o \textit{frame} no qual ela deve residir na memória principal.
+  {Explique como funcionam as organizações, \textit{forward-mapped} (mapeamento direto) e tabela invertida, de páginas.}
 
-  \textbf{Tabela Invertida:} a tabela é indexada pelo \textit{frame}. Para obter o índice correspondente da página virtual, é aplicada uma função \textit{hash}. Como é possível haver colisões, uma entrada pode conter uma lista de colisões, contendo as páginas que coincidiram naquele \textit{frame}.
+  \textbf{Forward-mapped:} a tabela é indexada pelo endereço de página virtual, podendo existir uma entrada para cada endereço de página possível. A página indexa o \textit{frame} no qual ela deve residir na memória principal.
+
+  \textbf{Tabela Invertida:} a tabela é indexada pelo \textit{frame}, segundo o espaço de endereçamento real. Para obter o índice correspondente da página virtual, é aplicada uma função \textit{hash}. Como é possível haver colisões, uma entrada pode conter uma lista de colisões, contendo as páginas que coincidiram naquele \textit{frame}.
+
 \end{exercicio}
 
 \begin{exercicio}
@@ -458,20 +479,27 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Quantas entradas são necessárias em uma tabela de páginas forward-mapped?
     \item E na tabela de páginas invertida?
   \end{enumerate}}
+  Para forward-mapped utiliza-se $2^{32}/2^{12} = 2^{20}$ \\
+  Para tabela invertida utiliza-se $2^{26}/2^{12} = 2^{14}$
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Drivers}
   {O que é uma controladora? Qual entidade do SO interage com ela?}
 
-  A controladora é a parte eletrônica das unidades de entrada e saída. Ela interage constantemente com os \textit{drivers} de dispositivo, recebendo comandos específicos de \textit{hardware} em seus registradores.
+  A controladora é a parte eletrônica das unidades de entrada e saída (Firmware). Ela interage constantemente com os \textit{drivers} de dispositivo, recebendo comandos específicos de \textit{hardware} em seus registradores.
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Sistemas de Arquivo}
   {Alguns sistemas de arquivo deletam todos os arquivos de usuário quando o usuário se desconecta da máquina (\textit{logoff}), a não ser que o usuário, explicitamente, diga quais arquivos devem ser permanentes. Comente esta abordagem em relação à abordagem tradicional.}
 
-  Esta abordagem se torna interessante quando o usuário não tem o constante interesse em garantir arquivos permanentes. Também é interessante para implementações com espaço em disco rígido pequeno.
+  Nela, temos:
+  \being{itemize}
+    \item \textbf{Segurança}, pois os dados guardados serão descartados.
+    \item \textbf{Desempenho}, pois ligará mais rápido já que não existe nenhuma associação a se fazer com os dados do usuário.
+    \item \textbf{Economia}, podendo ser usada quando temos pouco espaço em disco.
+  \end{itemize}
 \end{exercicio}
 
 \begin{exercicio}
@@ -482,11 +510,17 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando não existe buffer cache.
   \end{enumerate}}
 
+  %Sem buffer, ao utilizar um comando de escrita o que foi requisitado para guardar no disco será, de fato, salvado no momento da instrução. A leitura acesso o disco e escreve na memória o dado requisitado.
+  %Já com buffer cache, a escrita não ocorre no momento em que termina a execução da instrução, primeiro os dados são escritos na buffer cache liberando a CPU para outras coisas, e então o controlador do disco copia as informações da buffer cache para o disco.
+  %A leitura com buffer cache, utiliza leitura adiantada, ou seja, os dados lidos que não fazem da parte dos requisitados são guardados na buffer cache, pois pelo princípio de localidade, muito provavelmente estes dados serão utilizados num futuro próximo.
+
+
   \begin{enumerate}[label=(\alph*)]
     \item Quando uma operação de E/S é realizada, uma consulta a \textit{buffer cache} é realizada primeiro, onde o bloco solicitado é buscado em uma área de memória reservada. Caso não conste em memória, o bloco é buscado em disco, colocado na \textit{buffer cache} e assim efetua-se a operação.
 
     \item Neste caso, em todas as operações de E/S, o bloco é acessado diretamente do disco, resultando em um acesso mais lento.
   \end{enumerate}
+
 \end{exercicio}
 
 \begin{exercicio}
@@ -498,7 +532,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   {1º/2012}{Processos/Escalonamento}
   {O algoritmo de escalonamento de processos FCFS pode ser considerado um caso particular do algortimo Round-Robin. Qual é esse caso?}
 
-  Quando o quantum é infinito (teoricamente). Na prática, utiliza-se o \textit{quantum} como FFFF em arquiteturas de $32$ bits e FFFF FFFF em arquiteturas de $64$ bits.
+  Quando o quantum é infinito (teoricamente). Na prática, utiliza-se o \textit{quantum} como FFFF FFFF em arquiteturas de $32$ bits e FFFF FFFF FFFF FFFF em arquiteturas de $64$ bits.
 \end{exercicio}
 
 \begin{exercicio}
@@ -543,21 +577,25 @@ P & P & P & P & - & - & P & P & - & - & - & - & P & - & - & - & P & - & - & - \\
   {1º/2012}{Virtualização}
   {Os conceitos de \textit{full virtualization} e para \textit{virtualization} são explicados abaixo:\\
   \textit{Full Virtualization} oferece uma abstração de máquina virtual que é uma cópia exata do hardware e, portanto, permite hospedar sistemas operacionais inalterados.\\
-  \textit{Virtualization} oferece uma abstração de máquina virtual que é similar, porém, não idêntica ao hardware e, por isso, requer que algumas modificações sejam feitas no sistema operacional hospedado.
+  \textit{Para Virtualization} oferece uma abstração de máquina virtual que é similar, porém, não idêntica ao hardware e, por isso, requer que algumas modificações sejam feitas no sistema operacional hospedado.
   Sabendo disso, qual estrutura de sistema operacional suporta \textit{full virtualization} e qual suporta para \textit{virtualization}? Justifique sua resposta.}
+
+  A full virtualization aceita qualquer organização do SO, pois contém todo o hardware.
+  A para virtualization não aceita monolitico ou camadas, pois eles possuem um maior acoplamento, por outro lado microKernel e exoKernel podem ser modularizados e adicionados apenas os módulos necessários (existentes na máquina).
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Organização de Sistemas Operacionais}
   {Complete o quadro abaixo com os valores (A - Alto, M - Médio, B - Baixo). Justifque sua resposta. Atenção: Cada linha deve conter os valores Alto, Médio e Baixo.
-  \begin{table}[!h]
+  \begin{table}[!H]
     \centering
-    \begin{tabular}{clll}
+    \begin{tabular}{cllll}
       \hline \hline
-      \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
-      \textbf{Visão Global do Sistema} &&& \\
-      \textbf{Extensibilidade} &&& \\
-      \textbf{Flexibilidade} &&& \\
+      \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Camadas}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
+      \textbf{Visão Global do Sistema} & A & A & M & B \\
+      \textbf{Extensibilidade} & B & B & M & A \\
+      \textbf{Flexibilidade} & B & B & M & A \\
+      \textbf{Manuntebilidade} &&& \\
       \hline \hline
     \end{tabular}
     \caption{Tabela de comparação entre organizações}
