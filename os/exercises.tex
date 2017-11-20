@@ -118,7 +118,7 @@
     0     & \sout{0} 3    & \sout{1} 5            \\
     1     & \sout{1} 0    & \sout{2} 9            \\
     2     & 7             & 3              \\
-    3     & 2             & 4             
+    3     & 2             & 4
   \end{tabular}
 \end{table}
 
@@ -164,7 +164,7 @@
     0     & \sout{0} \sout{3} 0     & \sout{1} \sout{5} 9            \\
     1     & 1                       & \sout{2} 8            \\
     2     & 7                       & \sout{3} 7              \\
-    3     & \sout{2} 3              & \sout{4} \sout{6} 10             
+    3     & \sout{2} 3              & \sout{4} \sout{6} 10
   \end{tabular}
 \end{table}
 
@@ -217,7 +217,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \begin{exercicio}
   {2º/2017}{Organização de Sistemas Operacionais}
-  {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta. 
+  {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta.
   \begin{table}[!h]
     \centering
     \begin{tabular}{clll}
@@ -238,6 +238,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {2º/2017}{Arquiteturas de SO/Processos}
   {Cite os passos para a criação de processos nas arquiteturas monolíticas, \textit{microkernel} e \textit{exokernel}.}
+  \label{ex:processes-creation}
 
   Para as \textsc{arquiteturas monolíticas}:
   \begin{enumerate}
@@ -248,10 +249,6 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item O SO atribui um \textit{PID} ao processo filho;
 
     \item O SO ajusta a \textit{área de memória} para a execução do processo filho;
-    \begin{itemize}
-      \item % TODO: o que faz quando é criação tradicional?
-      \item % TODO: o que faz quando é clonagem?
-    \end{itemize}
 
     \item O SO preenche os \textit{valores de registradores} para execução do processo filho na tabela de processos;
 
@@ -436,13 +433,13 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   }
 
 
-    Estendemos a questão, inserindo também o resultado para política FCFS (note que nela o \textit{quantum} é inútil). Escrevemos em ordem, do primeiro para o último:
+    Estendemos a questão, inserindo também o resultado para política FCFS. Escrevemos em ordem, do primeiro para o último:
 
-    \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow B \rightarrow E \rightarrow A \rightarrow E$
+    \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow B \rightarrow E \rightarrow B \rightarrow E$
 
-    \textbf{SJF:} $C \rightarrow D \rightarrow A \rightarrow E \rightarrow B$
+    \textbf{SJF:} $C \rightarrow D \rightarrow A \rightarrow E \rightarrow B$ (não tem \textit{quantum})
 
-    \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$
+    \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (não tem \textit{quantum})
 \end{exercicio}
 
 \begin{exercicio}
@@ -469,6 +466,8 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2012}{Sistemas de Arquivo}
   {Alguns sistemas de arquivo deletam todos os arquivos de usuário quando o usuário se desconecta da máquina (\textit{logoff}), a não ser que o usuário, explicitamente, diga quais arquivos devem ser permanentes. Comente esta abordagem em relação à abordagem tradicional.}
+
+  Esta abordagem se torna interessante quando o usuário não tem o constante interesse em garantir arquivos permanentes. Também é interessante para implementações com espaço em disco rígido pequeno.
 \end{exercicio}
 
 \begin{exercicio}
@@ -478,6 +477,12 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando existe buffer cache.
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando não existe buffer cache.
   \end{enumerate}}
+
+  \begin{enumerate}[label=(\alph*)]
+    \item Quando uma operação de E/S é realizada, uma consulta a \textit{buffer cache} é realizada primeiro, onde o bloco solicitado é buscado em uma área de memória reservada. Caso não conste em memória, o bloco é buscado em disco, colocado na \textit{buffer cache} e assim efetua-se a operação.
+
+    \item Neste caso, em todas as operações de E/S, o bloco é acessado diretamente do disco, resultando em um acesso mais lento.
+  \end{enumerate}
 \end{exercicio}
 
 \begin{exercicio}
