@@ -3,7 +3,7 @@
 
 \section{1º/2017}
 \begin{exercicio}
-  {2º/2017}{\textit{Threads}}
+  {2º/2017}{Threads}
   {Por quê a implementação de \textit{threads} em nível de usuário possui um custo extremamente baixo de troca de contexto?}
 
   Comparando o custo da troca de contexto à nível de kernel com a implementação à nível \textit{threads}, o custo é extremamente baixo pois as trocas de contexto entre \textit{threads} não possuem o custo da troca de modo usuário para protegido, uma vez que esta troca é feita em nível de aplicação, existindo apenas no nível de usuário. À nível de \textit{threads} se resume a utilizar conjunto de instruções de \textit{load}, \textit{store} e \textit{jump} para simular uma troca de contexto, enquanto à nível kernel alterna entre modo usuário para protegido e modo usuário utilizando-se instruções de \textit{long jump}.
@@ -34,7 +34,7 @@
 \end{exercicio}
 
 \begin{exercicio}
-  {2º/2017}{\textit{Deadlocks}}
+  {2º/2017}{Deadlocks}
   {Por quê \textit{deadlocks} são ditos \textit{stable properties}?}
 
   Pois consistem em estados que não podem ser mudados sem utilização de força externa.
@@ -499,8 +499,28 @@
 \end{exercicio}
 
 \begin{exercicio}
-  {1º/2012}{Processos (Deadlock)}
+  {1º/2012}{Deadlock/Produtor-Consumidor}
   {Apresente uma solução para o problema do produtor-consumidor utilizando unicamente locks.}
+  \label{ex:prod-cons-locks}
+
+  Antes, definimos:
+  \begin{itemize}
+    \item \texttt{MAX = } \textit{buffer size};
+    \item \texttt{count = 0};
+    \item Definimos o \textit{lock} \texttt{l} e inicializamos o mesmo.
+  \end{itemize}
+
+  \begin{figure*}[h]
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{ex-lock-cons}
+      \caption{Código Consumidor}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{ex-lock-prod}
+      \caption{Código Produtor}
+    \end{subfigure}
+  \end{figure*}
 \end{exercicio}
 
 \begin{exercicio}
@@ -516,7 +536,7 @@
   1,2,3,4,2,1,5,6,2,1,2,3,7,6,3,2,1,2,3,6. \newline
   Quantos page faults ocorrerão para os algoritmos FCFS, ótimo e LRU, supondo que a memória real possui $4$ frames? Considere que inicialmente a memória está vazia.}
 
-  \textbf{Nota:} use de referência a estruturação do exercício da página \pageref{ex:pagination-1}
+  \textbf{Nota:} use como referência a estruturação do exercício da página \pageref{ex:pagination-1}. Aqui só inserimos a tabela de Ordem de Saída.
 
   \textbf{FCFS:} 14 \textit{page faults} \\
   \[

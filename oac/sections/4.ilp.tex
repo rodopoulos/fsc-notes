@@ -554,8 +554,6 @@ O conceito do projeto está muito associado a estruturas RISC, porém pode ser p
 
 
 \subsection{Very Large Instruction Word - VLIW}
-% TODO: indicar se VLIW pode ser conserado RISC ou CISC e porque.
-
 \textsc{Definição} arquitetura que combina diversas operações em uma única instrução muito longa. A tarefa de se determinar quais instruções que serão emitidas simultaneamente, entretanto, recai sobre o compilador.
 
 Neste caso, também teremos diversas unidades funcionais independentes. Uma instrução VLIW poderia incluir 2 operações inteira, 2 de ponto flutuante, 2 referências à memoria e um branch, por exemplo. Dessa forma, se cada unidade funcional tem 16 bits, teríamos um palavra de 112 bits. Note que \textbf{deve haver paralelismo suficiente na sequencia de código para manter todas as unidades ocupadas}.
@@ -564,7 +562,7 @@ Como a emissão de instruções e escalonamento é feito pelo compilador, essa a
 \begin{itemize}
   \item \textbf{Demandam grande número de portas} sendo uma para cada unidade funcional. Isso aumenta o uso do material - silício - e degrada a velocidade do clock.
 
-  \item Como há múltiplos acessos simultâneos à memória, \textbf{a complexida da memória também aumenta};
+  \item Como há múltiplos acessos simultâneos à memória, \textbf{a complexidade da memória também aumenta};
 
   \item \textbf{O tamanho do código aumenta bastante}, apesar de ser possível a implementação de grande quantidade de \textit{loop unrolling};
 
@@ -573,7 +571,8 @@ Como a emissão de instruções e escalonamento é feito pelo compilador, essa a
   \item Como as operações são emitidas de maneira síncrona, \textbf{um atraso em qualquer unidade funcional, representa um atraso no processador como um todo}
 \end{itemize}
 
-
+% TODO: indicar se VLIW pode ser conserado RISC ou CISC e porque.
+\textbf{Nota:} arquiteturas VLIW não podem ser consideradas RISC ou CISC, mas podem incorporar idéias e implementações destes conjuntos de instruções.
 
 
 

@@ -38,7 +38,7 @@ Por sua vez, o \textit{driver} é um processo que acessa diretamente portas de \
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.6\textwidth]{microkernel-driver}
+  \includegraphics[width=.45\textwidth]{microkernel-driver}
   \caption{Esquema genérico de um \textit{driver} no \textit{microkernel}}
   \label{fig:microkernel-driver}
 \end{figure}
@@ -100,7 +100,7 @@ Portanto, são definidas primitivas para a memória virtual:
     \item Neste momento, a região é mapeada, porém não é carregada em memória. Assim, o primeiro acesso a esta região ocasionará em um \textit{page fault}.
   \end{itemize}
 
-  \item \textbf{\textit{vm\_copy}:} copia um objeto da memória de uma região par a outra. Como otimização, ele implementa o \textit{copy on write}, onde % TODO: ver o que é isso e por figura
+  \item \textbf{\textit{vm\_copy}:} copia um objeto da memória de uma região para a outra. Como otimização, ele implementa o \textit{copy on write}: o recurso não é efetivamente duplicado, sendo compartilhado até que haja uma escrita em alguma instância;
 
   \item \textbf{\textit{vm\_inherit}:} determina que regiões serão herdadas na criação de um processo filho;
 
@@ -115,7 +115,7 @@ Objetos de memória são necessariamente paginados, podendo ser \textbf{gerencia
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.75\textwidth]{mach-external-pager}
+  \includegraphics[width=.6\textwidth]{mach-external-pager}
   \caption{Esquema de paginador externo e objeto de memória no espaço da aplicação}
   \label{fig:mach-external-pager}
 \end{figure}
@@ -139,7 +139,7 @@ O gerente de memória interage com o núcleo do \textit{Mach} através de um pro
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.8\textwidth]{mach-pagination}
+  \includegraphics[width=.7\textwidth]{mach-pagination}
   \caption{Protocolo entre gerente e núcleo}
   \label{fig:mach-pagination}
 \end{figure}
