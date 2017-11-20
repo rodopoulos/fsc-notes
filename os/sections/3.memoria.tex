@@ -389,10 +389,10 @@ Aqui descrevemos o funcionamento geral do pedido de uma página pela CPU. Supond
 
 
 \subsection{Cálculos na Paginação}
-Em uma arquitetura com espaço de endereçamento de $b$ \textit{bits}, páginas de tamanho $P$ \textit{bytes} e uma memória RAM com tamanho $M$ \textit{bytes}, temos que:
+Em uma arquitetura com espaço de endereçamento de $b$ \textit{bits}, páginas de tamanho $P = 2^{x}$ \textit{bytes} e uma memória RAM com tamanho $M$ \textit{bytes}, temos que:
 
 \begin{itemize}
-  \item O número de endereços virtuais possíveis é de $2^b$;
+  \item O número máximo de endereços virtuais possíveis é de $2^b$;
 
   \item O número $F$, que é o total de \textit{frames} na RAM é dado por:
 
@@ -422,11 +422,12 @@ Usando $p$, a MMU obtém o \textit{frame} $f$ correspondente e pode computar F a
   F = P . f + d
 \end{equation*}
 
-Aplicamos tais cálculos em um exemplo: admitindo páginas de tamanho 1Kbyte, tendo a tabela de páginas da Figura \ref{fig:pagination-example} e a MMU recebendo o endereço 12. Qual endereço será escrito no barramento?
+Aplicamos tais cálculos em um exemplo: admitindo páginas de tamanho $1KB$, tendo a tabela de páginas da Figura \ref{fig:pagination-example} e a MMU recebendo o endereço 12. Qual endereço será escrito no barramento?
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.3\textwidth]{pagination-example}
+  \caption{}
   \label{fig:pagination-example}
 \end{figure}
 

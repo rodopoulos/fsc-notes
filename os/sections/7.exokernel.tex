@@ -3,6 +3,13 @@ O conceito de \textit{exokernel} foi proposto por pesquisadores do MIT na décad
 
 A \textbf{motivação} de tais sistemas é fundamentada no \textit{overhead} inatos aos SO tradicionais, ilustrado na \ref{fig:os-overhead}, os quais tentam prover todas as funcionalidades a todas as aplicações, mesmo que algumas aplicações deixam de usar certas características. Além do \textit{overhead}, estas abstrações escondem informações das aplicações.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.65\textwidth]{os-overhead}
+  \caption{\textit{Overhead} inato de SOs tradicionais}
+  \label{fig:os-overhead}
+\end{figure}
+
 O \textit{exokernel} concentra-se na multiplexação segura do \textit{hardware}, realizando sua abstração e tornando-o visível às aplicações. De posse das primitivas básicas de \textit{hardware}, podem ser implementadas em modo usuário as abstrações tradicionalmente oferecidas pelo SO.
 
 O \textbf{objetivo} desta abordagem é obter maior \textbf{desempenho e funcionalidade}, já que a aplicação pode customizar o SO de acordo com suas necessidades, o que também acaba provendo \textbf{maior extensibilidade} em relação as arquiteturas monolíticas e de \textit{microkernel}.
@@ -27,7 +34,7 @@ A proteção de recursos de \textit{hardware} feita aqui e \textbf{não se preoc
   \begin{itemize}
     \item Alocar recursos através de chamadas de sistema, que verificarão permissões de acesso;
 
-    \item Liber de recursos através de chamadas de sistema;
+    \item Liberar recursos através de chamadas de sistema;
 
     \item Verificar o dono do recurso no momento.
   \end{itemize}

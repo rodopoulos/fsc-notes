@@ -1,6 +1,13 @@
 \chapter{\textit{Microkernel}}
 A palavra \textit{kernel} é tradicionalmente utilizada para denotar a parte do SO que é essencial e comum a todos os outros \textit{softwares}. A idéia principal da abordagem do \textit{microkernel} é reduzir o tamanho \textit{kernel}, implementando o maior número possível de funções e sub-sistemas fora dele. Esta idéia não é nova, advinda desde 1970. A maioria dos \textit{microkernels} comerciais utilizam a abordagem cliente/servidor. \underline{Exemplos:} Mach, Amoeba e Chorus.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.75\textwidth]{monolithic-2-micro}
+  \caption{Comparativo entre a estrutura monolítica e a de \textit{microkernel}}
+  \label{fig:monolithic-2-micro}
+\end{figure}
+
 \section{Arquitetura}
 A interface oferecida garante uma estrutura de sistema mais modular, de forma que o mal-funcionamento de servidores de funções pode ser isolado, como em qualquer outro programa de usuário, protegendo o \textit{kernel} de ser afetado. Além disso, isso permite que diferentes estratégias implementadas por diferentes servidores podem coexistir, garantindo \textbf{maior flexibilidade}.
 
@@ -28,6 +35,13 @@ O espaço de endereçamento é a abstração óbvia para a incorporação de por
 O \textbf{tratamento de interrupção} neste caso é diferente: o \textit{kernel} recebe a interrupção, transforma-a em mensagem e a envia ao \textit{driver} correspondente, que roda em modo usuário. Desta forma, \textbf{\textit{kernel} não se envolve no tratamento específico de uma interrupção}.
 
 Por sua vez, o \textit{driver} é um processo que acessa diretamente portas de \textit{hardware} em seu espaço de endereçamento e recebe as interrupções via mecanismos de IPC. Caso necessite manipular a memória, pode fazê-lo por meio de gerentes de memória. \underline{Exemplo:} \textit{driver} de vídeo.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.6\textwidth]{microkernel-driver}
+  \caption{Esquema genérico de um \textit{driver} no \textit{microkernel}}
+  \label{fig:microkernel-driver}
+\end{figure}
 
 \subsection{Identificadores Únicos}
 O \textit{microkernel} provê identificadores únicos (\textit{uid}) para recursos como \textit{threads}, tarefas, canais de comunicação, etc.. Logo, se um recurso $S_1$ quer enviar uma mensagem ao recurso $S_2$, ele deve especificar $S_2$ como destino. Para tal, o \textit{microkernel} deve conheces estes \textit{uid}.
@@ -96,10 +110,15 @@ Portanto, são definidas primitivas para a memória virtual:
 
 \end{itemize}
 
-\subsubsection{Paginadores Externo}
-Objetos de memória são necessariamente paginados, podendo ser gerenciados por aplicações de usuário chamadas gerentes de memória ou paginadores externos. Os gerentes de memória são os responsáveis pelas atividades de \textit{page-in} e \textit{page-out}.
+\subsection{Paginadores Externos}
+Objetos de memória são necessariamente paginados, podendo ser \textbf{gerenciados por aplicações de usuário} chamadas gerentes de memória ou paginadores externos. Os gerentes de memória são os responsáveis pelas atividades de \textit{page-in} e \textit{page-out}.
 
-% TODO: por figura
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.75\textwidth]{mach-external-pager}
+  \caption{Esquema de paginador externo e objeto de memória no espaço da aplicação}
+  \label{fig:mach-external-pager}
+\end{figure}
 
 \subsubsection{Protocolo entre Gerente e Núcleo}
 O gerente de memória interage com o núcleo do \textit{Mach} através de um protocolo assíncrono pré-definido:
@@ -118,7 +137,12 @@ O gerente de memória interage com o núcleo do \textit{Mach} através de um pro
   \item Se a aplicação deseja referenciar a página de um modo proibido pelos direitos de acesso atuais, um \textit{page fault} de proteção é gerado. O gerente pode também decidir restringir os direitos de acesso à uma página por conta própria.
 \end{enumerate}
 
-% TODO: botar figura
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.8\textwidth]{mach-pagination}
+  \caption{Protocolo entre gerente e núcleo}
+  \label{fig:mach-pagination}
+\end{figure}
 
 É importante notar que o usuário pode não querer gerenciar um objeto de memória e deseja que o sistema o faça, uma vez que sendo uma aplicação de usuário, pode conter \textit{bugs}. As páginas que compõe o próprio sistema \textit{Mach} devem ser geradas por alguém. Dado isso, o sistema dispõe de um \textbf{gerente de memória \textit{default}}.
 
