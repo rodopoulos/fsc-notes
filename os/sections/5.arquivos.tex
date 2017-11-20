@@ -53,7 +53,7 @@ Além do nome e dos dados, o SO associa a cada arquivo um conjunto de infomaçõ
 As operações sobre arquivos geralmente levam em consideração um conjunto de entidades de um sistema de arquivos, sendo elas:
 
 \begin{itemize}
-  \item \textbf{Tabela de Arquivos:} uma tabela global do sistema, onde existe uma entrada para cada arquivo, contendo as informações referentes a cada um;
+  \item \textbf{Tabela de Arquivos:} uma tabela global do sistema, onde existe uma entrada para cada arquivo, contendo as informações referentes a cada umm organizada em diretórios;
 
   \item \textbf{Diretório:} caminho que leva ao arquivo. Ao ser criado, o arquivo é posicionado em um diretório e a tabela de arquivos deste diretório deve conter uma entrada para o novo arquivo;
 
@@ -64,7 +64,6 @@ As operações sobre arquivos geralmente levam em consideração um conjunto de 
   \item \textbf{Posição Corrente:} ponteiro que indica qual a posição do arquivo será acessada na próxima vez. As operações de leitura e escrita incrementam o valor da posição corrente do arquivo do número de \textit{bytes} lidos e escritos.
 \end{itemize}
 
-% TODO: ILUSTRAR COM IMAGENS DO TANENBAUM
 Agora definimos as operações sobre os arquivos:
 
 \subsubsection{\textit{Create}}
