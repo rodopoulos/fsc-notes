@@ -118,7 +118,7 @@
     0     & \sout{0} 3    & \sout{1} 5            \\
     1     & \sout{1} 0    & \sout{2} 9            \\
     2     & 7             & 3              \\
-    3     & 2             & 4             
+    3     & 2             & 4
   \end{tabular}
 \end{table}
 
@@ -164,7 +164,7 @@
     0     & \sout{0} \sout{3} 0     & \sout{1} \sout{5} 9            \\
     1     & 1                       & \sout{2} 8            \\
     2     & 7                       & \sout{3} 7              \\
-    3     & \sout{2} 3              & \sout{4} \sout{6} 10             
+    3     & \sout{2} 3              & \sout{4} \sout{6} 10
   \end{tabular}
 \end{table}
 
@@ -219,6 +219,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   {2º/2017}{Organização de Sistemas Operacionais}
   {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta. 
   \begin{table}[!H]
+
     \centering
     \begin{tabular}{clll}
       \hline \hline
@@ -238,6 +239,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {2º/2017}{Arquiteturas de SO/Processos}
   {Cite os passos para a criação de processos nas arquiteturas monolíticas, \textit{microkernel} e \textit{exokernel}.}
+  \label{ex:processes-creation}
 
   Para as \textsc{arquiteturas monolíticas}:
   \begin{enumerate}
@@ -248,10 +250,6 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item O SO atribui um \textit{PID} ao processo filho;
 
     \item O SO ajusta a \textit{área de memória} para a execução do processo filho;
-    \begin{itemize}
-      \item % TODO: o que faz quando é criação tradicional?
-      \item % TODO: o que faz quando é clonagem?
-    \end{itemize}
 
     \item O SO preenche os \textit{valores de registradores} para execução do processo filho na tabela de processos;
 
@@ -454,21 +452,24 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   }
 
 
-    Estendemos a questão, inserindo também o resultado para política FCFS (note que nela o \textit{quantum} é inútil). Escrevemos em ordem, do primeiro para o último:
+    Estendemos a questão, inserindo também o resultado para política FCFS. Escrevemos em ordem, do primeiro para o último:
 
-    \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow B \rightarrow E \rightarrow A \rightarrow E$
+    \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow B \rightarrow E \rightarrow B \rightarrow E$
 
-    \textbf{SJF:} $C \rightarrow D \rightarrow A \rightarrow E \rightarrow B$
+    \textbf{SJF:} $C \rightarrow D \rightarrow A \rightarrow E \rightarrow B$ (não tem \textit{quantum})
 
-    \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$
+    \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (não tem \textit{quantum})
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Memória/Paginação}
+
   {Explique como funcionam as organizações, \textit{forward-mapped} (mapeamento direto) e tabela invertida, de páginas.}
 
-  No mapeamento direto mapeia-se a memória virtual sobre o espaço de gerenciamento da máquina, utilizando a página como índice.
-  A tabela invertida mapeia-se a memória virtual sobre o espaço de gerenciamento real, utilizando o frame como índice, logo necessita de um hash em cima do número da página.
+  \textbf{Forward-mapped:} a tabela é indexada pelo endereço de página virtual, podendo existir uma entrada para cada endereço de página possível. A página indexa o \textit{frame} no qual ela deve residir na memória principal.
+
+  \textbf{Tabela Invertida:} a tabela é indexada pelo \textit{frame}, segundo o espaço de endereçamento real. Para obter o índice correspondente da página virtual, é aplicada uma função \textit{hash}. Como é possível haver colisões, uma entrada pode conter uma lista de colisões, contendo as páginas que coincidiram naquele \textit{frame}.
+
 \end{exercicio}
 
 \begin{exercicio}
@@ -492,9 +493,13 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2012}{Sistemas de Arquivo}
   {Alguns sistemas de arquivo deletam todos os arquivos de usuário quando o usuário se desconecta da máquina (\textit{logoff}), a não ser que o usuário, explicitamente, diga quais arquivos devem ser permanentes. Comente esta abordagem em relação à abordagem tradicional.}
-  Segurança, pois os dados guardados serão descartados.
-  Desempenho, pois ligará mais rápido já que não existe nenhuma associação a se fazer com os dados do usuário.
-  Espaço em disco pequeno, não caberia vários usuários.
+
+  Nela, temos:
+  \being{itemize}
+    \item \textbf{Segurança}, pois os dados guardados serão descartados.
+    \item \textbf{Desempenho}, pois ligará mais rápido já que não existe nenhuma associação a se fazer com os dados do usuário.
+    \item \textbf{Economia}, podendo ser usada quando temos pouco espaço em disco.
+  \end{itemize}
 \end{exercicio}
 
 \begin{exercicio}
@@ -504,9 +509,18 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando existe buffer cache.
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando não existe buffer cache.
   \end{enumerate}}
-  Sem buffer, ao utilizar um comando de escrita o que foi requisitado para guardar no disco será, de fato, salvado no momento da instrução. A leitura acesso o disco e escreve na memória o dado requisitado.
-  Já com buffer cache, a escrita não ocorre no momento em que termina a execução da instrução, primeiro os dados são escritos na buffer cache liberando a CPU para outras coisas, e então o controlador do disco copia as informações da buffer cache para o disco.
-  A leitura com buffer cache, utiliza leitura adiantada, ou seja, os dados lidos que não fazem da parte dos requisitados são guardados na buffer cache, pois pelo princípio de localidade, muito provavelmente estes dados serão utilizados num futuro próximo.
+
+  %Sem buffer, ao utilizar um comando de escrita o que foi requisitado para guardar no disco será, de fato, salvado no momento da instrução. A leitura acesso o disco e escreve na memória o dado requisitado.
+  %Já com buffer cache, a escrita não ocorre no momento em que termina a execução da instrução, primeiro os dados são escritos na buffer cache liberando a CPU para outras coisas, e então o controlador do disco copia as informações da buffer cache para o disco.
+  %A leitura com buffer cache, utiliza leitura adiantada, ou seja, os dados lidos que não fazem da parte dos requisitados são guardados na buffer cache, pois pelo princípio de localidade, muito provavelmente estes dados serão utilizados num futuro próximo.
+
+
+  \begin{enumerate}[label=(\alph*)]
+    \item Quando uma operação de E/S é realizada, uma consulta a \textit{buffer cache} é realizada primeiro, onde o bloco solicitado é buscado em uma área de memória reservada. Caso não conste em memória, o bloco é buscado em disco, colocado na \textit{buffer cache} e assim efetua-se a operação.
+
+    \item Neste caso, em todas as operações de E/S, o bloco é acessado diretamente do disco, resultando em um acesso mais lento.
+  \end{enumerate}
+
 \end{exercicio}
 
 \begin{exercicio}

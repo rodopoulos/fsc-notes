@@ -332,6 +332,7 @@ No \textit{aging}, a cada interrupção de \textit{clock}, é feito um \textit{s
 
 
 \subsection{Tratamento de \textit{Page Fault}}
+\label{sec:page-fault}
 Aqui é explicada toda a rotina de tratamento de um \textit{page fault}:
 
 \begin{enumerate}
@@ -368,21 +369,26 @@ Aqui descrevemos o funcionamento geral do pedido de uma página pela CPU. Supond
 
   \item Na MMU, o endereço virtual é divido em uma tupla ($p,d$), onde $p$ é a página desejada e $d$ o deslocamento dentro da página;
 
-  \item Ainda na MMU, a página $p$ é utilizada para acessar a \textbf{tabela de páginas}, que reside na MMU. A partir dessa tabela, a tupla inicial é convertida na tupla $F = (F,d)$ correspondente do endereço físico. Nela, $f$ corresponderá ao \textit{frame} da memória física e o deslocamento permanece o mesmo;
+  \item Ainda na MMU, a página $p$ é utilizada para acessar a \textbf{tabela de páginas}:
+    \begin{itemize}
+      \item Primeiro, ela procura pela entrada em sua TLB. Se ela estiver presente, o mapeamento é imediato;
 
-  \item Antes de escrever o endereço no barramento, a MMU checa se a página está mapeada em memória física, através de um \textit{bit} de presença.
+      \item Caso não esteja na TLB, a entrada correspondente da tabela de páginas é buscada em memória. Ela é inserida na TLB, estando disponível nos próximos acessos.
+    \end{itemize}
+
+  \item Com a entrada da tabela de páginas disponível, o \textit{frame} $f$ pode ser obtido. Antes, a MMU checa se a página está mapeada em memória física, através do \textit{bit} de presença.
 
   \begin{itemize}
     \item Caso a página esteja mapeada, o endereço já pode ser escrito no barramento;
 
-    \item Caso contrário, a MMU gerá um \textit{syscall} ao SO, chamado de \textbf{\textit{page fault}}. Dessa forma, seleciona um \textit{frame} da memória pra ser substituído pela página requisitada e a instrução inicial de acesso a memória é reexecutada. Consequentemente, a MMU vai constatar que a página existe;
+    \item Caso contrário, a MMU gera um \textit{page fault}, sendo executada sua rotina (Seção \ref{sec:page-fault}). Ao fim, a página estará devidamente mapeada em memória, a instrução será reexecutada e a MMU irá constatar a presença do \textit{frame}.
   \end{itemize}
 
-  \item O endereço físico $F$ é escrito no barramento de memória
+  \item O endereço físico $F = (f,d)$ é escrito no barramento de memória, a qual irá devolver o \textit{frame} requisitado.
 \end{enumerate}
 
 
-\subsubsection{Cálculos na Paginação}
+\subsection{Cálculos na Paginação}
 Em uma arquitetura com espaço de endereçamento de $b$ \textit{bits}, páginas de tamanho $P$ \textit{bytes} e uma memória RAM com tamanho $M$ \textit{bytes}, temos que:
 
 \begin{itemize}
@@ -395,10 +401,59 @@ Em uma arquitetura com espaço de endereçamento de $b$ \textit{bits}, páginas 
   \end{equation*}
 \end{itemize}
 
-Ao solicitar um endereço virtual à memória, a CPU utiliza a tupla $(p,d)$, onde $p$ é a página virtual e $d$ o deslocamento dentro da página. Este endereço virtual deve ser transformado em um endereço físico \textbf{de mesmo tamanho}, composto pela tupla $(f,d)$, onde $f$ é o número do \textit{frame} a ser utilizado e $d$ é o mesmo deslocamento usado no endereço virtual.
+A conversão de uma página $p$ para um \textit{frame} $f$ irá depender da tabela de páginas. O esquema da Figura \ref{fig:pagination-calc} ilustra o processo.
 
-Disso, temos que:
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.75\textwidth]{pagination-calc}
+  \caption{Esquema de paginação}
+  \label{fig:pagination-calc}
+\end{figure}
 
-\begin{itemize}
-  \item O tamanho de página $P$ é o valor máximo que $2^d$ pode assumir;
-\end{itemize}
+A MMU recebe $v$, obtendo $(p,d)$ através das equações. Observe que $p$ é o quociente da divisão e $d$ é o resto:
+
+\begin{equation*}
+  p = \frac{v}{P} \hspace{4cm} d = v\mod P
+\end{equation*}
+
+Usando $p$, a MMU obtém o \textit{frame} $f$ correspondente e pode computar F através da equação:
+
+\begin{equation*}
+  F = P . f + d
+\end{equation*}
+
+Aplicamos tais cálculos em um exemplo: admitindo páginas de tamanho 1Kbyte, tendo a tabela de páginas da Figura \ref{fig:pagination-example} e a MMU recebendo o endereço 12. Qual endereço será escrito no barramento?
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{pagination-example}
+  \label{fig:pagination-example}
+\end{figure}
+
+\textbf{Resposta:} vemos aqui que $v = 12$ e $p = 1024$ (dado que 1KB = 1024B). Logo, obtemos $p$ e $d$, usando as equações:
+
+\begin{equation*}
+  \begin{split}
+    p & = \frac{v}{P} \\
+      & = \frac{12}{1024} \\
+      & = 0
+  \end{split}
+  \hspace{3cm}
+  \begin{split}
+    d & = v\mod P \\
+      & = 12\mod 1024 \\
+      & = 12
+  \end{split}
+\end{equation*}
+
+Consultando a posição $p = 0$ da tabela, obtemos $f = 2$. Logo, o cálculo de F é:
+
+\begin{equation*}
+  \begin{split}
+    F & = P . f + d \\
+      & = 1024 . 2 + 12 \\
+      & = 2060
+  \end{split}
+\end{equation*}
+
+Logo, o endereço escrito no barramento é 2060.
