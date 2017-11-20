@@ -79,7 +79,7 @@
   Fazer o exercício de forma a mostrar cada iteração e o histórico das tabelas.
 
   \textbf{FIFO:} 6 \textit{page faults} \\
-  1ª forma:
+  1ª forma: Estado de Memória e Ordem de Saída
   \[
   \begin{array}{rcccccccccc}
     \text{Página Referênciada}
@@ -100,7 +100,7 @@
     & - & - & - & 0 & 1 & 1 & 1 & 1 & 7 & 7 \\
   \end{array}
   \]
-2ª forma:
+2ª forma: Tabela
 \[
 \begin{array}{rcccccccccc}
   \text{Tempo de referência}
@@ -114,17 +114,19 @@
 \begin{table}[H]
   \centering
   \begin{tabular}{lll}
-    Frame & Página & Tempo de carga \\
-    0     & \sout{0} 3    & \sout{1} 5            \\
-    1     & \sout{1} 0    & \sout{2} 9            \\
-    2     & 7             & 3              \\
-    3     & 2             & 4
+    \hline \hline
+    \textbf{Frame}  & \textbf{Página}                   & \textbf{Tempo de carga} \\ \hline
+    0               & \sout{0} 3                        & \sout{1} 5 \\
+    1               & \sout{1} 0                        & \sout{2} 9 \\
+    2               & 7                                 & 3 \\
+    3               & 2                                 & 4 \\
+    \hline \hline
   \end{tabular}
 \end{table}
 
   \textbf{LRU:} 7 \textit{page faults} \\
 
-  1ª forma:
+  1ª forma: Estado de Memória e Ordem de Saída
   \[
   \begin{array}{rcccccccccc}
     \text{Página Referênciada}
@@ -146,7 +148,7 @@
   \end{array}
   \]
 
-2ª forma:
+2ª forma: Tabela
 \[
 \begin{array}{rcccccccccc}
   \text{Tempo de referência}
@@ -160,11 +162,13 @@
 \begin{table}[H]
   \centering
   \begin{tabular}{lll}
-    Frame & Página                  & Tempo de referência \\
-    0     & \sout{0} \sout{3} 0     & \sout{1} \sout{5} 9            \\
-    1     & 1                       & \sout{2} 8            \\
-    2     & 7                       & \sout{3} 7              \\
-    3     & \sout{2} 3              & \sout{4} \sout{6} 10
+    \hline \hline
+    \textbf{Frame}  & \textbf{Página}                   & \textbf{Tempo de referência} \\ \hline
+    0               & \sout{0} \sout{3} 0               & \sout{1} \sout{5} 9 \\
+    1               & 1                                 & \sout{2} 8 \\
+    2               & 7                                 & \sout{3} 7 \\
+    3               & \sout{2} 3                        & \sout{4} \sout{6} 10 \\
+    \hline \hline
   \end{tabular}
 \end{table}
 
@@ -604,7 +608,7 @@ P & P & P & P & - & - & P & P & - & - & - & P & P & P & - & - & P & - & - & - \\
       \textbf{Visão Global do Sistema} & A & A & M & B \\
       \textbf{Extensibilidade} & B & B & M & A \\
       \textbf{Flexibilidade} & B & B & M & A \\
-      \textbf{Manutenibilidade} &&& \\
+      \textbf{Manutenibilidade}& B & M & A & A\\
       \hline \hline
     \end{tabular}
   \end{table}}
@@ -612,24 +616,32 @@ P & P & P & P & - & - & P & P & - & - & - & P & P & P & - & - & P & - & - & - \\
   \textbf{Monolítico:}
   \begin{itemize}
     \item \textit{Visão Global do Sistema:} todas as funcionalidades do SO estão no kernel;
-    \item \textit{Extensibilidade:}
-    \item \textit{Flexibilidade:}
-    \item \textit{Manutenibilidade:}
+    \item \textit{Extensibilidade:} %%%%%%%%%%%%%%%TO DO%
+    \item \textit{Flexibilidade:} pouca de estruturação torna o código custoso ao editar ou adicionar funcionalidade;
+    \item \textit{Manutenibilidade:} é necessário uma atenção para não interferir em outras funcionalidades e toda alteração implica em recompilar todo o kernel;
+  \end{itemize}
+
+  \textbf{\textit{Camadas}:}
+  \begin{itemize}
+    \item \textit{Visão Global do Sistema:} todas as funcionalidades do SO estão no kernel;
+    \item \textit{Extensibilidade:} %%%%%%%%%%%%%%%TO DO%
+    \item \textit{Flexibilidade:}  %%%%%%%%%%%%%%%TO DO%
+    \item \textit{Manutenibilidade:} apesar das camadas terem regras bem definidas, toda alteração implica em recompilar todo o kernel;
   \end{itemize}
 
   \textbf{\textit{Microkernel}:}
   \begin{itemize}
     \item \textit{Visão Global do Sistema:} alguns módulos estão no modo usuário, como gerência de memória e sistema de arquivos. Porém, ele possui visão global da gerência de processos e da memória dependente do hardware;
-    \item \textit{Extensibilidade:}
-    \item \textit{Flexibilidade:}
-    \item \textit{Manutenibilidade:}
+    \item \textit{Extensibilidade:} é possível adicionar mais módulos em modo usuário desde que estes respeitem o protocolo IPC;
+    \item \textit{Flexibilidade:} diferentes estratégias de diferentes implementadas por servidores podem coexistir fora do kernel, exceto funcionalidades essenciais como gerência de processos e gerência de memória dependente do hardware;
+    \item \textit{Manutenibilidade:} cada módulo é bem definido e pode ser tratado individualmente sem prejudicar os outros módulos;
   \end{itemize}
 
   \textbf{\textit{Exokernel}:}
   \begin{itemize}
     \item \textit{Visão Global do Sistema:} não conhece nenhuma abstração do SO, como gerência de processos ou sistema de arquivos. Apenas expõe o hardware e os protege;
-    \item \textit{Extensibilidade:}
-    \item \textit{Flexibilidade:}
-    \item \textit{Manutenibilidade:}
+    \item \textit{Extensibilidade:} é possível descarregar código no kernel, aumentando suas funcionalidades;
+    \item \textit{Flexibilidade:} é possível executar diferentes LibOS em um mesmo exokernel, dando liberdade à aplicação de escolher qual LibOS ele executará no momento;
+    \item \textit{Manutenibilidade:} além da facilidade de manipular bibliotecas que compõe abstrações da LibOS, caso alguma LibOS não esteja respondendo de modo adequado, é possível retirá-la de memória sem prejudicar os outros componentes e as outras LibOS em execução;
   \end{itemize}
 \end{exercicio}
