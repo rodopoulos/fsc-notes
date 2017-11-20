@@ -100,7 +100,7 @@ Portanto, são definidas primitivas para a memória virtual:
     \item Neste momento, a região é mapeada, porém não é carregada em memória. Assim, o primeiro acesso a esta região ocasionará em um \textit{page fault}.
   \end{itemize}
 
-  \item \textbf{\textit{vm\_copy}:} copia um objeto da memória de uma região par a outra. Como otimização, ele implementa o \textit{copy on write}, onde % TODO: ver o que é isso e por figura
+  \item \textbf{\textit{vm\_copy}:} copia um objeto da memória de uma região para a outra. Como otimização, ele implementa o \textit{copy on write}: o recurso não é efetivamente duplicado, sendo compartilhado até que haja uma escrita em alguma instância;
 
   \item \textbf{\textit{vm\_inherit}:} determina que regiões serão herdadas na criação de um processo filho;
 

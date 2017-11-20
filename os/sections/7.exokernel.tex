@@ -24,7 +24,12 @@ Aqui, o conceito tradicional de um SO é dividido em duas partes:
   \item \textbf{LibOS:} conjunto de bibliotecas que gerenciam recursos e oferecem abstrações de alto nível para as aplicações.
 \end{itemize}
 
-% TODO: adicionar figura
+\begin{figure}
+  \centering
+  \includegraphics[width=.7\textwidth]{exokernel-libos}
+  \caption{Um \textit{exokernel} simples, com duas aplicações ligadas com suas respectivas LibOSes}
+  \label{fig:exokernel-libos}
+\end{figure}
 
 \subsection{\textit{Exokernel}}
 A proteção de recursos de \textit{hardware} feita aqui e \textbf{não se preocupa com a gerência do \textit{hardware}}. Entretanto, o \textit{exokernel} implementa a proteção de memória. Além disso, o \textit{kernel} torna visível:
