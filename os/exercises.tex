@@ -6,7 +6,7 @@
   {2º/2017}{\textit{Threads}}
   {Por quê a implementação de \textit{threads} em nível de usuário possui um custo extremamente baixo de troca de contexto?}
 
-  Pois as trocas de contexto entre \textit{threads} não possuem o custo da troca de modo usuário para protegido, uma vez que esta troca é feita em nível de aplicação, existindo apenas no nível de usuário.
+  Comparando o custo da troca de contexto à nível de kernel com a implementação à nível \textit{threads}, o custo é extremamente baixo pois as trocas de contexto entre \textit{threads} não possuem o custo da troca de modo usuário para protegido, uma vez que esta troca é feita em nível de aplicação, existindo apenas no nível de usuário. À nível de \textit{threads} se resume a utilizar conjunto de instruções de \textit{load}, \textit{store} e \textit{jump} para simular uma troca de contexto, enquanto à nível kernel alterna entre modo usuário para protegido e modo usuário utilizando-se instruções de \textit{long jump}.
 \end{exercicio}
 
 \begin{exercicio}
@@ -62,9 +62,9 @@
   \begin{enumerate}[label=(\alph*)]
     \item \textbf{CPU:} envia o endereço virtual à MMU;
 
-    \item \textbf{MMU:} quebra o endereço virtual em duas partes, sendo elas a página e o deslocamento. A MMU usa $p$ como índice na TLB para obter o \textit{frame} $f$. A MMU troca a página $p$ pelo frame $f$, que é inserido no barramento junto com o deslocamento.
+    \item \textbf{MMU:} quebra o endereço virtual em duas partes, sendo elas a página e o deslocamento. A MMU usa $p$ como índice na TLB para obter o \textit{frame} $f$. A MMU troca a página $p$ pelo frame $f$, que é inserido no barramento junto com o deslocamento, gerando endereço físico.
 
-    \item \textbf{Memória RAM:} entidade que guarda o dado desejado e será acessada;
+    \item \textbf{Memória RAM:} entidade que contém dado desejado. Dado um endereço físico, ela acessa dado;
 
     \item \textbf{TLB:} é obtido o \textit{frame}, a partir do endereço virtual recebido.
   \end{enumerate}
@@ -79,6 +79,7 @@
   Fazer o exercício de forma a mostrar cada iteração e o histórico das tabelas.
 
   \textbf{FIFO:} 6 \textit{page faults} \\
+  1ª forma:
   \[
   \begin{array}{rcccccccccc}
     \text{Página Referênciada}
@@ -99,8 +100,31 @@
     & - & - & - & 0 & 1 & 1 & 1 & 1 & 7 & 7 \\
   \end{array}
   \]
+2ª forma:
+\[
+\begin{array}{rcccccccccc}
+  \text{Tempo de referência}
+    & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+  \text{Página Referênciada}
+    & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
+  \text{Resultado}
+    & P & P & P & P & P & - & - & - & P & - \\
+\end{array}
+ \]
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll}
+    Frame & Página & Tempo de carga \\
+    0     & \sout{0} 3    & \sout{1} 5            \\
+    1     & \sout{1} 0    & \sout{2} 9            \\
+    2     & 7             & 3              \\
+    3     & 2             & 4             
+  \end{tabular}
+\end{table}
 
   \textbf{LRU:} 7 \textit{page faults} \\
+
+  1ª forma:
   \[
   \begin{array}{rcccccccccc}
     \text{Página Referênciada}
@@ -122,12 +146,93 @@
   \end{array}
   \]
 
+2ª forma:
+\[
+\begin{array}{rcccccccccc}
+  \text{Tempo de referência}
+    & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+  \text{Página Referênciada}
+    & 0 & 1 & 7 & 2 & 3 & 2 & 7 & 1 & 0 & 3 \\ \hline
+  \text{Resultado}
+    & P & P & P & P & P & - & - & - & P & P \\
+\end{array}
+ \]
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll}
+    Frame & Página                  & Tempo de referência \\
+    0     & \sout{0} \sout{3} 0     & \sout{1} \sout{5} 9            \\
+    1     & 1                       & \sout{2} 8            \\
+    2     & 7                       & \sout{3} 7              \\
+    3     & \sout{2} 3              & \sout{4} \sout{6} 10             
+  \end{tabular}
+\end{table}
+
 \end{exercicio}
 
 \begin{exercicio}
   {2º/2017}{Estruturação de Sistemas Operacionais}
   {Explique a estruturação em camadas de sistema operacional. Comente vantagens e desvantagens.}
 
+SO fica em modo protegido e seu código é distribuído em diversas camadas funcionais, de modo que rotinas de uma camada podem fazer chamadas às camadas imediatamente superior ou inferior.
+
+ \textsc{Vantagens}:
+  \begin{enumerate}
+    \item Facilidade de manutenção;
+
+    \item Modularidade;
+  \end{enumerate}
+
+ \textsc{Desvantagens}:
+  \begin{enumerate}
+    \item Overhead em relação ao monolítico;
+  \end{enumerate}
+
+\end{exercicio}
+
+\begin{exercicio}
+  {2º/2017}{Escalonamento de Processos}
+  {Considere o conjunto de $6$ processos e respectivos tempos de execução (quantum = $4 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin}, \textit{First Come First Served} e \textit{Shortest Job First (SJF)}.
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+      \hline \hline
+      \textbf{Processo} & \textbf{Tempo de execução (ms)} \\ \hline
+      A                 & 9                               \\
+      B                 & 10                              \\
+      C                 & 2                               \\
+      D                 & 6                               \\
+      E                 & 8                               \\
+      E                 & 3                              \\ \hline \hline
+    \end{tabular}
+  \end{table}.}
+
+  \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A \rightarrow B \rightarrow D \rightarrow E \rightarrow A \rightarrow B$
+
+  \textbf{SJF:} $C \rightarrow F \rightarrow D \rightarrow E \rightarrow A \rightarrow B$
+
+  \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F$
+
+\end{exercicio}
+
+\begin{exercicio}
+  {2º/2017}{Organização de Sistemas Operacionais}
+  {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta. 
+  \begin{table}[!h]
+    \centering
+    \begin{tabular}{clll}
+      \hline \hline
+      \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
+      \textbf{Visão Global do Sistema} &Alto & Médio & Baixo \\
+      \hline \hline
+    \end{tabular}
+    \end{table}}
+
+    \begin{itemize}
+      \item Monolítico: todas as funcionalidades do SO estão no kernel;
+      \item Microkernel: alguns módulos estão no modo usuário, como gerência de memória e sistema de arquivos. Porém, ele possui visão global da gerência de processos e da memória dependente do hardware;
+       \item Exokernel: não conhece nenhuma abstração do SO, como gerência de processos ou sistema de arquivos. Apenas expõe o hardware e os protege;
+    \end{itemize}
 \end{exercicio}
 
 \begin{exercicio}
