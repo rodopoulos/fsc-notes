@@ -444,7 +444,11 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \begin{exercicio}
   {1º/2012}{Memória/Paginação}
-  {Explique como funcionam as organizações, \textit{forward-mapped} (mapeamento direto) e tabela invertida, de páginas.}
+  {Explique como funcionam as organizações \textit{forward-mapped} (mapeamento direto) e tabela invertida de páginas.}
+
+  \textbf{Forward-mapped:} a tabela é indexada pelo endereço de página virtual, podendo existir uma entrada para cada endeço de página possível. A página indexa o \textit{frame} no qual ela deve residir na memória principal.
+
+  \textbf{Tabela Invertida:} a tabela é indexada pelo \textit{frame}. Para obter o índice correspondente da página virtual, é aplicada uma função \textit{hash}. Como é possível haver colisões, uma entrada pode conter uma lista de colisões, contendo as páginas que coincidiram naquele \textit{frame}.
 \end{exercicio}
 
 \begin{exercicio}
