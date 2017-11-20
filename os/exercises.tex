@@ -12,7 +12,7 @@
 \begin{exercicio}
   {2º/2017}{Condições de Corrida}
   {Defina condição de corrida. Considere o código multi-processo abaixo. Existe condição de corrida nesse código? Se sim, corrija o código de maneira a eliminá-la.
-  \begin{figure}[!H]
+  \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{ex-race-cond}
   \end{figure}}
@@ -21,7 +21,7 @@
 
   Sim, existe condição de corrida na variável $b$. Utilizamos \textit{locks} para a nossa solução:
 
-  \begin{table}[!H]
+  \begin{table}[H]
     \centering
     \begin{tabular}{l|l}
       \textbf{P1:}            & \textbf{P2:} \\
@@ -53,7 +53,7 @@
   {2º/2017}{Memória Virtual}
   {
     Considere um sistema de memória virtual paginada. Dê os nomes dos elementos marcados com (a), (b), (c) e (d) na figura abaixo e explique como cada um é utilizado em uma operação de acesso à memória.
-    \begin{figure}[!H]
+    \begin{figure}[H]
       \centering
       \includegraphics[width=0.4\textwidth]{ex-mem-structure}
     \end{figure}
@@ -66,7 +66,7 @@
 
     \item \textbf{Memória RAM:} entidade que contém dado desejado. Dado um endereço físico, ela acessa dado;
 
-    \item \textbf{TLB:} é obtido o \textit{frame}, a partir do endereço virtual recebido.
+    \item \textbf{TLB:} \textit{buffer} contido na MMU que possui as últimas entradas referenciadas da tabela de página. Recebe a página como índice para retornar a entrada correspondente, contendo o \textit{frame}.
   \end{enumerate}
 \end{exercicio}
 
@@ -111,7 +111,7 @@
     & P & P & P & P & P & - & - & - & P & - \\
 \end{array}
  \]
-\begin{table}[!H]
+\begin{table}[H]
   \centering
   \begin{tabular}{lll}
     Frame & Página & Tempo de carga \\
@@ -157,7 +157,7 @@
     & P & P & P & P & P & - & - & - & P & P \\
 \end{array}
  \]
-\begin{table}[!H]
+\begin{table}[H]
   \centering
   \begin{tabular}{lll}
     Frame & Página                  & Tempo de referência \\
@@ -174,12 +174,11 @@
   {2º/2017}{Estruturação de Sistemas Operacionais}
   {Explique a estruturação em camadas de sistema operacional. Comente vantagens e desvantagens.}
 
-SO fica em modo protegido e seu código é distribuído em diversas camadas funcionais, de modo que rotinas de uma camada podem fazer chamadas às camadas imediatamente superior ou inferior.
+  SO fica em modo protegido e seu código é distribuído em diversas camadas funcionais, de modo que rotinas de uma camada podem fazer chamadas às camadas imediatamente superior ou inferior.
 
- \textsc{Vantagens}:
+  \textsc{Vantagens}:
   \begin{enumerate}
     \item Facilidade de manutenção;
-
     \item Modularidade;
   \end{enumerate}
 
@@ -187,13 +186,12 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   \begin{enumerate}
     \item Overhead em relação ao monolítico;
   \end{enumerate}
-
 \end{exercicio}
 
 \begin{exercicio}
   {2º/2017}{Escalonamento de Processos}
   {Considere o conjunto de $6$ processos e respectivos tempos de execução (quantum = $4 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin}, \textit{First Come First Served} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[!H]
+  \begin{table}[H]
     \centering
     \begin{tabular}{cc}
       \hline \hline
@@ -212,28 +210,6 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   \textbf{SJF:} $C \rightarrow F \rightarrow D \rightarrow E \rightarrow A \rightarrow B$
 
   \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F$
-
-\end{exercicio}
-
-\begin{exercicio}
-  {2º/2017}{Organização de Sistemas Operacionais}
-  {Complete o quadro abaixo com uma das seguintes características: Visão Global do Sistema, Extensibilidade, Facilidade de Manutenção de código do SO. Justifque sua resposta. 
-  \begin{table}[!H]
-
-    \centering
-    \begin{tabular}{clll}
-      \hline \hline
-      \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
-      \textbf{Visão Global do Sistema} &Alto & Médio & Baixo \\
-      \hline \hline
-    \end{tabular}
-    \end{table}}
-
-    \begin{itemize}
-      \item Monolítico: todas as funcionalidades do SO estão no kernel;
-      \item Microkernel: alguns módulos estão no modo usuário, como gerência de memória e sistema de arquivos. Porém, ele possui visão global da gerência de processos e da memória dependente do hardware;
-       \item Exokernel: não conhece nenhuma abstração do SO, como gerência de processos ou sistema de arquivos. Apenas expõe o hardware e os protege;
-    \end{itemize}
 \end{exercicio}
 
 \begin{exercicio}
@@ -304,7 +280,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   {2º/2017}{Memória (Paginação)}
   {Tendo a tabela de páginas abaixo e recebendo o endereço $12$, que endereço a MMU vai colocar no barramento? (Considere páginas de 1KBytes)
   Faça o mesmo exercício para o endereço $3150$.
-  \begin{table}[!H]
+  \begin{table}[H]
     \centering
     \caption{Look-Aside Buffer Table}
     \label{tab:pag_to_frame}
@@ -317,7 +293,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     3      & 5     \\ \hline \hline
     \end{tabular}
     \end{table}}
-    
+
     1. Para endereço $X$ divide-se o endereço pelo tamanho da página, e encontra-se a página requerida.
     2. Após isto pega-se o número do frame e multiplica-se pelo tamanho para encontrar o endereço da página, soma-se o deslocamento (resto da divisão do primeiro passo).
 
@@ -358,7 +334,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2013}{\textit{Escalonamento de processos}}
   {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[!H]
+  \begin{table}[H]
     \centering
     \begin{tabular}{cc}
       \hline \hline
@@ -423,7 +399,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2012}{Arquiteturas de SO}
   {Admita um sistema operacional que é originalmente organizado segundo a estruturação microkernel no qual foi embutido um outro sistema operacional monolítico, por razões de desempenho. Como você classificaria esse sistema operacional? Por quê?}
-  
+
 \end{exercicio}
 
 \begin{exercicio}
@@ -436,7 +412,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 \begin{exercicio}
   {1º/2012}{Escalonamento de Processos}
   {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
-  \begin{table}[!H]
+  \begin{table}[H]
       \centering
       \begin{tabular}{cc}
         \hline \hline
@@ -463,13 +439,11 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \begin{exercicio}
   {1º/2012}{Memória/Paginação}
-
   {Explique como funcionam as organizações, \textit{forward-mapped} (mapeamento direto) e tabela invertida, de páginas.}
 
   \textbf{Forward-mapped:} a tabela é indexada pelo endereço de página virtual, podendo existir uma entrada para cada endereço de página possível. A página indexa o \textit{frame} no qual ela deve residir na memória principal.
 
   \textbf{Tabela Invertida:} a tabela é indexada pelo \textit{frame}, segundo o espaço de endereçamento real. Para obter o índice correspondente da página virtual, é aplicada uma função \textit{hash}. Como é possível haver colisões, uma entrada pode conter uma lista de colisões, contendo as páginas que coincidiram naquele \textit{frame}.
-
 \end{exercicio}
 
 \begin{exercicio}
@@ -479,15 +453,22 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Quantas entradas são necessárias em uma tabela de páginas forward-mapped?
     \item E na tabela de páginas invertida?
   \end{enumerate}}
-  Para forward-mapped utiliza-se $2^{32}/2^{12} = 2^{20}$ \\
-  Para tabela invertida utiliza-se $2^{26}/2^{12} = 2^{14}$
+
+  Sabendo que o tamanho da página $P = 4KB = 4096B = 2^{12}$, temos:
+  \begin{enumerate}[label=(\alph*)]
+    \item \textbf{Forward-mapping:}
+    $\frac{\text{espaço de endereçamento virtual}}{\text{/tamanho da paǵina}} =
+    \frac{2^{32}}{2^{12}} = 2^{20}$;
+
+    \item \textbf{Tabela Invertida:} $\frac{\text{endereçamento da memória}}{\text{tamanho da paǵina}} = \frac{2^{26}}{2^{12}} = 2^{14}$.
+  \end{enumerate}
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Drivers}
   {O que é uma controladora? Qual entidade do SO interage com ela?}
 
-  A controladora é a parte eletrônica das unidades de entrada e saída (Firmware). Ela interage constantemente com os \textit{drivers} de dispositivo, recebendo comandos específicos de \textit{hardware} em seus registradores.
+  A controladora é a parte eletrônica das unidades de entrada e saída (\textit{firmware}). Ela interage constantemente com os \textit{drivers} de dispositivo, recebendo comandos específicos de \textit{hardware} em seus registradores.
 \end{exercicio}
 
 \begin{exercicio}
@@ -495,7 +476,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   {Alguns sistemas de arquivo deletam todos os arquivos de usuário quando o usuário se desconecta da máquina (\textit{logoff}), a não ser que o usuário, explicitamente, diga quais arquivos devem ser permanentes. Comente esta abordagem em relação à abordagem tradicional.}
 
   Nela, temos:
-  \being{itemize}
+  \begin{itemize}
     \item \textbf{Segurança}, pois os dados guardados serão descartados.
     \item \textbf{Desempenho}, pois ligará mais rápido já que não existe nenhuma associação a se fazer com os dados do usuário.
     \item \textbf{Economia}, podendo ser usada quando temos pouco espaço em disco.
@@ -510,17 +491,11 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando não existe buffer cache.
   \end{enumerate}}
 
-  %Sem buffer, ao utilizar um comando de escrita o que foi requisitado para guardar no disco será, de fato, salvado no momento da instrução. A leitura acesso o disco e escreve na memória o dado requisitado.
-  %Já com buffer cache, a escrita não ocorre no momento em que termina a execução da instrução, primeiro os dados são escritos na buffer cache liberando a CPU para outras coisas, e então o controlador do disco copia as informações da buffer cache para o disco.
-  %A leitura com buffer cache, utiliza leitura adiantada, ou seja, os dados lidos que não fazem da parte dos requisitados são guardados na buffer cache, pois pelo princípio de localidade, muito provavelmente estes dados serão utilizados num futuro próximo.
-
-
   \begin{enumerate}[label=(\alph*)]
-    \item Quando uma operação de E/S é realizada, uma consulta a \textit{buffer cache} é realizada primeiro, onde o bloco solicitado é buscado em uma área de memória reservada. Caso não conste em memória, o bloco é buscado em disco, colocado na \textit{buffer cache} e assim efetua-se a operação.
+    \item Quando uma operação de E/S é realizada, uma consulta a \textit{buffer cache} é realizada primeiro, onde o bloco solicitado é buscado em uma área de memória reservada. Caso não conste em memória, o bloco é buscado em disco, pelo controlador do disco, e colocado na \textit{buffer cache}, para completar a operação. Logo, as escritas não em disco não ocorrem no momento da operação, mas posteriormente. No caso de leituras, utiliza-se a leitura adiantada, ou seja, dados lidos adjacentes, que não fazem parte dos requisitados, são guardados na \textit{buffer cache}, seguindo o princípio da localidade.
 
-    \item Neste caso, em todas as operações de E/S, o bloco é acessado diretamente do disco, resultando em um acesso mais lento.
+    \item Neste caso, em todas as operações de E/S, o bloco é acessado diretamente do disco, resultando em um acesso mais lento. Logo, em uma leitura, o bloco é buscado em disco e, em uma escrita, o bloco é escrito no momento da requisição.
   \end{enumerate}
-
 \end{exercicio}
 
 \begin{exercicio}
@@ -570,35 +545,71 @@ P & P & P & P & - & - & P & P & - & - & - & - & P & - & - & - & P & - & - & - \\
   \]
 
   \textbf{LRU:} 10 \textit{page faults} \\
+  \[
+  \begin{array}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 2 & 1 & 5 & 6 & 2 & 1 & 2 & 3 & 7 & 6 & 3 & 2 & 1 & 2 & 3 & 6 \\ \hline
+P & P & P & P & - & - & P & P & - & - & - & P & P & P & - & - & P & - & - & - \\
+\\
+1 & 2 & 3 & 4 & 2 & 1 & 5 & 6 & 2 & 1 & 2 & 3 & 7 & 6 & 3 & 2 & 1 & 2 & 3 & 6 \\
+- & 1 & 2 & 3 & 4 & 2 & 1 & 5 & 6 & 2 & 1 & 2 & 3 & 7 & 6 & 3 & 2 & 1 & 2 & 3 \\
+- & - & 1 & 2 & 3 & 4 & 2 & 1 & 5 & 6 & 6 & 1 & 2 & 3 & 7 & 6 & 3 & 3 & 1 & 2 \\
+- & - & - & 1 & 1 & 3 & 4 & 2 & 1 & 5 & 5 & 6 & 1 & 2 & 2 & 7 & 6 & 6 & 6 & 1 \\
+  \end{array}
+  \]
 
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Virtualização}
-  {Os conceitos de \textit{full virtualization} e para \textit{virtualization} são explicados abaixo:\\
-  \textit{Full Virtualization} oferece uma abstração de máquina virtual que é uma cópia exata do hardware e, portanto, permite hospedar sistemas operacionais inalterados.\\
-  \textit{Para Virtualization} oferece uma abstração de máquina virtual que é similar, porém, não idêntica ao hardware e, por isso, requer que algumas modificações sejam feitas no sistema operacional hospedado.
+  {Os conceitos de \textit{full virtualization} e para \textit{virtualization} são explicados abaixo:
+  \begin{itemize}
+    \item \textit{Full Virtualization}: oferece uma abstração de máquina virtual que é uma cópia exata do hardware e, portanto, permite hospedar sistemas operacionais inalterados;
+    \item \textit{Para Virtualization}: oferece uma abstração de máquina virtual que é similar, porém, não idêntica ao hardware e, por isso, requer que algumas modificações sejam feitas no sistema operacional hospedado.
+  \end{itemize}
   Sabendo disso, qual estrutura de sistema operacional suporta \textit{full virtualization} e qual suporta para \textit{virtualization}? Justifique sua resposta.}
 
-  A full virtualization aceita qualquer organização do SO, pois contém todo o hardware.
-  A para virtualization não aceita monolitico ou camadas, pois eles possuem um maior acoplamento, por outro lado microKernel e exoKernel podem ser modularizados e adicionados apenas os módulos necessários (existentes na máquina).
+  \textbf{\textit{Full Virtualization}:} aceita qualquer organização do SO, pois contém todo o hardware.
+
+  \textbf{\textit{Para Virtualization}:} não aceita monolítico ou camadas, pois eles possuem um maior acoplamento, por outro lado \textit{microkernel} e \textit{exokernel} podem ser modularizados e adicionados apenas os módulos necessários (existentes na máquina).
 \end{exercicio}
 
 \begin{exercicio}
   {1º/2012}{Organização de Sistemas Operacionais}
   {Complete o quadro abaixo com os valores (A - Alto, M - Médio, B - Baixo). Justifque sua resposta. Atenção: Cada linha deve conter os valores Alto, Médio e Baixo.
-  \begin{table}[!H]
+  \begin{table}[H]
     \centering
-    \begin{tabular}{cllll}
+    \begin{tabular}{rcccc}
       \hline \hline
       \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Camadas}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
       \textbf{Visão Global do Sistema} & A & A & M & B \\
       \textbf{Extensibilidade} & B & B & M & A \\
       \textbf{Flexibilidade} & B & B & M & A \\
-      \textbf{Manuntebilidade} &&& \\
+      \textbf{Manutenibilidade} &&& \\
       \hline \hline
     \end{tabular}
-    \caption{Tabela de comparação entre organizações}
-    \label{tab:ex15}
-    \end{table}}
+  \end{table}}
+
+  \textbf{Monolítico:}
+  \begin{itemize}
+    \item \textit{Visão Global do Sistema:} todas as funcionalidades do SO estão no kernel;
+    \item \textit{Extensibilidade:}
+    \item \textit{Flexibilidade:}
+    \item \textit{Manutenibilidade:}
+  \end{itemize}
+
+  \textbf{\textit{Microkernel}:}
+  \begin{itemize}
+    \item \textit{Visão Global do Sistema:} alguns módulos estão no modo usuário, como gerência de memória e sistema de arquivos. Porém, ele possui visão global da gerência de processos e da memória dependente do hardware;
+    \item \textit{Extensibilidade:}
+    \item \textit{Flexibilidade:}
+    \item \textit{Manutenibilidade:}
+  \end{itemize}
+
+  \textbf{\textit{Exokernel}:}
+  \begin{itemize}
+    \item \textit{Visão Global do Sistema:} não conhece nenhuma abstração do SO, como gerência de processos ou sistema de arquivos. Apenas expõe o hardware e os protege;
+    \item \textit{Extensibilidade:}
+    \item \textit{Flexibilidade:}
+    \item \textit{Manutenibilidade:}
+  \end{itemize}
 \end{exercicio}
