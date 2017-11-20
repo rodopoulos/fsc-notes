@@ -5,7 +5,7 @@ A \textbf{motivação} de tais sistemas é fundamentada no \textit{overhead} ina
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.65\textwidth]{os-overhead}
+  \includegraphics[width=.45\textwidth]{os-overhead}
   \caption{\textit{Overhead} inato de SOs tradicionais}
   \label{fig:os-overhead}
 \end{figure}
@@ -24,9 +24,9 @@ Aqui, o conceito tradicional de um SO é dividido em duas partes:
   \item \textbf{LibOS:} conjunto de bibliotecas que gerenciam recursos e oferecem abstrações de alto nível para as aplicações.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{exokernel-libos}
+  \includegraphics[width=.5\textwidth]{exokernel-libos}
   \caption{Um \textit{exokernel} simples, com duas aplicações ligadas com suas respectivas LibOSes}
   \label{fig:exokernel-libos}
 \end{figure}
@@ -51,9 +51,9 @@ A proteção de recursos de \textit{hardware} feita aqui e \textbf{não se preoc
 
 
 \subsection{Download de Código}
-A manipulação de algumas estruturas de \textit{hardware} requer modo protegido, por exemplo, a TLB ou blocos de disco. Por esta razão, o \textit{exokernel} permite que as aplicações descarreguem código no \textit{kernel}, em uma área de memória especial.Esta técnica é chamada de \textbf{\textit{sandboxing}}
+A manipulação de algumas estruturas de \textit{hardware} requer modo protegido, por exemplo, a TLB ou blocos de disco. Por esta razão, o \textit{exokernel} permite que as aplicações descarreguem código no \textit{kernel}, em uma área de memória especial. Esta técnica é chamada de \textbf{\textit{sandboxing}}
 
-Tal técnica garante muito poder a aplicação que descarrega o código, dado que tal código pode extrapolar os limites dessa área de memória, resultando em uma potencial falha de segurança. Entretanto, tal poder pode ser útil para várias aplicações. Isto é uma questão em aberto na literatura.
+Tal técnica resulta na \textbf{execução de código não-confiável em modo protegido}, garantindo muito poder a aplicação. Isto já representa uma violação de segurança. Tal código pode ainda extrapolar sua área de memória estipulada, mesmo que o \textit{sandboxing} tente proteger o \textit{kernel}, resultando em outra ameaça. Mesmo assim, tal estratégia pod ser útil para várias aplicações.
 
 
 \subsection{LibOS}
@@ -69,7 +69,7 @@ Para prover abstrações compartilhadas, o sistema dispõe de alguns mecanismos:
 \begin{itemize}
   \item \textbf{Regiões de \textit{Software}:} áreas de memória que só podem ser lidas ou escritas através de chamadas de sistema. Com isso, elas provêm proteção à sub-páginas e isolamento de falhas;
 
-  \item \textbf{Predicados \textit{Wake Up}:} pequenas funções descarregadas no \textit{kernel} que acordam processos quando alguma condição se torna verdadeira. Este recurso garante as LibOSes acesso à estruturas de dados vinculadas ao \textit{hardware}. Além disso, eles permitem que processos possam entrar em estado de \textit{sleep} enquanto aguardam algum recurso. Dessa forma, garante-se que processos com \textit{bugs} ou \textit{crash} não atrapalhem processos bem comportados.;
+  \item \textbf{Predicados \textit{Wake Up}:} pequenas funções descarregadas no \textit{kernel} que acordam processos quando alguma condição se torna verdadeira. Este recurso garante as LibOSes acesso à estruturas de dados vinculadas ao \textit{hardware}. Além disso, eles permitem que processos possam entrar em estado de \textit{sleep} enquanto aguardam algum recurso. Também podem se usados para eliminar processos com \textit{bugs} ou \textit{crash}, de modo a não atrapalhar processos bem comportados;
 
   \item \textbf{Proteção hierárquica}: cada chamada de sistema deve conter capacidades que devem ser verificadas pelo \textit{exokernel}, ou seja, que devem ser conter as devidas permissões. Isso garante proteção contra acessos indevidos por alguns processos.
 \end{itemize}
@@ -83,7 +83,7 @@ Por exemplo, se o \textit{exokernel} pede que a uma página seja retirada de mem
 \begin{itemize}
   \item A descentralização da gerência, realocando-a para aplicações de usuário distintas implica em perda de informação;
 
-  \item As LibOSes podem corromper outras LibOSes e suas áreas de memória;
+  \item As LibOSes podem corromper outras LibOSes e suas áreas de memória, através de \textit{predicados wakeup}, códigos em prólogo e epílogo, etc.;
 
   \item As LibOSes podem corromper o \textit{kernel}.
 \end{itemize}
