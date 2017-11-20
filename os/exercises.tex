@@ -302,9 +302,6 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
 \end{exercicio}
 
-
-
-
 \section{1º/2013}
 \begin{exercicio}
   {1º/2013}{Sistemas de Arquivo}
@@ -322,7 +319,7 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
 
     \item Operação de busca da posição e uma operação de escrita do bloco;
 
-    \item Uma única operação de remoção do bloco.
+    \item Uma única operação de remoção do bloco. (Podem ser também $99$ operações de shift para a esquerda)
   \end{enumerate}
 
   \textbf{Para lista encadeada:}
@@ -399,7 +396,30 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
   \end{itemize}
 \end{exercicio}
 
+\begin{exercicio}
+  {2º/2017}{Memória (Paginação)}
+  {Tendo a tabela de páginas abaixo e recebendo o endereço $12$, que endereço a MMU vai colocar no barramento? (Considere páginas de 1KBytes)
+  Faça o mesmo exercício para o endereço $3150$.
+  \begin{table}[]
+    \centering
+    \caption{Look-Aside Buffer Table}
+    \label{tab:pag_to_frame}
+    \begin{tabular}{cc}
+      \hline \hline
+    Página & Frame \\ \hline
+    0      & 2     \\
+    1      & 1     \\
+    2      & 0     \\
+    3      & 5     \\ \hline \hline
+    \end{tabular}
+    \end{table}}
+    
+    1. Para endereço $X$ divide-se o endereço pelo tamanho da página, e encontra-se a página requerida.
+    2. Após isto pega-se o número do frame e multiplica-se pelo tamanho para encontrar o endereço da página, soma-se o deslocamento (resto da divisão do primeiro passo).
 
+    Para $12$, 12/1024 = 0, resto 12. Página 0 é o frame 2, 2 * 1024 = 2048, 2048 + 12 = 2060.
+    Para $3150$, 3150/1024 = 3, resto 78. Página 3 é o frame 5, 5 * 1024 = 5120, 5120 + 78 = 5198.
+\end{exercicio}
 
 
 
@@ -478,6 +498,9 @@ SO fica em modo protegido e seu código é distribuído em diversas camadas func
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando existe buffer cache.
     \item Explique como as leituras e escritas em arquivos convencionais funcionam quando não existe buffer cache.
   \end{enumerate}}
+  Sem buffer, ao utilizar um comando de escrita o que foi requisitado para guardar no disco será, de fato, salvado no momento da instrução. A leitura acesso o disco e escreve na memória o dado requisitado.
+  Já com buffer cache, a escrita não ocorre no momento em que termina a execução da instrução, primeiro os dados são escritos na buffer cache liberando a CPU para outras coisas, e então o controlador do disco copia as informações da buffer cache para o disco.
+  A leitura com buffer cache, utiliza leitura adiantada, ou seja, os dados lidos que não fazem da parte dos requisitados são guardados na buffer cache, pois pelo princípio de localidade, muito provavelmente estes dados serão utilizados num futuro próximo.
 \end{exercicio}
 
 \begin{exercicio}
@@ -543,12 +566,13 @@ P & P & P & P & - & - & P & P & - & - & - & - & P & - & - & - & P & - & - & - \\
   {Complete o quadro abaixo com os valores (A - Alto, M - Médio, B - Baixo). Justifque sua resposta. Atenção: Cada linha deve conter os valores Alto, Médio e Baixo.
   \begin{table}[!h]
     \centering
-    \begin{tabular}{clll}
+    \begin{tabular}{cllll}
       \hline \hline
-      \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
-      \textbf{Visão Global do Sistema} &&& \\
-      \textbf{Extensibilidade} &&& \\
-      \textbf{Flexibilidade} &&& \\
+      \multicolumn{1}{l}{}             & \multicolumn{1}{c}{\textbf{Monolítico}} & \multicolumn{1}{c}{\textbf{Camadas}} & \multicolumn{1}{c}{\textbf{Microkernel}} & \multicolumn{1}{c}{\textbf{Exokernel}} \\ \hline
+      \textbf{Visão Global do Sistema} & A & A & M & B \\
+      \textbf{Extensibilidade} & B & B & M & A \\
+      \textbf{Flexibilidade} & B & B & M & A \\
+      \textbf{Manuntebilidade} &&& \\
       \hline \hline
     \end{tabular}
     \caption{Tabela de comparação entre organizações}
