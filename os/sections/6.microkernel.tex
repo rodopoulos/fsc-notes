@@ -44,7 +44,7 @@ Por sua vez, o \textit{driver} é um processo que acessa diretamente portas de \
 \end{figure}
 
 \subsection{Identificadores Únicos}
-O \textit{microkernel} provê identificadores únicos (\textit{uid}) para recursos como \textit{threads}, tarefas, canais de comunicação, etc.. Logo, se um recurso $S_1$ quer enviar uma mensagem ao recurso $S_2$, ele deve especificar $S_2$ como destino. Para tal, o \textit{microkernel} deve conheces estes \textit{uid}.
+O \textit{microkernel} provê identificadores únicos (\textit{uid}) para recursos como \textit{threads}, tarefas, canais de comunicação, etc.. Logo, se um recurso $S_1$ quer enviar uma mensagem ao recurso $S_2$, ele deve especificar $S_2$ como destino. Para tal, o \textit{microkernel} deve conhecer estes identificadores.
 
 \subsection{Gerentes de Memória}
 Um servidor que gerencia o espaço de endereçamento $E0$ será um gerente de memória tradicional, porém fora do \textit{microkernel}. A memória física a ser gerenciada será mapeada para o espaço de endereçamento do servidor.
@@ -83,7 +83,7 @@ Como o paginador externo roda em modo usuário, várias outras funções podem s
 
 
 \subsection{Memória Virtual}
-O espaço de endereçamento de um processo é paginado. Este espaço é dividido em unidades esparsas de tamanho variável, chamadas \textbf{regiões}. Cada região que estive mapeada em memória de um processo é denominada \textbf{objeto de memória}. Eles podem ser arquivos, \textit{pipes}, etc..
+O espaço de endereçamento de um processo é paginado. Este espaço é dividido em unidades esparsas de tamanho variável, chamadas \textbf{regiões}. Cada região que estiver mapeada em memória de um processo é denominada \textbf{objeto de memória}. Eles podem ser arquivos, \textit{pipes}, etc..
 
 Os objetos de memória podem ser gerenciados tanto por paginadores externos como por paginadores \textit{default} do Mach. O objeto de memória é referenciado por uma porta e mensagens são enviadas para solicitar operações sobre o objeto.
 
@@ -185,7 +185,7 @@ Arquiteturas diferentes requerem técnicas de otimização específicas que muit
 
 
 \subsection{Domínios de Proteção}
-É uma outra estruturação possível além do cliente/servidor, tendo como exemplo as implementações SPACE, Kea, Spring e Pebble. Elas são baseadas em duas abstrações: domínios de proteção e \textit{threads}. Um programa consiste de: um conjunto de domínios de proteção e uma única \textit{thread}.
+É uma outra estruturação possível além do cliente/servidor, tendo como exemplo as implementações SPACE, Kea, Spring e Pebble. Elas são baseadas em duas abstrações, domínios de proteção e \textit{threads}, onde um programa consiste de: um conjunto de domínios de proteção e uma única \textit{thread}.
 
 O \textbf{domínio de proteção} é composto por um espaço de endereçamento e informações de proteção. Os módulos do sistema operacional são implementados como domínios de proteção. Cada domínio registra seus métodos e o mecanismo de comunicação inter-domínio (IDC) é utilizado para se obter acesso a um método protegido de outro domínio. Existe uma pilha de domínios de proteção que contém as IDCs em andamento.
 
@@ -201,10 +201,10 @@ Outra estruturação possível, baseada nos níveis de proteção da arquitetura
 
 Em um dado momento, um processo está em um nível de proteção e só pode acessar dados no mesmo nível ou em níveis inferiores, dado que o código só pode ser acessado no mesmo nível de proteção.
 
-Logo, são implementados os \textbf{call gates}. Cada nível de proteção define quais dos seus métodos são acessíveis através de um \textit{call gate}, onde o nível pode ter um número qualquer \textit{gates}. O \textit{call gate} por sua vez será utilizado para movimentação entre os níveis de proteção.
+Logo, são implementados os \textbf{call gates}. Cada nível de proteção define quais dos seus métodos são acessíveis através de um \textit{call gate}, onde o nível pode ter um número qualquer de \textit{gates}. O \textit{call gate} por sua vez será utilizado para movimentação entre os níveis de proteção.
 
 O espaço de endereçamento de um processo é divido em três níveis: \textit{kernel}, intermediário e usuário.
 
-Cada módulo do SO independe do \textit{hardware} e é implementado como um módulo no nível intermediário. Um \textit{call gate} é definido, onde estão incluídos os métodos do módulo (interface). Assim, a comunicação é feita por \textit{call gates}.
+Cada módulo do SO independe do \textit{hardware} é implementado como um módulo no nível intermediário. Um \textit{call gate} é definido, onde estão incluídos os métodos do módulo (interface). Assim, a comunicação é feita por \textit{call gates}.
 
 Como \textbf{vantagem} em relação ao modelo cliente/servidor, esta implementação reduz o \textit{overhead} da troca de mensagens, troca de contexto entre \textit{threads} e da troca de espaços de endereçamento. Como \textbf{desvantagens}, vemos que esse modelo é dependente do \textit{hardware} dados os níveis de proteção e os módulos do SO não estão protegidos entre si.

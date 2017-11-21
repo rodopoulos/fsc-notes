@@ -1,6 +1,6 @@
 \chapter{Entrada e Saída}
 
-Para prover um abstração simples da máquina física, o sistema operacional deve conhecer bem cada \textit{hardware} sobre o qual ele opera, uma vez que cada um destes dispositivos tem um conjunto de comandos específicos. As unidades de entrada e saída são compostas por duas partes: uma parte mecânica, sendo o dispositivo propriamente dito, e uma parte eletrônica, que é a sua \textbf{controladora}, a qual irá interagir com o SO para realizar as operações de E/S.
+Para prover um abstração simples da máquina física, o sistema operacional deve conhecer bem cada \textit{hardware} sobre o qual ele opera, uma vez que cada um destes dispositivos tem um conjunto de comandos específicos. As unidades de entrada e saída (\textit{firmware}) são compostas por duas partes: uma parte mecânica, sendo o dispositivo propriamente dito, e uma parte eletrônica, que é a sua \textbf{controladora}, a qual irá interagir com o SO para realizar as operações de E/S.
 
 \begin{figure}[H]
   \centering
@@ -9,11 +9,11 @@ Para prover um abstração simples da máquina física, o sistema operacional de
   \label{fig:io-unity}
 \end{figure}
 
-A \textbf{comunicação entre SO e controladora} se dá por registradores acessados pela CPU, onde o SO emite comandos escrevendo nestes e obtém informações sobre os dispositivos por meio da leitura dos registradores. Além disso, parte da comunicação também é feita por \textit{buffers}, onde o SO lê e escreve dados. Cada controladora irá possuir um conjunto de comandos específicos, definidos em seus manuais.
+A \textbf{comunicação entre SO e controladora} se dá por registradores acessados pela CPU, onde o SO emite comandos através da escrita e obtém informações sobre os dispositivos através da leitura dos registradores. Além disso, parte da comunicação também é feita por \textit{buffers}, onde o SO lê e escreve dados. Cada controladora irá possuir um conjunto de comandos específicos, definidos em seus manuais.
 
 Os registradores de controle podem estar localizados nas controladores, sendo mapeados em portas de E/S. Entretanto, o sistema geralmente empregado é o de \textbf{E/S mapeado em memória}, onde os registradores são mapeados em posições fixas da memória, sendo associado um endereço a eles.
 
-A entidade do SO que interage com as controladoras são do \textbf{drivers de dispositivo}, entidades que recebem instruções abstratas dos processos e as traduzem em comandos específicos a serem enviados às controladoras.
+A entidade do SO que interage com as controladoras são os \textbf{drivers de dispositivo}, entidades que recebem instruções abstratas dos processos e as traduzem em comandos específicos a serem enviados às controladoras.
 
 Por fim, em geral, dividem-se os dispositivos de entrada e saída em dois tipos:
 \begin{itemize}

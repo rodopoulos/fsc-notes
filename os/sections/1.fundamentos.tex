@@ -5,7 +5,7 @@
   \begin{itemize}
     \item \textbf{Criar para o usuário uma abstração do hardware}, simplificando a máquina real, escondendo a complexidade do hardware;
 
-    \item \textbf{Gerênciar os recursos da máquina}, mantendo informações sobre o estado, endereço, controle de acesso dos mesmos, alocando e liberando-os apropriadamente, de forma eficiente e previsível.
+    \item \textbf{Gerênciar os recursos da máquina}, mantendo informações sobre o estado, endereço e controle de acesso aos recursos, alocando e liberando-os apropriadamente, de forma eficiente e previsível.
   \end{itemize}
 \end{definicao}
 
@@ -18,9 +18,9 @@ Note que o computador é um conjunto de recursos que serão compartilhados, onde
 
 Levando em conta a gerência de recursos, o SO deve:
 \begin{itemize}
-  \item \textbf{Ser eficiente:} maximizar a utilização dos recursos, ou seja, \textbf{se existe demanda, o recurso tem que estar ocupado};
+  \item \textbf{Ser eficiente}, maximizando a utilização dos recursos, ou seja: \textbf{se existe demanda, o recurso tem que estar ocupado};
 
-  \item \textbf{Possuir um tempo de resposta previsível:} onde, preferivelmente, este tempo deve ser rápido.
+  \item \textbf{Possuir um tempo de resposta previsível,} onde, preferivelmente, este tempo deve ser rápido.
 \end{itemize}
 
 \begin{figure}[h]
@@ -47,16 +47,16 @@ Levando em conta a gerência de recursos, o SO deve:
 \begin{definicao}{\textit{Bootstrap}}
   Programa executado quando o computador começa a funcionar, tendo como funções:
   \begin{itemize}
-    \item \textbf{Inicializar o sistema}, o que inclui registradores, memória, controladores de I/O. Por exemplo, temos operações como zerar o \texttt{PC};
-    \item \textbf{Verificações de hardware}, principalmente os dispositivos do computador;
-    \item \textbf{Carregar o SO}. Repare que, o que existir no setor 0 do disco de boot será o programa a ser iniciado pelo \textit{bootstrap}, devendo este se o SO;
-    \item \textbf{Terminar a execução}, dado que é necessário que ele mesmo termina sua execução, uma vez que ele é um microcódigo.
+    \item \textbf{Inicializar o sistema}, o que inclui registradores, memória, controladores de I/O. \underline{Exemplo:} zerar o \texttt{PC};
+    \item \textbf{Verificações de hardware}, o que inclui, principalmente, os dispositivos do computador;
+    \item \textbf{Carregar o SO}. Repare que, o que existir no setor 0 do disco de \textit{boot} será o programa a ser iniciado pelo \textit{bootstrap}, devendo este ser o SO;
+    \item \textbf{Terminar a execução}, dado que é necessário que ele mesmo termine sua execução.
   \end{itemize}
 \end{definicao}
 
 Ao ligar o computador, o \textit{bootstrap} realiza checagens e rotinas iniciais, carregando o sistema operacional. O SO nunca deve terminar sua execução, a não ser quando é instruído para tal ou quando ocorre \textbf{panic}.
 
-Após ser iniciado, o SO inicia outros processos como o \textbf{init} e outros que rodam em background, chamados \textbf{daemons}. Depois disso, ele apenas aguarda a ocorrência de eventos, os quais são sinalizados por interrupções.
+Após ser iniciado, o SO inicia outros processos como o \textbf{\textit{init}} e outros que rodam em background, chamados \textbf{\textit{daemons}}. Depois disso, ele apenas aguarda a ocorrência de eventos, os quais são sinalizados por interrupções.
 
 
 
@@ -76,11 +76,9 @@ Após ser iniciado, o SO inicia outros processos como o \textbf{init} e outros q
 
 
 \section{Interrupções}
-Interrupções podem ser tanto de \textit{hardware} como de \textit{software}.
+Interrupções podem ser tanto de \textit{hardware} como de \textit{software}. Nas interrupções de \textit{harware}, sinais são enviados para a CPU através de barramentos.
 
-Interrupções de \textit{harware} são sinais enviados para a CPU através de barramentos.
-
-Interrupções de \textit{software} (traps) são geradas por operações especiais conhecidas como \textbf{chamadas de sistema (\textit{system calls})}. Podemos chamá-las de \textit{monitor calls} ou \textit{supervisor calls}, sendo essas nomenclaturas arcaicas.
+Interrupções de \textit{software} (traps) são geradas por operações especiais conhecidas como \textbf{chamadas de sistema (\textit{system calls})}. Podemos chamá-las de \textit{monitor calls} ou \textit{supervisor calls}, as quais são nomenclaturas arcaicas.
 
 A interação entre o sistema operacional e os programas é através de chamadas de sistema.
 
@@ -90,21 +88,20 @@ A interação entre o sistema operacional e os programas é através de chamadas
 
 Este processo \textbf{envolve tanto hardware como o sistema operacional}. Quando ocorre uma interrupção, temos os seguintes passos:
 \begin{enumerate}
-  \item O hardware interrompe a execução corrente e salva seu estado na pilha, o que inclui registradores, descritores, etc.;
+  \item O hardware interrompe a execução corrente e salva seu o estado na pilha, o que inclui registradores, descritores, etc.;
 
-  \item O hardware acessa um endereço específico de memória física, onde há o \textbf{vetor de interrupções}. Nele, os endereços das rotinas de tratamento de interrupções geradas por cada dispositivo está contido. O PC é apontado para endereço da interrupção correspondente;
+  \item O hardware acessa um endereço específico de memória física, onde há o \textbf{vetor de interrupções}. Nele estão contidos os endereços das rotinas de tratamento de interrupções. O PC é apontado para endereço da interrupção correspondente;
 
   \item O sistema operacional executa o tratamento de interrupção indicado. Os registradores que foram empilhados pelo hardware são salvos em memória;
 
   \item A interrupção é devidamente tratada;
 
-  \item A CPU volta à execução anterior à ocorrência da interrupção.
+  \item A CPU volta a execução anterior à ocorrência da interrupção.
 \end{enumerate}
 
 \begin{definicao}{Vetor de Interrupções}
-  Contém o endereço da rotina de tratamento de interrupções, geradas por cada classe de dispositivo físico: disco, flop, terminal, etc..
+  Contém o endereço da rotina de tratamento de interrupções, geradas por cada classe de dispositivo físico: disco, \textit{flop}, terminal, etc..
 \end{definicao}
-
 
 \textbf{Nota:} A rotina de tratamento de interrupção e seus endereços contidos no vetor de interrupções são gerados e escritos pelo sistema operacional.
 
@@ -196,7 +193,7 @@ A \textbf{tabela de dispositivos} será a estrutura que irá auxiliar no acompan
 
 
 
-\section{Direct Memory Access}
+\subsection{Direct Memory Access (DMA)}
 Quando a controladora lê dados de um dispositivo, estes são armazenados inicialmente em um \textit{buffer} interno. Estando o bloco completo e correto neste buffer, o mesmo deve ser escrito em memória.
 
 Esta escrita em memória pode ser feita pela CPU, mas esta operação consome muito tempo, dadas as operações de cópia. Desta forma, normalmente, a operação acaba ficando a cargo da controladora, através de operações de acesso direto à memória, ou DMA. Este processo ocorre através das seguintes etapas:

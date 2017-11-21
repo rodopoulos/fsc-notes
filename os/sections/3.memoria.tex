@@ -1,7 +1,7 @@
 \chapter{Memória}
-De uma maneira geral, quando um processo é criado, sua imagem (ou parte dela) é armazenada em memória, onde a as instruções e os dados que estão sendo manipulados em um determinado instante são carregados na CPU. Os dados alterados são escritos em memória continuamente e os mais permanentes são armazenados em disco.
+De uma maneira geral, quando um processo é criado, sua imagem (ou parte dela) é armazenada em memória, onde as instruções e os dados que estão sendo manipulados em um determinado instante são carregados na CPU. Os dados alterados são escritos em memória continuamente e os mais permanentes são armazenados em disco.
 
-Um programa fonte apresenta instruções contendo endereços simbólicos, definidos pelo programador. Após o processo de compilação e montagem, o programa agora apresenta endereços relocáveis, construído em relação ao início do módulo objeto. Após a \textit{linkagem}, o programa agora possui os endereços absolutos, únicos para o programa como um todo.
+Um programa fonte apresenta instruções contendo endereços simbólicos, definidos pelo programador. Após o processo de compilação e montagem, o programa contém endereços relocáveis, construídos em relação ao início do módulo objeto. Após a \textit{linkagem}, o programa agora possui os endereços absolutos, únicos para o programa como um todo.
 
 
 
@@ -78,7 +78,7 @@ Proposto em 1961, é o método mais comum atualmente, considerando os SO atuais,
   \item \textbf{Segmentação:} divide a memória física e a memória virtual em unidades de \textbf{tamanho variável}.
 \end{itemize}
 
-Para ilustrar o possível espectro de endereços virtuais, supomos um arquitetura de 32 \textit{bits}. Logo, um processo pode endereçar até $2^{32} - 1$ endereços, independente da memória física.
+Para ilustrar o possível espectro de endereços virtuais, supomos um arquitetura de 32 \textit{bits}. Logo, um processo pode endereçar de 0 até $2^{32} - 1$ endereços, independente da memória física.
 
 
 
@@ -146,7 +146,7 @@ Existem variações que implementam listas duplamente encadeadas, para que seja 
 \section{Paginação}
 Paginação é uma técnica de memória virtual, onde é utilizado um endereço virtual que representa um \textbf{espaço de endereçamento virtual} dividido em unidades de tamanho fixo, chamadas de \textbf{páginas}, e a memória física é dividida em unidades de tamanho fixo chamadas \textbf{\textit{page frames}}. Estas últimas, serão as áreas de memória física que irão abrigar as páginas utilizadas pela CPU.
 
-A tradução entre páginas e \textit{frames} tem auxílio de um \textit{hardware} adicional, chamado \textbf{Memory Management Unit (MMU)}, o qual recebe um endereço virtual, mapeando-o no seu endereço físico correspondente, e escreve este último no barramento da memória, a qual poderá retornar o dado desejado para a CPU. A indexação de endereços é feita por uma estrutura interna da MMU chamada \textbf{tabela de páginas}.
+A tradução entre páginas e \textit{frames} tem auxílio de um \textit{hardware} adicional, chamado \textbf{Memory Management Unit (MMU)}. Este recebe um endereço virtual, realiza o mapeamento no seu endereço físico correspondente, e escreve este último no barramento da memória, para que esta possa obter o dado a ser entregue à CPU. A indexação de endereços é feita por uma estrutura interna da MMU chamada \textbf{tabela de páginas}.
 
 \textbf{Nota:} se estas operações fossem feitas por \textit{software}, o esquema de paginação sera comprometido pelo alto \textit{overhead} a cada acesso.
 
@@ -192,7 +192,7 @@ Dessa forma, o SO irá escolher uma página da memória para ser substituída pe
 
 \subsection{Tabela de Páginas}
 \begin{definicao}{Tabela de Páginas}
-  Estrutura de dados presente na MMU que guarda as informações necessárias para o mapeamento do endereço virtual de um processo em endereços físicos.
+  Estrutura de dados que guarda as informações necessárias para o mapeamento do endereço virtual de um processo em endereços físicos.
 \end{definicao}
 
 As tabelas de página podem variar entre máquinas diferentes, porém possuem campos comuns:
@@ -210,11 +210,11 @@ As tabelas de página podem variar entre máquinas diferentes, porém possuem ca
   \item \textbf{Número do \textit{frame}:} número do \textit{frame} onde a página está mapeada.
 \end{itemize}
 
-Observe que \textbf{o tamanho da tabela de páginas depende do espaço de endereçamento da arquitetura}. Dessa forma, a tabela poderia assumir espaços irreais como $2^{64}$. Dessa forma, dois problemas são inseridos: não é viável manter a tabela totalmente na MMU e a velocidade de mapeamento dos endereços pode ser comprometida.
+Observe que \textbf{o tamanho da tabela de páginas depende do espaço de endereçamento da arquitetura}. Dessa forma, a tabela poderia assumir espaços irreais como $2^{64}$. Consequentemente, dois problemas são inseridos: não é viável manter a tabela totalmente na MMU e a velocidade de mapeamento dos endereços pode ser comprometida.
 
-Para mitigar o problema do tamanho, a \textbf{tabela de páginas fica armazenada em memória principal}, onde um registrador guarda o endereço de início desta tabela. Logo, a MMU utiliza uma memória associativa chamada de \textbf{\textit{Translation Look-aside Buffer} (TLB)}, onde algumas entradas da tabela de páginas são armazenadas.
+Para mitigar o problema do tamanho, a \textbf{tabela de páginas fica armazenada em memória principal}, onde um registrador guarda o endereço de início desta tabela. Paralelamente, a MMU utiliza uma memória associativa chamada de \textbf{\textit{Translation Look-aside Buffer} (TLB)}, onde algumas entradas da tabela de páginas são armazenadas, geralmente sendo as referenciadas mais recentemente.
 
-Assim, quando um endereço virtual é apresentado a MMU, ela procura este na TLB. Se estiver presente, o mapeamento é direto, caso contrário, um acesso à memória é feito para recuperar a entrada da tabela de páginas. A entrada requisitada é inserida na TBL, de forma que futuras requisiçõe serão imediatas.
+Assim, quando um endereço virtual é apresentado a MMU, ela procura-o na TLB. Se este estiver presente, o mapeamento é direto. Caso contrário, um acesso à memória é feito para recuperar a entrada da tabela de páginas. A entrada requisitada é inserida na TBL, de forma que as futuras requisiçõe serão imediatas.
 
 Temos duas organizações possíveis para a tabela de páginas: mapeamento direto ou invertida.
 
@@ -223,7 +223,7 @@ Também chamada de \textit{forward-mapped}, aqui a \textbf{tabela de páginas é
 
 Para este esquema \textbf{cada processo tem uma tabela de páginas}. Aliado ao crescimento do espaço de endereçamento e tamanho da página, as tabelas acabam por ficarem grandes demais. Dessa forma, para evitar que essas tabelas fiquem em memória o tempo todo, os computadores implementam as \textbf{tabelas de página em  multinível}.
 
-Esta organização faz com que mesmo que um processo possa armazenar $2^n$ posições em memória física, ele não vai fazer isto. Logo, o número da página é quebrado em $n$ partes, onde $n$ será o número de níveis. A Figura \ref{fig:forward-mapped} ilustra a divisão.
+Esta organização faz com que mesmo que um processo possa armazenar $2^n$ posições em memória física, ele não vai fazer isto. Assim, o número da página é quebrado em $n$ partes, onde $n$ será o número de níveis. A Figura \ref{fig:forward-mapped} ilustra a divisão.
 
 \begin{figure}[h]
   \centering
@@ -234,17 +234,23 @@ Esta organização faz com que mesmo que um processo possa armazenar $2^n$ posi�
 
 Como exemplo, existem tabelas de páginas de 1 nível (PDP-11), 2 níveis (VAX), 3 níveis (SunSPARC) e 4 níveis (Motorola 68030). Além de 4 níveis, o projeto fica extremamente complexo e o ganho não é muito grande.
 
+Com processadores em 64 \textit{bits} e páginas com $4KB$, acabamos por ter $2^{52}$ entradas na tabela de página, o que torna inviável a utilização de tabelas com mapeamento direto. \textbf{Nota:} mesmo assim, algumas arquiteturas de 64 \textit{bits} utilizam este mapeamento, com 3 níveis.
 
 
 
 \subsubsection{Mapeamento Invertido}
-Com processadores em 64 \textit{bits} e páginas com $4KB$, acabamos por ter $2^{52}$ entradas na tabela de página, o que torna inviável a utilização de tabelas com mapeamento direto. \textbf{Nota:} mesmo assim. algumas arquiteturas de 64 \textit{bits} utilizam este mapeamento, com 3 níveis.
+Em tabelas de páginas invertidas, a indexação é feita pelo \textit{frame} e não mais pela página. O problema é que o índice utilizado pela CPU ainda é a página $p$.
 
-Em tabelas de páginas invertidas, a indexação é feita pelo \textit{frame} e não mais pela página. O problema é que o índice utilizado pela CPU ainda é a página $p$. Por isso, neste método é utilizada uma tabela de \textit{hash}, com o \textit{frame} como índice. Logo, a CPU envia $p$ como entrada, porém antes de ser aplicado na tabela, é feito um \textit{hash} sobre $p$ para obter o índice correspondente. \textbf{Nota:} em particular, esse \textit{hash} é uma função de módulo, dado que o tamanho da tabela é o tamanho de \textit{frames} possíveis na memória.
+Por isso, neste método, é utilizada uma tabela de \textit{hash}, com o \textit{frame} como índice. Logo, a CPU envia $p$ como entrada, porém antes de ser aplicado na tabela, é feito um \textit{hash} sobre $p$ para obter o índice correspondente. A Figura \ref{fig:page-table-invert} ilustra o esquema. \textbf{Nota:} em particular, esse \textit{hash} é uma função de módulo, dado que o tamanho da tabela é o tamanho de \textit{frames} possíveis na memória.
 
 Entretanto, existem páginas que após o \textit{hash} acabam por cair no mesmo índice. Nelas, são criados \textit{buckets} (lista de conflitos) contendo o endereço da página virtual $p$ e o \textit{frame} $f$ correspondente a ser escrito no barramento.
 
-
+\begin{figure}
+  \centering
+  \includegraphics[width=.5\textwidth]{page-table-invert}
+  \caption{Mapeamento invertido com a implementação de \textit{buckets}}
+  \label{fig:page-table-invert}
+\end{figure}
 
 
 
@@ -256,7 +262,7 @@ Entretanto, existem páginas que após o \textit{hash} acabam por cair no mesmo 
 
 
 \subsection{Substituição de Páginas}
-A condição de um bom algoritmo de substituição é de escolher sempre a página a página que está em memória física que será referenciada no futuro mais distante. Entretanto, isso não é possível pois não há como saber o futuro. Portanto, usamos estratégias realizáveis.
+A condição de um bom algoritmo de substituição é de escolher sempre a página que está em memória física que será referenciada no futuro mais distante, sendo este um \textbf{algoritmo ótimo}. Entretanto, isso não é possível pois não há como saber o futuro. Portanto, usamos estratégias realizáveis.
 
 \subsubsection{NRU}
 Abreviação de \textit{Não recentemente utilizada}, este método utiliza os \textit{bits} de referência ($R$) e de modificação ($M$). contidos na tabela de página.
@@ -317,7 +323,7 @@ O problema do NFU é que uma página muito referenciada há muito tempo atrás r
 
 
 \subsubsection{NFU com \textit{Aging}}
-Para que as referência antigas do NFU sejam esquecidas, devemos utilizar uma técnica chamada \textit{aging}. O número de \textit{bits} no contado é o número de referências passadas que será considerado.
+Para que as referência antigas do NFU sejam esquecidas, devemos utilizar uma técnica chamada \textit{aging}. O número de \textit{bits} no contador é o número de referências passadas que será considerado.
 
 No \textit{aging}, a cada interrupção de \textit{clock}, é feito um \textit{shift} do contador de cada página para a direita e o \textit{bit} R é inserido à esquerda, ou seja, no \textit{bit} mais significativo. Quando há um \textit{page fault}, o algoritmo escolhe a página com o menor contador. A Figura \ref{fig:nfu-aging} mostra o funcionamento.
 
@@ -340,15 +346,15 @@ Aqui é explicada toda a rotina de tratamento de um \textit{page fault}:
 
   \item O \textit{hardware} executa uma rotina em código de máquina, que salva os demais registradores e outras informações. No final, a rotina chama o SO;
 
-  \item O SO recebe o \textit{trap} e determina que ocorreu um \textit{page fault}. O mesmo determina a página virtual necessária para a resolução do \textit{page fault}, o qual geralmente está em um registrador especial;
+  \item O SO recebe o \textit{trap} e determina que ocorreu um \textit{page fault}. O mesmo determina a página virtual necessária para a resolução do \textit{page fault}, o qual, geralmente, está em um registrador especial;
 
-  \item Com o endereço virtual em falta, o SO verifica se o endereço é válida e se houve a violação de proteção;
+  \item Com o endereço virtual em falta, o SO verifica se o endereço é válido e se houve uma violação de proteção;
 
-  \item O SO determina um espaço de \textit{frame} livre para inserir a página solicitada. Caso não haja, o algoritmo de subtituição é executado. Se a página selecionada tiver sido modificada, ela deve ser escrita em disco. O \textit{frame} é marcado como reservado e o SO escolhe um novo processo para rodar;
+  \item O SO determina um espaço de \textit{frame} livre para inserir a página solicitada. Caso não haja \textit{frame} livre, o algoritmo de subtituição é executado. Se a página selecionada tiver sido modificada, ela deve ser escrita em disco. O \textit{frame} é marcado como reservado e o SO escolhe um novo processo para rodar;
 
   \item Quando o SO tem certeza de que o \textit{frame} está livre, ele determina o endereço de disco onde se encontra a página que causou o \textit{page fault}. Durante a busca no disco para a passagem para a memória, um novo processo é posto para rodar;
 
-  \item Ao checar a interrupção de disco que indica o términa da cópia da página de disco para memória, a tabela de páginas é alterada e o \textit{frame} é marcado como ocupado;
+  \item Ao checar a interrupção de disco que indica o término da cópia da página de disco para memória, a tabela de páginas é alterada e o \textit{frame} é marcado como ocupado;
 
   \item A instrução que causou o \textit{page fault} é carregada no registrador de instruções e o seu endereço é carregado no PC. Daí, o processo desta instrução é colocado para rodar. O SO termina a execução, voltando a ser executada a rotina em código de máquina que o chamou. A rotina restaura os registradores e demais informações para a situação anterior à falta e dá o processador ao processo de usuário;
 

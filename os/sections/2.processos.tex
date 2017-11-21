@@ -86,14 +86,13 @@ Todo sistema operacional deve possuir mecanismos que permitam a criação de pro
 \section{Estado do Processo}
 Apesar de processos serem relativamente auto-suficientes, muitas vezes eles necessitam de acessar outros recursos (discos, terminais) ou mesmo se comunicar com outros processos. Quando um processo está ocioso, esperando que um evento aconteça, nós dizemos que ele está bloqueado. Em algumas situações, o processo pode ser bloqueado a revelia, ou seja, a força, pelo sistema operacional. Podemos ter os seguintes estados:
 
-Estados:
 \begin{itemize}
   \item \textbf{Rodando:} processo em execução
   \item \textbf{Bloqueado:} processo parado, aguardando alguma coisa;
   \item \textbf{Pronto:} processo parado, pronto para ser executado, aguardando sua vez.
 \end{itemize}
 
-Usando a Figura \ref{fig:proc-states} como referências, podemos ilustrar as diversas passagens de estados ao longo da vida de um processo:
+Usando a Figura \ref{fig:proc-states} como referência, podemos ilustrar as diversas passagens de estados ao longo da vida de um processo:
 
 \begin{enumerate}
   \item O processo bloqueia-se à espera de um evento ou recurso;
@@ -155,7 +154,7 @@ Dessa forma, define-se a troca de contexto como a operação de salvamento dos r
 
 
 \section{Criação de Processos}
-Um esquema detalhado sobre a criação de processos em diferentes arquiteturas de SO é detalhado no exercício da página \pageref{ex:processes-creation}.
+Um esquema detalhado sobre a criação de processos em diferentes arquiteturas de SO é apresentado no exercício da página \pageref{ex:processes-creation}.
 
 
 
@@ -179,7 +178,7 @@ Para garantir um bom algoritmo de escalonamento, alguns \textbf{critérios} deve
 
   \item \textbf{Minimizar o \textit{waiting time}:} ou seja, o tempo de resposta entre os estados \textit{Ready} e \textit{Running};
 
-  \item \textbf{Maximizar o \textit{thoughtput}:} aumentar o número de processos conclúidos em um determinado tempo.
+  \item \textbf{Maximizar o \textit{thoughtput}:} aumentar o número de processos concluídos em um determinado tempo.
 \end{itemize}
 
 \begin{definicao}{Preempção}
@@ -195,11 +194,11 @@ Podemos classificar escalonadores segundo sua preempção:
 
   \item \textbf{Escalonadores preemptivos:} cada processo possui um tempo máximo de permanência, chamado \textbf{\textit{quantum}}, de posse do processador. Quando o \textit{quantum} termina, o SO retira o processador deste processo, para permitir a execução de outro processo.
 
-  Desta forma, estes escalonadores garantem um uso mais balanceado da CPU, o que levam a eles serem usados na maioria dos SOs. Entretanto, seu projeto é consideravelmente mais complexo, uma vez que os processos devem proteger suas regiões críticas de outros processos concorrentes.
+  Desta forma, estes escalonadores garantem um uso mais balanceado da CPU, tornando-os mais populares na maioria dos SOs. Entretanto, seu projeto é consideravelmente mais complexo, uma vez que os processos devem proteger suas regiões críticas de outros processos concorrentes.
 \end{itemize}
 
 \begin{definicao}{Região Crítica}
-  Área que contém as estrutura de dados importantes de um processo em execução, não podendo ser acessada concorrentemente, mas sim atômicamente.
+  Área que contém as estrutura de dados importantes de um processo em execução, não podendo ser acessada concorrentemente, mas apenas atômicamente.
 \end{definicao}
 
 O tempo de execução do processo é controlado por um \textit{clock} que gera interrupções em uma determinada frequência, chamadas de \textit{clock tick}. Tal ferramenta está presente em qualquer processador moderno.
@@ -216,7 +215,7 @@ Os processos que solicitam a CPU são colocados em uma fila \textit{ready}, ger�
 \begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth]{scale-fcfs}
-  \caption{Execução de processos em política FSFC com ordem chegada P1, P2 e P3.}
+  \caption{Execução de processos em política FSFC com ordem de chegada: P1, P2 e P3.}
   \label{fig:scale-fcfs}
 \end{figure}
 
@@ -256,7 +255,7 @@ A prioridade pode ser definida de duas formas:
   \item \textbf{Dinâmicamente:} o sistema analisa o comportamento dos processos e atribui prioridades favorecendo um certo tipo de comportamento. Por exemplo, processos com I/O podem ter prioridades altas. O cálculo da prioridade pode ser dado por $1/f$, onde $f$ é a fração do \textit{quantum} de tempo utilizado na última rodada do processo.
 \end{itemize}
 
- Note que é possível que um processo pode monopolizar a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. A técnica de prioridade dinâmica tenta justamente mitigar este comportamento.
+ Note que é possível que um processo monopolize a CPU caso ele precise de muito tempo de processamento e sua prioridade for a maior de todas. A técnica de prioridade dinâmica tenta justamente mitigar este comportamento.
 
 \begin{figure}[h]
   \centering
@@ -313,7 +312,7 @@ Note que este algoritmo pode não ser muito justo, pois, supondo um processo com
 \section{\textit{Threads}}
 \textit{Threads}, ou linhas de controle múltiplas, foram criadas visando maior concorrência na execução de processos. Nelas, o processo é dividido em dois: processo em si, correspondendo ao ambiente, e a \textit{thread}, correspondendo a execução.
 
-Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thread} pode se bloquear a espera de um recurso e outra, do mesmo processo ou não, pode se executar, paralelamente. A entidade que realmente executa é a \textit{thread}, sendo o processo apenas o ambiente.
+Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thread} pode se bloquear, esperando um recurso, e outra, do mesmo processo ou não, pode se executar, paralelamente. A entidade que realmente executa é a \textit{thread}, sendo o processo apenas o ambiente.
 
 \begin{figure}[h]
   \centering
@@ -322,7 +321,7 @@ Um processo pode ser composto por várias \textit{threads}, onde uma \textit{thr
   \label{fig:threads}
 \end{figure}
 
-As \textit{threads} de um mesmo processo compartilham as variáveis de ambiente do processo e cada uma contém suas próprias variáveis de execução. Dessa forma, a troca de contexto entre \textit{threads} envolve apenas as variáveis de execução. Consequentemente, \textbf{a troca de contexto é mais leve}. A Tabela \ref{tab:process-thread-data}
+As \textit{threads} de um mesmo processo compartilham as variáveis de ambiente do processo e cada uma contém suas próprias variáveis de execução. Dessa forma, a troca de contexto entre \textit{threads} envolve apenas as variáveis de execução. Consequentemente, \textbf{a troca de contexto é mais leve}.
 
 \begin{table}[h]
   \centering
@@ -336,20 +335,19 @@ As \textit{threads} de um mesmo processo compartilham as variáveis de ambiente 
     Alarmes pendentes & \\
     Sinais e manipuladores de sinais & \\
     Informação de contabilidade & \\
-    \hline
   \end{tabular}
 
   \caption{A primeira coluna lista itens compartilhados por todas as \textit{threads} do processo e a segunda lista itens específicos de cada \textit{thread}}
   \label{tab:process-thread-data}
 \end{table}
 
-Dado isto, estas \textit{threads} compartilham as mesmas variáveis globais, memória, descritores de arquivo e outros recursos. Logo, são necessários mecanismos de \textbf{sincronização} destes recursos: variáveis \textit{mutex}, variáveis de condição, etc..
+Dado isto, \textit{threads} de um mesmo processo compartilham as mesmas variáveis globais, memória, descritores de arquivo e outros recursos. Logo, são necessários mecanismos de \textbf{sincronização} destes recursos: variáveis \textit{mutex}, variáveis de condição, etc..
 
 Podemos ter dois tipos de \textit{threads}:
 \begin{itemize}
   \item \textbf{Estáticas:} o número de linhas de controle que irão compor o processo é definido em tempo de compilação, fazendo com que a execução comece com o número determinado;
 
-  \item \textbf{Dinâmicas:} as \textit{threads} são criadas e destruídas dinâmicamente, ao longo da execução do processo, criadas com primitivas específicas. A execução começa com uma \textit{thread} apontando para o início da rotina \textit{main}. Esta técnica é a mais comum.
+  \item \textbf{Dinâmicas:} as \textit{threads} são criadas e destruídas dinâmicamente, ao longo da execução do processo, através de primitivas específicas. A execução começa com uma \textit{thread} apontando para o início da rotina \textit{main}. Esta técnica é a mais comum.
 \end{itemize}
 
 
@@ -360,7 +358,7 @@ Podemos ter dois tipos de \textit{threads}:
 \subsection{Implementação}
 É possível implementar \textit{threads} de duas maneiras. A primeira é a \textbf{nível de \textit{kernel}}. Aqui, as abstrações de processo e \textit{threads} são implementadas pelo sistema operacional, de maneira protegida. Logo, existe a tabela de processos e uma tabela de \textit{threads} para cada processo. Isto garante um alto grau de concorrência, porém o custo da troca de contexto entre \textit{threads} continua alto, pois esta gera trocas de contexto entre modo protegido e usuário, o que é um \textit{overhead} custoso.
 
-A segunda forma é a implementação a \textbf{nível de usuário}, simulando as \textit{threads} através de bibliotecas. Dessa forma, o custo da troca de contexto é baixo, porém quando uma \textit{thread} realizar uma operação blocante, o seu processo inteiro será bloqueado e, consequentemente, todas as suas \textit{threads-irmãs}.
+A segunda forma é a implementação a \textbf{nível de usuário}, simulando as \textit{threads} através de bibliotecas, resultando em um custo de troca de contexto baixo. Porém, quando uma \textit{thread} realizar uma operação blocante, o seu processo inteiro será bloqueado e, consequentemente, todas as suas \textit{threads-irmãs}.
 
 \textbf{Nota:} maiores informações e comparações entre esses modelos são explorados em exercício na página \pageref{ex:threads-implementation-comparison}.
 
@@ -383,7 +381,7 @@ A segunda forma é a implementação a \textbf{nível de usuário}, simulando as
 \end{figure}
 
 \begin{definicao}{\textit{Livelock}}
-  Ocorre quando um conjunto de processos tentam acessar um recurso por meio de \textit{polling}, sempre encontrando esse recurso ocupado, pois estes estão alocados a processos que fazem parte do mesmo conjunto. Dessa forma, estes processos bloqueiam-se mutuamente. Logo, \textbf{há uma espera circular dentro do conjunto de processos}.
+  Ocorre quando um conjunto de processos tentam acessar um recurso por meio de \textit{polling} e sempre encontram este recurso ocupado, dado que o último está alocado para processos que fazem parte do mesmo conjunto. Dessa forma, estes processos bloqueiam-se mutuamente. Logo, \textbf{há uma espera circular dentro do conjunto de processos}.
 \end{definicao}
 
 \begin{definicao}{\textit{Polling}}
@@ -400,7 +398,7 @@ A segunda forma é a implementação a \textbf{nível de usuário}, simulando as
 \textbf{Nota:} Do ponto de vista teórico, \textit{livelock} e \textit{deadlock} tem significados equivalentes.
 
 \begin{definicao}{\textit{Starvation}}
-  Ocorre quando um conjunto de processos é indefinidamente preterido porque sua prioridade é menor que a prioridade de outros conjuntos de processos. Ou seja, é \textbf{uma espera por um tempo indefinido por recursos}.
+  Ocorre quando um conjunto de processos é indefinidamente preterido porque sua prioridade é menor que a prioridade de outros conjuntos de processos. Ou seja, é \textbf{uma espera por recursos, por um tempo indefinido}.
 \end{definicao}
 
 
@@ -460,7 +458,7 @@ Para garantir uma exclusão mútua eficiente, a solução deve levar em contra o
 
 
 \subsection{Exclusão Mútua com Inibição de Interrupções}
-Quando um processo deseja acessar a seção crítica, o mesmo inibe todas as interrupções do SO, inibindo o escalonador de emitir interrupções para realocar a CPU. Logo, demais processos não serão executados e apenas o processo inibidor executa. Ao fim do seu acesso à seção crítica, o processo executante reabilita as interrupções. A Figura \ref{fig:syscall-inibition} dá um exemplo.
+Quando um processo deseja acessar a seção crítica, o mesmo inibe todas as interrupções do SO, inibindo o escalonador de emitir interrupções para realocar a CPU a outro processo. Logo, demais processos não serão executados e apenas o processo inibidor executa. Ao fim do seu acesso à seção crítica, o processo executante reabilita as interrupções. A Figura \ref{fig:syscall-inibition} dá um exemplo.
 
 \begin{figure}[ht]
   \centering
@@ -471,7 +469,7 @@ Quando um processo deseja acessar a seção crítica, o mesmo inibe todas as int
 
 Esta técnica trivialmente \textbf{preserva a exclusão mútua, a espera limitada e o progresso}, dado que apenas um processo apenas executa (e logo acessa a seção crítica) e a tomada da seção crítica é feita de forma direta por cada processo. Porém, por ser uma função crítica, a inibição de interrupções geralmente só pode ser executada pelo SO, sendo \textbf{arriscado disponibilizar este recurso para o usuário}, logo este raramente tem acesso a esta função.
 
-Também é importante notar que esta técnica acaba por ser prejudicada em arquiteturas multiprocessadas: quando um processo inibe as interrupções, ele o faz apenas no seu processador. Logo, processos em outros \textit{cores} que queiram acessar a região crítica poderião fazê-lo sem problema. Logo, esta abordagem é mais interessantes em arquiteturas mono-processadas ou em ambientes protegidos, com pequenas porções de código.
+Também é importante notar que esta técnica acaba por ser \textbf{prejudicada em arquiteturas multiprocessadas}: quando um processo inibe as interrupções, ele o faz apenas no seu processador. Logo, processos em outros \textit{cores} que queiram acessar a região crítica poderião fazê-lo sem problema. Logo, esta abordagem é mais interessantes em arquiteturas mono-processadas ou em ambientes protegidos, com pequenas porções de código.
 
 
 
@@ -487,7 +485,7 @@ Também chamada de \textit{busy waiting}, nesta técnica o processo espera a per
   \label{fig:busy-waiting}
 \end{figure}
 
-Esta técnica acaba por disperdiçar muita CPU, uma vez que o processo não é bloqueado e permanece executando, mas de maneira ociosa. Por isso é interessante utilizá-la apenas quando a espera será pequena. Entretanto, em multiprocessadores, isto pode ser interessante, dado que algum outro processo concorrente pode executar na seção crítica durante a espera ociosa.
+Esta técnica acaba por disperdiçar muita CPU, uma vez que o processo não é bloqueado e permanece executando, mas de maneira ociosa. Por isso, é interessante utilizá-la apenas quando a espera será pequena. Entretanto, em multiprocessadores, isto pode ser interessante, dado que algum outro processo concorrente pode executar na seção crítica durante a espera ociosa.
 
 Dentre as técnicas neste paradigma, a implementação do Algoritmo de Dekker e Peterson não será destrinchada.
 
@@ -518,7 +516,7 @@ Dessa forma, o processo irá testar a variável, ficando em \textit{busy waiting
   \label{fig:strict-switch}
 \end{figure*}
 
-Esta técnica preserva exclusão mútua e a espera limitada. Entretanto, ela \textbf{não preserva o progresso}. Usamos o exemplo da Figura \ref{fig:strict-switch}, dado o caso onde o processo P1 é muito rápido lento que P2. Suponha que P2 está em sua região não-crítica e, nesse meio tempo, P1 executou por inteiro, deixando a variável \texttt{vez} igual a 1. P1 tenta executar o \textit{loop} novamente, mas não irá conseguir até que P2 coloque a variável em 0. Logo, a região crítica está vazia e temos um processo executando fora da região crítica bloqueando um processo que deseja a região.
+Esta técnica preserva exclusão mútua e a espera limitada. Entretanto, ela \textbf{não preserva o progresso}. Usamos o exemplo da Figura \ref{fig:strict-switch}, dado o caso onde o processo P1 é bem mais rápido que P2. Suponha que $P2$ está em sua região não-crítica e, nesse meio tempo, $P1$ executou por inteiro, deixando a variável \texttt{vez} igual a 1. $P1$ tenta executar o \textit{loop} novamente, mas não irá conseguir até que $P2$ coloque a variável em 0, o que só irá ocorrer depois que ele sair de sua região não-crítica e entre no seu \textit{loop} novamente. Logo, a região crítica está vazia e temos o processo $P2$ executando fora da região crítica bloqueando o processo $P1$, que deseja sua região crítica.
 
 
 
@@ -535,7 +533,7 @@ Esta técnica acaba por \textbf{gerar mais trocas de contextos entre processos, 
 Existem duas primitivas básicas, as quais, normalmente, envolvem a seção crítica:
 
 \begin{itemize}
-  \item Primitiva de \textbf{bloqueio de processo} quando a seção estive ocupada;
+  \item Primitiva de \textbf{bloqueio de processo}, quando a seção estiver ocupada;
 
   \item Primitiva de \textbf{desbloqueio de processos} à espera da permissão de acesso à seção crítica.
 \end{itemize}
@@ -551,7 +549,7 @@ Existem duas primitivas básicas, as quais, normalmente, envolvem a seção crí
 
 
 \subsubsection{Semáforos}
-Definidos por \textit{Dijkstra} em 1965, consiste em uma variável inteira positiva, que controla o acesso à região crítica, estabelecendo um limite de controle dos sinais de interesse de acesso à ela. O valor inicial do semáforo indica quantos processos podem acessar o recurso simultaneamente, normalmente inicializado com 1.
+Definidos por \textit{Dijkstra} em 1965, consiste em uma variável inteira positiva, que controla o acesso à região crítica, estabelecendo um limite de controle dos sinais de interesse de acesso à ela. \textbf{O valor inicial do semáforo indica quantos processos podem acessar o recurso simultaneamente}, normalmente inicializado com 1.
 
 As operações de manipulação dos semáforos são \textbf{indivisíveis}, ou seja, se um processo está executando-as, ele não pode ser bloqueado. Elas são duas e seu código é mostrado:
 
@@ -581,9 +579,7 @@ As operações de manipulação dos semáforos são \textbf{indivisíveis}, ou s
   \label{fig:sem-ops}
 \end{figure*}
 
-\textbf{Ideia Geral:} sempre que houver uma região crítica, envolvemos ela com a operação \textit{wait} e \textit{signal}, nesta ordem, como mostra a Figure \ref{fig:semaphore}. Assim, o processo vai checar se o semáforo é maior que 0, ou seja, se a região crítica já está comportando o número limite de processos. Caso esteja, o processo bloqueia, senão, o processo decrementa o valor do semáforo, indicando que há um processo operando ali.
-os
-Quando o processo acabar de executar a região crítica, ele acorda os outros processos, para que estes possam tentar assumir a região crítica. Finalmente, ele incrementa o semáforo, indicando que há espaço para outro processo acessar o recurso. Note que os outros processos não podem entrar no meio dessas duas ações, pois a ação de \textit{signal} é indivisível.
+\textbf{Ideia Geral:} sempre que houver uma região crítica, envolvemos ela com a operação \textit{wait} e \textit{signal}, nesta ordem, como mostra a Figure \ref{fig:semaphore}. Assim, o processo vai checar se o semáforo é maior que 0, ou seja, se a região crítica já está comportando o número limite de processos. Caso esteja, o processo bloqueia, senão, o processo decrementa o valor do semáforo, indicando que há um processo operando ali. Quando o processo acabar de executar a região crítica, ele acorda os outros processos, para que estes possam tentar assumir a região crítica. Finalmente, ele incrementa o semáforo, indicando que há espaço para outro processo acessar o recurso. Note que os outros processos não podem entrar no meio dessas duas ações, pois a ação de \textit{signal} é indivisível.
 
 
 \begin{figure}[ht]
@@ -618,7 +614,7 @@ Estas primitivas são chamadas de sistema, podendo ser implementadas tanto como 
 
 
 \subsubsection{\textit{Monitores}}
-Monitores são conjuntos de procedimentos e dados agrupados em um módulo, indicando que estas entidades são uma região crítica. Estas regiões só podem ser \textbf{acessadas por um processo por vez}, o qual só pode acessar os dados contidos no da seção crítica através de procedimentos definidos pelo monitor. Logo, \textbf{não há acesso direto aos dados por parte do processo requisitante}.
+Monitores são conjuntos de procedimentos e dados agrupados em um módulo, indicando que estas entidades são uma região crítica. Estas regiões só podem ser \textbf{acessadas por um processo por vez}, o qual só pode acessar os dados contidos na seção crítica através de procedimentos definidos pelo monitor. Logo, \textbf{não há acesso direto aos dados por parte do processo requisitante}.
 
 \begin{figure}[ht]
   \centering
@@ -684,7 +680,7 @@ Primitivas bloqueadas ocorrem quando, em um envio de mensagem, o processo remete
 
 Podemos ter dois comportamentos:
 \begin{itemize}
-  \item \textbf{\textit{Send} antes do \textit{Receive}:} primeiro, o processo remetente envia a mensagem e se bloqueia, aguardando o \textit{rendez-vouz}. O processo destinatário se bloqueia apenas para receber a mensagem, desbloqueando logo depois. \textbf{O maior tempo de bloqueio está do lado do remetente};
+  \item \textbf{\textit{Send} antes do \textit{Receive}:} primeiro, o processo remetente envia a mensagem e se bloqueia, aguardando o \textit{rendez-vouz}. O processo destinatário recebe a mensagem, sem se bloquear. \textbf{O maior tempo de bloqueio está do lado do remetente};
 
   \item \textbf{\textit{Receive} antes do \textit{Send}:} primeiro, o processo destinatário se bloqueia, aguardando a mensagem, desbloqueando apenas quando recebe. O processo remetente se bloqueia apenas no momento do envio da mensagem e logo recomeça a execução. \textbf{O maior tempo de bloqueio está do lado do destinatário}.
 \end{itemize}
@@ -710,7 +706,7 @@ Podemos ter dois comportamentos:
 
 Dizemos que essa é uma \textbf{comunicação síncrona}, dado que no memento da troca de mensagens, cada processo envolvido na comunicação sabe exatamente o estado do outro, pois ambos estão executando a primitiva de comunicação. Logo, implicitamente os processos também estão comunicando os seus estados de execução. Como vantagem, estas primitivas \textbf{tem implementação mais simples}.
 
-Quando dois processos executam um \textit{receive}, esperando um mensagem do outro, ambos se encontram bloqueados e aguardando um recurso do outro. Logo, vemos a \textbf{possibilidade de \textit{deadlock}} nesta comunicação. Tal situação pode ser resolvida com a temporização da primitiva de \textit{receive}, estabelecendo um tempo máximo que o processo pode ficar bloqueado.
+Quando dois processos executam um \textit{receive}, esperando uma mensagem do outro, ambos se encontram bloqueados e aguardando um recurso do outro. Logo, vemos a \textbf{possibilidade de \textit{deadlock}} nesta comunicação. Tal situação pode ser resolvida com a temporização da primitiva de \textit{receive}, estabelecendo um tempo máximo que o processo pode ficar bloqueado.
 
 \begin{figure*}[ht]
   \begin{subfigure}[t]{0.5\textwidth}

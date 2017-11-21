@@ -53,7 +53,7 @@ Além do nome e dos dados, o SO associa a cada arquivo um conjunto de infomaçõ
 As operações sobre arquivos geralmente levam em consideração um conjunto de entidades de um sistema de arquivos, sendo elas:
 
 \begin{itemize}
-  \item \textbf{Tabela de Arquivos:} uma tabela global do sistema, onde existe uma entrada para cada arquivo, contendo as informações referentes a cada umm organizada em diretórios;
+  \item \textbf{Tabela de Arquivos:} uma tabela global do sistema, onde existe uma entrada para cada arquivo, contendo as informações referentes a cada um, organizada em diretórios;
 
   \item \textbf{Diretório:} caminho que leva ao arquivo. Ao ser criado, o arquivo é posicionado em um diretório e a tabela de arquivos deste diretório deve conter uma entrada para o novo arquivo;
 
@@ -134,7 +134,9 @@ Na criação do arquivo, é reservado um espaço contíguo em disco. Para se gua
 
 Em consequência, essa técnica provê uma recuperação de dados extremamente rápida, pois como os blocos são contíguos, o movimento do braço do disco é mínimo. Além disso, tem fácil implementação.
 
-Entretanto, este método apresenta um alto grau de fragmentação ao longo do tempo. Explicando: uma vez que os blocos são contíguos, após sucessivas exclusões de arquivos, o disco acaba ficando com diversas lacunas ao longo de seu espaço. Quando o disco for preenchido até o final, o espaço das lacunas pode não se suficiente para acomodar arquivos grandes, resultando em falta de espaço, mesmo que, no total de espaço em branco, haja espaço suficiente. Para mitigar este problema, é necessário fazer defragmentação, que e o processo de relocar todos os blocos no inicio do disco, eliminando as lacunas. Note que tal processo é custoso.
+Entretanto, este método apresenta um alto grau de fragmentação ao longo do tempo. Explicando: uma vez que os blocos são contíguos, após sucessivas exclusões de arquivos, o disco acaba ficando com diversas lacunas ao longo de seu espaço. Quando o disco for preenchido até o final, o espaço das lacunas pode não ser suficiente para acomodar arquivos grandes, resultando em falta de espaço, mesmo que, no total de espaços em branco, haja espaço suficiente.
+
+Para mitigar este problema, é necessário fazer defragmentação, que é o processo de relocar todos os blocos no inicio do disco, eliminando as lacunas. Entretanto, este é um processo custoso.
 
 \begin{figure*}[h]
   \begin{subfigure}{\textwidth}
@@ -169,6 +171,13 @@ Esta técnica mitiga o problema da fragmentação, uma vez que arquivos não pre
 Aqui, cada arquivo possui uma pequena tabela denominada de i-nodos, que contém os atributos e os endereços dos blocos físicos alocados ao arquivo. Os primeiros endereços de disco são armazenados no próprio i-nodo, que é transferido do disco para a memória no momento da abertura do arquivo.
 
 Em arquivos maiores, o i-nodo contém o endereço de um bloco de disco denominado \textbf{bloco indireto simples}. Este bloco é uma tabela de endereços de blocos de disco, podendo haver indireção em segundo e terceiro níveis.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{inodes}
+  \caption{Estruturação de i-nodos, onde existe a associação entre os nós e um processo.}
+  \label{fig:inodes}
+\end{figure}
 
 \section{Desempenho do Sistema de Arquivos}
 Em geral, um acesso a disco é muito mais lento do que um acesso à memória principal. Uma maneira simples de aumentar a performance do sistema de arquivos é escrever e ler os dados da memória principal sempre que possível.
