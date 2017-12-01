@@ -128,11 +128,11 @@ O gerente de memória interage com o núcleo do \textit{Mach} através de um pro
 
   \item O núcleo envia uma mensagem ao gerente de memória (\textit{memory\_object\_init}), dizendo que o objeto que ele gerencia foi mapeado. O gerente faz algumas inicializações e responde ao núcleo com \textit{memory\_object\_ready};
 
-  \item A tarefa é referencia o objeto de memória. As referências são feitas por operações básicas de acesso à memória (\textit{LOAD} e \textit{STORE}). Um \textit{page fault} é gerado. O núcleo é ativado e contacta o gerente de memória responsável pelo objeto de memória e pede a página por \textit{memory\_object\_data\_request};
+  \item A tarefa referencia o objeto de memória. As referências são feitas por operações básicas de acesso à memória (\textit{LOAD} e \textit{STORE}). Um \textit{page fault} é gerado. O núcleo é ativado e contacta o gerente de memória responsável pelo objeto de memória e pede a página por \textit{memory\_object\_data\_request};
 
   \item Quando a página estiver disponível, o gerente de memória responde ao \textit{kernel} com \textit{memory\_object\_data\_supply};
 
-  \item A substituição de páginas é decidida pelo núcleo \textit{Mach}. Nesse caso, a página é enviada ao gerente de memóriam com um \textit{memory\_object\_data\_return}, que é o responsável pelo seu armazenamento;
+  \item A substituição de páginas é decidida pelo núcleo \textit{Mach}. Nesse caso, a página é enviada ao gerente de memória, com um \textit{memory\_object\_data\_return}. O gerente se responsabiliza por armazenar a página;
 
   \item Se a aplicação deseja referenciar a página de um modo proibido pelos direitos de acesso atuais, um \textit{page fault} de proteção é gerado. O gerente pode também decidir restringir os direitos de acesso à uma página por conta própria.
 \end{enumerate}
