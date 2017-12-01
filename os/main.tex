@@ -1,79 +1,10 @@
-%-------------------------------------------------------------------------------
-%	PACKAGES
-%-------------------------------------------------------------------------------
-\documentclass[a4paper, 11pt, twoside]{book}
-\usepackage[hmarginratio=3:2]{geometry}
-\usepackage[hidelinks]{hyperref}
-\usepackage[brazilian]{babel}
-\usepackage[utf8x]{inputenc}
-\usepackage{subcaption}
-\usepackage{mdframed}
-\usepackage{enumitem}
-\usepackage{graphicx}
-\usepackage{parskip}
-\usepackage{amsmath}
-\usepackage{float}
-\usepackage{fsc}
-\usepackage{ulem}
-\usepackage[yyyymmdd,hhmmss]{datetime}
-
-
+\documentclass{fsc}
 
 \begin{document}
+	\coursefront{Sistemas Operacionais}
+	\maketitle
+
 	\frontmatter
-
-	%-----------------------------------------------------------------------------
-	%	TITLE PAGE
-	%-----------------------------------------------------------------------------
-	\begin{titlepage}
-		% No style in cover
-		\thispagestyle{empty}
-		% Centraling content in page
-		\newgeometry{margin=1in}
-		\center
-
-		%	HEADING SECTIONS
-		\textsc{\LARGE Universidade de Brasília}\\[1.5cm] % Name of your university/college
-		\textsc{\Large Notas de Aula}\\[5cm] % Major heading such as course name
-
-		%	TITLE SECTION
-		\HRule \\[0.4cm]
-		{\huge \bfseries Fundamentos de Sistemas Computacionais}\\[0.4cm]
-		{\Large \textsc{Sistemas Operacionais}}
-		\HRule \\[6.5cm]
-
-		%	AUTHOR SECTION
-		\begin{minipage}{0.4\textwidth}
-		\begin{flushleft} \large
-		\emph{Autor:}\\
-		Felipe \textsc{Rodopoulos} % Your name
-		\end{flushleft}
-		\end{minipage}
-		~
-		\begin{minipage}{0.4\textwidth}
-		\begin{flushright} \large
-		\emph{Professora:} \\
-		Dr. Alba \textsc{Melo} % Supervisor's Name
-		\end{flushright}
-		\end{minipage}\\[2cm]
-
-		%	DATE SECTION
-		\vfill
-		{\large \today}\\[2cm]
-	\end{titlepage}
-
-
-
-
-
-
-
-
-	%-----------------------------------------------------------------------------
-	%	CONTENT
-	%-----------------------------------------------------------------------------
-	% Default margins for the rest of the document
-	\restoregeometry
 
 	% Index
 	\tableofcontents
@@ -91,5 +22,5 @@
 	\nocite{*}
 
   \appendix
-  \include{exercises}
+  \include{exercises/_all}
 \end{document}

@@ -1,0 +1,93 @@
+\section{1º/2013}
+\begin{exercicio}
+  {1º/2013}{Sistemas de Arquivo}
+  {Considere um arquivo de alocação contígua composto por 100 blocos, cujo tamanho máximo é 200 blocos. Quantas operações devem ser feitas caso:
+  \begin{enumerate}
+    \item Um bloco seja adicionado no início do arquivo.
+    \item Um bloco seja adicionado no final do arquivo.
+    \item Um bloco seja removido no início do arquivo.
+  \end{enumerate}
+  Responda o mesmo para um arquivo de mesmo tamanho que utilize lista encadeada.}
+
+  \textbf{Para alocação contígua:}
+  \begin{enumerate}
+    \item 100 realocações de bloco e uma escrita, no começo;
+
+    \item Operação de busca da posição e uma operação de escrita do bloco;
+
+    \item Uma única operação de remoção do bloco. (Podem ser também $99$ operações de shift para a esquerda)
+  \end{enumerate}
+
+  \textbf{Para lista encadeada:}
+  \begin{enumerate}
+    \item Obtenção de um bloco livre, escrita do bloco em disco e apontamento do bloco como o primeiro do arquivo, colocando o antigo primeiro bloco como o próximo;
+
+    \item Obtenção de um bloco livre, escrita do bloco e inserção do endereço deste bloco no apontamento do antigo último bloco
+
+    \item Remoção do bloco e apontamento do antigo segundo bloco como o novo primeiro.
+  \end{enumerate}
+\end{exercicio}
+
+\begin{exercicio}
+  {1º/2013}{\textit{Escalonamento de processos}}
+  {Considere o conjunto de $5$ processos e respectivos tempos de execução (quantum = $8 ms$). A ordem de chegada dos processos foi $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$ (do mais antigo para o mais recente). No momento de início de execução do algoritmo de escalonamento, todos os processos estão prontos. Diga a ordem na qual este conjunto será executado, considerando as políticas \textit{Round-Robin} e \textit{Shortest Job First (SJF)}.
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+      \hline \hline
+      \textbf{Processo} & \textbf{Tempo de execução (ms)} \\ \hline
+      A                 & 9                               \\
+      B                 & 2                              \\
+      C                 & 7                               \\
+      D                 & 1                               \\
+      E                 & 18                              \\ \hline \hline
+    \end{tabular}
+  \end{table}
+  } % Fim do enunciado
+
+  Estendemos a questão, inserindo também o resultado para política FCFS. Escrevemos em ordem, do primeiro para o último:
+
+  \textbf{Round-robin:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A \rightarrow E$
+
+  \textbf{SJF:} $D \rightarrow B \rightarrow C \rightarrow A \rightarrow E$
+
+  \textbf{FCFS:} $A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$
+\end{exercicio}
+
+\begin{exercicio}
+  {1º/2013}{\textit{Threads}}
+  {Explique os $2$ níveis de implementação de threads. Cite vantagens e desvantagens.}
+  \label{ex:threads-implementation-comparison}
+
+  \textbf{\textit{Threads} a nível de usuário:} a implementação da \textit{thread} é no espaço de endereçamento do usuário, através de chamadas de funções definidas em uma biblioteca a nível de aplicação.
+
+  \textit{Vantagens}:
+  \begin{itemize}
+    \item A troca de contexto entre \textit{threads} tem custo baixo, dado não é preciso de privilégio de \textit{kernel} e as estruturas compartilhadas estão a nível de usuário apenas;
+
+    \item O escalonamento pode ser especificado dentro do processo do usuário, podendo definir-se uma política mais adequada;
+
+    \item Caso seja implementadas por bibliotecas portáveis, podem ser executadas em qualquer SO.
+  \end{itemize}
+
+  \textit{Desvantagens:}
+  \begin{itemize}
+    \item Se a \textit{thread} realizar uma operação blocante, todo o processo será bloqueado até que a operação tenha resultado, bloqueando as \textit{threads-irmãs};
+
+    \item Uma aplicação \textit{multithread} não pode tirar vantagem do multiprocessamento, já que o processo que detém as \textit{threads} apenas em um processador.
+  \end{itemize}
+
+  \textbf{\textit{Threads} a nível de \textit{kernel}:} o gerenciamento de \textit{threads} é feito pelo \textit{kernel}, manipuladas por chamadas de sistema. Cada processo contém sua tabela de \textit{threads} e o bloqueio de uma \textit{thread} não resulta no bloqueio de outras, sendo este chaveamento feito pelo \textit{kernel}.
+
+  \textit{Vantagens:}
+  \begin{itemize}
+    \item Melhor aproveitamento da capacidade de multiprocessamento da máquina, escalonando várias \textit{threads} do processo em diferentes processadores;
+
+    \item O bloqueio de uma \textit{thread} não resulta no bloqueio de outras, inclusive suas irmãs.
+  \end{itemize}
+
+  \textit{Desvantagens:}
+  \begin{itemize}
+    \item A troca de contexto entre \textit{threads} é custosa, uma vez que existe a passagem do modo usuário para o modo protegido.
+  \end{itemize}
+\end{exercicio}
