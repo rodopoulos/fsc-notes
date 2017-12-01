@@ -1,22 +1,29 @@
 \chapter{Cache e RAM}
 
-\textsc{Definição} \textbf{Princípio de Localidade:} programas tendem a reusar dados e instruções que foram usadas recentemente. Podemos dividir em:
+\begin{definicao}{Princípio de Localidade}
+  Tendência de programas a reusar dados e instruções que foram usadas recentemente. Podemos dividir em:
 
-\begin{itemize}
-  \item \textbf{Localidade temporal:} itens acessados recentemente têm grande probabilidade de serem acessados novamente;
+  \begin{itemize}
+    \item \textbf{Localidade temporal:} itens acessados recentemente têm grande probabilidade de serem acessados novamente;
 
-  \item \textbf{Localidade espacial:} itens cujos endereços estão próximos tendem a ser acessados em tempos próximos.
-\end{itemize}
+    \item \textbf{Localidade espacial:} itens cujos endereços estão próximos tendem a ser acessados em tempos próximos.
+  \end{itemize}
+\end{definicao}
+
 
 Logo temos a possibilidade de prever instruções que serão utilizadas em um futuro próximo com base em acessos recentes. Isso justifica o uso da \textbf{hierarquia de memória}.
 
 
 \section{Cache}
-\textsc{Definição} Memória rápida e com pouca capacidade de armazenamento. Interposta entre a CPU e a memória principal. A medida de dados é feita em \textbf{WORDS} (palavras), a qual normalmente trocada entre CPU e cache. Definimos:
+\begin{definicao}{\textit{Cache}}
+  Memória rápida e com pouca capacidade de armazenamento, interposta entre a CPU e a memória principal.
+\end{definicao}
 
-\textbf{Cache hit:} o dado procurado está em cache
+A medida de dados é feita em \textbf{words} (palavras), a qual normalmente é trocada entre CPU e \textit{cache}. Definimos:
 
-\textbf{Cache miss:} o dado procurado NÃO está em cache
+\textbf{\textit{Cache hit:}} o dado procurado está em cache
+
+\textbf{\textit{Cache miss:}} o dado procurado NÃO está em cache
 
 \begin{figure}[ht]
   \centering
@@ -129,9 +136,13 @@ Temos duas políticas de escrita:
   \item \textbf{Write-back:} dado é escrito somente em \textit{cache}. Apenas quando há substituição que o bloco modificado é escrito em memória. Acabam por ser mais rápidas, pois ocorrem só na velocidade de \textit{cache} e usam menos largura de banda já que envia nada a memória.
 \end{itemize}
 
-\textsc{Definição} \textbf{Dirty bits:} indicam se o bloco foi modificação enquanto estava em \textit{cache} (\textit{dirty}) ou não (\textit{clean}), sendo que estes últimos não são escritos em memória na substituição.
+\begin{definicao}{\textit{Dirty bits}}
+  Indicam se o bloco foi modificação enquanto estava em \textit{cache} (\textit{dirty}) ou não (\textit{clean}), sendo que estes últimos não são escritos em memória na substituição.
+\end{definicao}
 
-\textsc{Definição} \textbf{Write Stalls:} ocorrem quando a CPU tem que esperar que o dado seja escrito em memória. Para reduzir este tempo, são usada \textbf{write-buffers}, onde a CPU escreve o dado e continua suas tarefas. O dado então é enviado de maneira assíncrona para a memória.
+\begin{definicao}{\textit{Write Stalls}}
+   Ocorrem quando a CPU tem que esperar que o dado seja escrito em memória. Para reduzir este tempo, são usada \textbf{write-buffers}, onde a CPU escreve o dado e continua suas tarefas. O dado então é enviado de maneira assíncrona para a memória.
+\end{definicao}
 
 Em um \textbf{write miss}, o dado antigo não é mais necessário e logo temos duas abordagens para tal:
 \begin{itemize}
@@ -315,14 +326,14 @@ O acesso a matrizes com os mesmo loops porém fazendo cálculos diferentes. Logo
 \textsc{Blocagem}\\
 As vezes, quando diversas matrizes são acessas sendo umas por linhas e outras por colunas, podemos realizar uma otimização mais complexa. Operamos em submatrizes (ou blocos), ao invś de se operar sobre a matriz inteira.
 
-\begin{figure*}[ht]
-  \begin{subfigure}[t]{.5\textwidth}
+\begin{figure*}[H]
+  \begin{subfigure}[t]{.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{blocking-1}
     \caption{\textbf{Código original:} \texttt{a} e \texttt{b} percorrem por linha, enquanto \texttt{c} percorre por coluna. Percorremos a matriz inteira sequencialmente.}
   \end{subfigure}
   ~
-  \begin{subfigure}[t]{.5\textwidth}
+  \begin{subfigure}[t]{.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{blocking-2}
     \caption{\textbf{Código arrumado:} criação de submatrizes e percorrimento dessas}
@@ -338,19 +349,22 @@ As vezes, quando diversas matrizes são acessas sendo umas por linhas e outras p
 \subsection{Reduzindo Penalidade do Miss}
 
 \subsubsection{Priorizar Misses de Leitura}
-Para acelerar a conclusão da execução de instruções, geralmente \textit{write buffers} são adicionados ao hardware. Logo, quando o store termina, geralmente o dado se encontra neste buffer e não no bloco de cache associado.
+Para acelerar a conclusão da execução de instruções, geralmente \textit{write buffers} são adicionados ao hardware. Logo, quando o \textit{store} termina, geralmente o dado se encontra neste \textit{buffer} e não no bloco de cache associado. Esta decisão pode fazer com que dependendo da ordem de acesso aos dados, valores antigos sejam lidos.
 
-Esta decisão pode fazer com que dependendo da ordem de acesso aos dados, valores antigos sejam lidos.
+\begin{figure}[H]
+  \centering
+  \[
+    \begin{array}{llll}
+      (1) & \texttt{LOAD} & \texttt{512, r3} \\
+      (2) & \texttt{LOAD} & \texttt{r1, 1024} \\
+      (3) & \texttt{LOAD} & \texttt{r2, 512}
+    \end{array}
+  \]
+  \caption{Caso os endereços 512 e 2014 estejam mapeados no mesmo índice de cache e a escrita de (1) demorar a se completar, a instrução 3 pode ler o valor antigo da memória, havendo um hazard RAW de dados.}
+  \label{fig:read-miss}
+\end{figure}
 
-\underline{Exemplo:}
-
-\texttt{1. LOAD 512, r3}\\
-\texttt{2. LOAD r1, 1024}\\
-\texttt{3. LOAD r2, 512} \\
-
-Caso os endereços 512 e 2014 estejam mapeados no mesmo índice de cache e a escrita de (1) demorar a se completar, a instrução 3 pode ler o valor antigo da memória, havendo um hazard RAW de dados.
-
-A maneira mais simples de evitar que este problema aconteça, consiste em fazer com que o read miss espere até que o \textit{write buffer} esteja vazio. Mas isso aumenta a penalidade do read miss.
+A maneira mais simples de evitar que o problema da Figura \ref{fig:read-miss} aconteça, consiste em fazer com que o read miss espere até que o \textit{write buffer} esteja vazio. Mas isso aumenta a penalidade do read miss.
 
 Para priorizar misses de leitura, o hardware de muitos processadores verificam o contéudo do \textit{write buffer} e, caso não haja conflito, deixa o read miss continuar.
 
@@ -426,7 +440,9 @@ O pipelining de escritas ocorre entre escritas distintas. Para que o dado seja e
 
 
 \section{Memória RAM}
-\textsc{Definição} memória semicondutora volátil, onde há a necessidade de um fornecimento constante de energia para manter os valores.
+\begin{definicao}{Memória RAM}
+  Memória semicondutora volátil, onde há a necessidade de um fornecimento constante de energia para manter os valores.
+\end{definicao}
 
 \subsection{DRAM}
 Composta por células que armazenam dados, onde um transistor é utilizado para armazenar um bit. É organizada como uma matriz retangular, endereçada por linhas e colunas.

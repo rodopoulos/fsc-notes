@@ -5,7 +5,7 @@
 
 \underline{Exemplos:} conjunto de instruçoes, endereçamento de memória, ...
 
-\textbf{Organização de computadores} está relacionado às unidades operacionais do computador e suas interconexões (barramentos).\\[0.2cm]
+\textbf{Organização de computadores} está relacionado às unidades operacionais do computador e suas interconexões (barramentos).
 
 \underline{Exemplos:} sinais de controle, tecnologia de memória e cache, ...
 
@@ -195,9 +195,10 @@ Muito usado nos primeiros RISCs. O compilador tenta inserir um conjunto de instr
 \end{itemize}
 
 \begin{figure}
-  \includegraphics[width=\textwidth]{delayed-branch-scheme}
+  \centering
+  \includegraphics[width=.95\textwidth]{delayed-branch-scheme}
   \label{fig:delayed-branch-scheme}
-  \caption{Escalonamentos do delayed branch}
+  \caption{Escalonamentos do \textit{delayed branch}}
 \end{figure}
 
 Se a previsão é correta, o \textit{delay slot} é executado. Caso contrário, fazemos o \textbf{cancelamento do \textit{branch}}: inserimos um \texttt{NOP} no \textit{delay slot} e executamos. Isso remove restrições extras a serem colocadas no \textit{slot}. Normalmente, os \textit{cancelling branches} são tomados quando há o \textit{not taken}.
@@ -208,7 +209,9 @@ Esta técnica possui limitações. Em tempo de compilação, é difícil de prev
 
 
 \section{Barramento}
-\textsc{Definição:} meio de transmissão compartilhado que conecta dispositivos. Sua velocidade máxima é limitada pelo seu tamanho e o número de dispositivos conectados a ele.
+\begin{definicao}{Barramento}
+  Meio de transmissão compartilhado que conecta dispositivos. Sua velocidade máxima é limitada pelo seu tamanho e o número de dispositivos conectados a ele.
+\end{definicao}
 
 Barramentos do tipo CPU-Memória são pequenos e de alta velocidade, enquanto os de I/O são maiores, acomodando diversos tipos de dispositivos, seguindo um determinado padrão.
 

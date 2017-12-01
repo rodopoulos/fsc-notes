@@ -1,8 +1,10 @@
 \chapter{RISC x CISC}
 
-\textsc{Definição} \textbf{Gap Semântico:} diferença entre as operações oferecidas por uma linguagem e as operações oferecidas pela arquitetura.
+\begin{definicao}{Gap Semântico}
+  Diferença entre as operações oferecidas por uma linguagem e as operações oferecidas pela arquitetura.
+\end{definicao}
 
-A cada vez que as linguagens de programação iam se modernizando, o gap semântico ia aumentando. Ele deu origem a diversas ineficiências na execução dos programas, tamanho excessivo de código binário e complexidade do compilador.
+A cada vez que linguagens de programação se modernizam, o gap semântico aumenta. Este deu origem a diversas ineficiências na execução dos programas, tamanho excessivo de código binário e complexidade do compilador.
 
 Afim de reduzir esses efeitos, foram projetadas arquiteturas contendo grande número de intruções, diversos modos de endereçamento e instruções complexas oriundas das linguagens de alto nível, surgindo assim as máquinas com conjuntos complexos de intruções, as CISC.
 
@@ -58,7 +60,7 @@ A janela é dividida em 3 regiões de tamanho fixo:
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=.7\textwidth]{reg-window}
+  \includegraphics[width=.66\textwidth]{reg-window}
   \label{fig:reg-window}
   \caption{Esquema de uma janela de registradores. Perceba a sobreposição dos temporários e de parâmetros para permitir passagem de valores entre procedures}
 \end{figure}
@@ -134,7 +136,7 @@ Como exemplos, as atuais arquiteturas do PowerPC, que é classificada como RISC,
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.75\textwidth]{risc-x-cisc}
+  \includegraphics[width=0.725\textwidth]{risc-x-cisc}
   \label{fig:risc-x-cisc}
   \caption{Tabela comparativa de RISC (entradas escuras) X CISC (claras)}
 \end{figure}

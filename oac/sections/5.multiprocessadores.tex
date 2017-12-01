@@ -96,7 +96,9 @@ Todos os processadores podem desempenhar as mesmas funções e o sistema é cont
   \caption{Estrutura de um multiprocessador simétrico. A memória aqui não é necessariamente única}
 \end{figure}
 
-\textsc{Definição} \textbf{Crossbar:} vários barramentos de maneira que você consiga uma conexão direta com todos os barramentos, evitando conflito de acesso. Ele é quadrátrico em relação ao número de elementos ($n^2$ conexões quando se tem $n$ elementos). Isso permite a garantia de acesso em tempo uniforme. É um hardware mais caro.
+\begin{definicao}{\textit{Crossbar}}
+  Vários barramentos de maneira que você consiga uma conexão direta com todos os barramentos, evitando conflito de acesso, porém sendo um \textit{hardware} mais caro. Ele é quadrátrico em relação ao número de elementos ($n^2$ conexões quando se tem $n$ elementos), permitindo a garantia de acesso em tempo uniforme.
+\end{definicao}
 
 Quando interconectados por barramentos, a arquitetura não é escalável, devido a problemas de contenção no acesso à memória. A cada processador adicionado, existe mais conflito no barramento. Com o crossbar, o problema é o custo do mesmo.
 
@@ -124,7 +126,9 @@ As caches em multiprocessadores podem ser:
   \item \textbf{Compartilhada:} só existe uma cache, compartilhada entre vários processadores
 \end{itemize}
 
-\textsc{Definição} \textbf{Coerência de cache:} garantia que todas as caches possuem sempre o mesmo valor para todas as cópias dos dados, \textbf{quando observadas}.
+\begin{definicao}{Coerência de \textit{Cache}}
+  Garantia que todas as caches possuem sempre o mesmo valor para todas as cópias dos dados, \textbf{quando observadas}.
+\end{definicao}
 
 Logo, queremos garantir que todas as cópias em cache retornem sempre o último valor escrito, ou seja, uma visão coerente e uniforme da memória para todos os processadores, independente do fato de existirem várias caches.
 
@@ -325,7 +329,9 @@ Perceba que há um \textit{overhead}: o tamanho de cada entrada de diretório é
 \subsubsection{Limited Directories}
 Propostos com o intuito de \textbf{reduzir o tamanho dos diretórios}. Aqui o número de cópias em cache simultâneas para um bloco particular é limitado.
 
-\textsc{Definição} \textbf{Dir$_{i}X$}, onde $i$ é o número de cópias simultâneas e $X$ pode ser NB (\textit{no broadcast}) ou B (\textit{broadcast}).
+\begin{definicao}{Dir$_{i}X$}
+  Onde $i$ é o número de cópias simultâneas e $X$ pode ser NB (\textit{no broadcast}) ou B (\textit{broadcast}).
+\end{definicao}
 
 São similares aos full-map, exceto no caso onde existem mais de $i$ solicitações de leitura simultâneas. Neste caso, podemos tomar duas atitudes:
 \begin{itemize}

@@ -1,6 +1,8 @@
 \chapter{Instruction Level Parallelism}
 
-\textsc{Definição} o grau no qual instruções de um mesmo programa podem ser avaliadas em paralelo, ou seja, \textbf{a medida de sobreposição potencial entre as instruções}.
+\begin{definicao}{\textit{Instruction Level Parallelism}}
+  O grau no qual instruções de um mesmo programa podem ser avaliadas em paralelo, ou seja, \textbf{a medida de sobreposição potencial entre as instruções}.
+\end{definicao}
 
 \textbf{Note que:} O pipelining é uma das técnicas que explora ILP e é geralmente a base para as demais otimizações propostas.
 
@@ -46,7 +48,9 @@ Dependências são propriedades de programas e a presença delas indica o potenc
 
 
 \subsection{Dependências de Dados}
-\textsc{Definição} quando uma instrução depende do resultado de uma instrução específica ou do resultado encadeado de instruções, então temos uma dependência de dados. Também chamada de dependência real.
+\begin{definicao}{Dependências de Dados}
+  Quando uma instrução depende do resultado de uma instrução específica ou do resultado encadeado de instruções, então temos uma dependência de dados. Também chamada de dependência real.
+\end{definicao}
 
 \begin{figure}[ht]
   \centering
@@ -80,8 +84,11 @@ Um valor de dado pode fluir entre instruções através de registradores ou posi
 
 
 \subsection{Dependências de Nomes}
-\textsc{Definição} quando não há valor transferido entre instruções, mas ambas usam o mesmo nome (de registrador ou posição de memória) e pelos menos uma delas altera o valor deste nome, temos uma dependência de nome. Temos dois tipos:
+\begin{definicao}{Dependências de Nomes}
+  Quando não há valor transferido entre instruções, mas ambas usam o mesmo nome (de registrador ou posição de memória) e pelos menos uma delas altera o valor deste nome, temos uma dependência de nome.
+\end{definicao}
 
+Temos dois tipos de dependências de nomes:
 \begin{itemize}
   \item \textbf{Anti-Dependência:} ocorre quando uma instrução lê o valor de um nome e uma outra instrução quer escrever neste mesmo nome. Ou seja, quando \textbf{temos um WAR}. \underline{Exemplo:}
 
@@ -107,7 +114,9 @@ Como não há valor sendo transmitido entre instruções, as dependências de no
 
 
 \subsection{Dependências de Controle}
-\textsc{Definição} quando o ordenamento de uma instrução está atrelado a um \textit{branch}, temos uma dependência de controle.
+\begin{definicao}{}
+  Quando o ordenamento de uma instrução está atrelado a um \textit{branch}, temos uma dependência de controle.
+\end{definicao}
 
 Toda a instrução, exceto as pertencentes ao primeiro bloco básico, estão atreladas a algum conjunto de \textit{branches} e logo é dependente de controle destes. No caso geral, as dependências de controle devem ser preservadas.
 
@@ -146,7 +155,9 @@ O reordenamento da execução de das instruções não deve permitir o surgiment
 
 
 \subsubsection{Fluxo de Dados}
-\textsc{Definição} o fluxo real de dados entre as instruções que os produzem e as que os consomem.
+\begin{definicao}{}
+  Fluxo real de dados entre as instruções que os produzem e as que os consomem.
+\end{definicao}
 
 O branches fazem com que o fluxo de dados seja dinâmico, permitindo que o dado utilizado em determinada instrução possa vir de vários pontos. Logo, o reordenamento não pode afetar este fluxo.
 
@@ -214,13 +225,19 @@ O desvio pode ser \textit{backwards}, indo para trás ou \textit{forward}, indo 
 \subsection{Previsões}
 Os sinais dos desvios são geralmente preditos por esquemas de previsão de desvio e medimos sua acurácia: \textit{branch prevision accuracy}, ou BPA. O caminho predito é o \textit{predicted path} e o caminho cuja previsão diz que não será tomado é o \textit{not predicted path}.
 
-\textsc{Definição} \textbf{Janela de execução do processador:} parte do código que está em processo de execução na CPU
-
 Um desvio é geralmente previsto depois que entra na janela de execução. Após a previsão, o desvio fica \textbf{pendente}. Quando a condição do desvio é efetivamente avaliada, o branch é dito \textbf{resolvido}.
 
-\textsc{Definição} \textbf{Código estático:} código na ordem de escrita pelo programador ou compilador.
+\begin{definicao}{Janela de execução do processador}
+  parte do código que está em processo de execução na CPU
+\end{definicao}
 
-\textsc{Definição} \textbf{Código dinâmico:} diferentes instâncias de instruções estáticas, que surgem durante a execução, ordenadas pelo tempo no qual foram executadas.
+\begin{definicao}{Código Estático vs. Código Dinâmico}
+  \begin{itemize}
+    \item \textbf{Estático:} código na ordem de escrita pelo programador ou compilador.
+
+    \item \textbf{Dinâmico:} diferentes instâncias de instruções estáticas, que surgem durante a execução, ordenadas pelo tempo no qual foram executadas.
+  \end{itemize}
+\end{definicao}
 
 
 
@@ -231,7 +248,9 @@ Um desvio é geralmente previsto depois que entra na janela de execução. Após
 \section{Técnicas de Exploração}
 
 \subsection{\textit{Loop Unrolling}}
-\textsc{Definição} aumento do bloco básico entre as iterações de um \textit{loop}.
+\begin{definicao}{}
+  Aumento do bloco básico entre as iterações de um \textit{loop}.
+\end{definicao}
 
 É uma das técnicas mais simples para explorar ILP e implica em um rearrumação do código, normalmente feita pelo compilador. Aplicamos tal técnica em loops independentes, ou seja, loops paralelos. As Figuras \ref{fig:loop-unrolling-1} e \ref{fig:loop-unrolling-2} explicam bem.
 
@@ -274,16 +293,16 @@ A execução fora de ordem permite que as instruções possam começar sua execu
 
 A execução fora de ordem divide o estágio ID em duas partes:
 \begin{itemize}
-  \item \textbf{Issue:} decodifica as instruções e verifica hazards estruturais
+  \item \textbf{\textit{Issue}:} decodifica as instruções e verifica hazards estruturais
 
-  \item \textbf{Read Operands:} espera até que não haja hazards de dados e lê operandos.
+  \item \textbf{\textit{Read Operands}:} espera até que não haja hazards de dados e lê operandos.
 \end{itemize}
 
 A execução de uma instrução se inicia no instante $t$ e termina no instante $v$, onde $v > t$. Em um pipeline com escalonamento dinâmico, todas as instruções entram no estágio \textit{issue} na ordem do programa. Entretanto, no estágio \textit{read operands}, elas podem ser atrasadas ou fazerem um \textit{bypass} das outras instruções - o que é a própria execução fora de ordem.
 
 
 
-\subsection{Scoreboarding}
+\subsection{\textit{Scoreboarding}}
 Técnica que permite que as instruções sejam executadas fora de ordem, quando há recursos suficientes e independência de dados. O \textit{scoreboarding} é o elemento principal desta técnica, pois ele controla a execução das instruções e faz a detecção de \textit{hazards}.
 
 Como várias instruções podem estar no estágio EX simultaneamente, o \textit{scoreboarding} \textbf{só é efetivo quando há múltiplas unidades funcionais}.
@@ -515,7 +534,9 @@ Todos os branches são preditos e alguns deles também são executados agressiva
 \subsection{Arquiteturas Superescalares}
 % TODO: indicar se é RISC ou CISC e porque.
 
-\textsc{Definição} Arquiteturas que permitem que diversas instruções sejam iniciadas em um único ciclo de clock e executadas de maneira independente.
+\begin{definicao}{}
+  Arquiteturas que permitem que diversas instruções sejam iniciadas em um único ciclo de clock e executadas de maneira independente.
+\end{definicao}
 
 Para que isso seja possível, deve-se ser capaz de buscar mais de uma instrução
 por ciclo de clock e executar diversas instruções simultaneamente. Entretanto, isso trás uma série de limitações:
@@ -554,7 +575,9 @@ O conceito do projeto está muito associado a estruturas RISC, porém pode ser p
 
 
 \subsection{Very Large Instruction Word - VLIW}
-\textsc{Definição} arquitetura que combina diversas operações em uma única instrução muito longa. A tarefa de se determinar quais instruções que serão emitidas simultaneamente, entretanto, recai sobre o compilador.
+\begin{definicao}{}
+  Arquitetura que combina diversas operações em uma única instrução muito longa. A tarefa de se determinar quais instruções que serão emitidas simultaneamente, entretanto, recai sobre o compilador.
+\end{definicao}
 
 Neste caso, também teremos diversas unidades funcionais independentes. Uma instrução VLIW poderia incluir 2 operações inteira, 2 de ponto flutuante, 2 referências à memoria e um branch, por exemplo. Dessa forma, se cada unidade funcional tem 16 bits, teríamos um palavra de 112 bits. Note que \textbf{deve haver paralelismo suficiente na sequencia de código para manter todas as unidades ocupadas}.
 
