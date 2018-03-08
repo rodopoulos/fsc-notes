@@ -56,7 +56,9 @@ Para gerar os documentos em Windows, tome vergonha na cara, instale um Linux e r
 
 Para você contribuir, dê um _fork_ neste repositório, realize as alterações desejadas, _commite_ para o seu repositório e abra um _pull request_. Explique brevemente o motivo e se tudo estiver de acordo, eu dou um _merge_. Se a sua contribuição for muito contraditória, ela será debatida aqui no fórum do Github mesmo.
 
-Além disso, você pode contribuir fazendo requisições:
+### Pedidos e *Issues*
+
+Você também pode contribuir fazendo requisições diversas:
 
 * Inserção de novos conceitos introduzidos na disciplina ao longo dos semestres;
 * Melhorar explicações;
@@ -66,7 +68,9 @@ Além disso, você pode contribuir fazendo requisições:
 * Exercícios de fixação de conteúdo que não constam nos anexos dos documento;
 * Qualquer coisa que você achar útil.
 
-De quebra, você ganha seu nome na lista de contribuições aqui do repositório.
+Para isto, basta abrir uma *issue* no repositório. Da mesma forma, você é encorajado e fechar *issues* já criadas, criando *pull requests* que resolvam as mesmas.
+
+Qualquer contribuição é válida e, de quebra, você ganha seu nome na lista de contribuições do repositório.
 
 ### Exercícios
 É extremamente importante que sejam reunidos todo e qualquer exercício sobre as matérias deste curso aqui. Eles são a base para fazer um bom estudo antes da prova, uma vez que várias questões tem sacadas capiciosas.
