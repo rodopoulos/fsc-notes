@@ -10,6 +10,6 @@ clean:
 
 build:
 	@echo "Compilando Latex com PDFLatex e BibTeX..."
-	@pdflatex $(FILE)
-	@pdflatex $(FILE)
-	@echo "Feito. \n"
+	@pdflatex $(FILE) > /dev/null
+	@pdflatex $(FILE) > /dev/null
+	@echo "Feito"
